@@ -10,9 +10,8 @@ import UIKit
 
 class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var movieCollectionView: UICollectionView!
-    var movieArray:[Any] = []
+    var movieArray:[MovieModel] = []
     var pageNumber = 1
-    let dispatchGroup = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,45 +35,34 @@ class MovieCollectionViewController: UIViewController {
     }
     
     func getPopularMovies() {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=608b8e34a89c818571631096e34773a3&language=en-US&page=\(pageNumber)") as! URL
-        let urlRequest = URLRequest(url: url)
-        NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
-            data in
-            if let data = data {
-                do {
-                    if let response = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                        if let result = response["results"] as? [[String:Any]] {
-                            self.pageNumber += 1
-                            for movie in result {
-                                if let posterPath = movie["poster_path"] as? String {
-                                    let posterPath = URL(string: tmdbImageBaseUrl + posterPath)
-                                    if let posterPathUrl = posterPath {
-                                        self.dispatchGroup.enter()
-                                        NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{ response in
-                                            self.movieArray.append(response)
-                                            self.dispatchGroup.leave()
-                                        }
-                                            , failure: { response in
-                                                print(response)
-                                                self.dispatchGroup.leave()
-                                        })
-                                    }
-                                }
+        let popularMovieUrl = popularMovieBaseUrl + "\(pageNumber)"
+        
+        if let url = URL(string: popularMovieUrl) {
+            let urlRequest = URLRequest(url: url)
+            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
+                data in
+                if let data = data {
+                    do {
+                        let response = try JSONDecoder().decode(MovieResultModel.self, from: data)
+                        self.pageNumber += 1
+                        for movie in response.results {
+                            if let movie = movie {
+                                self.movieArray.append(movie)
                             }
-                            
-                            self.dispatchGroup.notify(queue: .main, execute: {
-                                self.movieCollectionView.reloadData()
-                                })
                         }
                         
+                        DispatchQueue.main.async {
+                            self.movieCollectionView.reloadData()
+                        }
+                        
+                    } catch {
+                        print(error)
                     }
-                } catch {
-                    
                 }
-            }
-        }, failure: {
-            result in print(result)
-        })
+            }, failure: {
+                result in print(result)
+            })
+        }
     }
 }
 
@@ -89,7 +77,30 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
         }
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellNibName, for: indexPath) as? MovieCollectionViewCell {
-            cell.movieImage.image = UIImage(data: movieArray[indexPath.row] as! Data)
+            
+            if let data = self.movieArray[indexPath.row].poster_image {
+                if let poster_image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.movieImage.image = poster_image
+                    }
+                }
+            } else {
+                if let posterPath = movieArray[indexPath.row].poster_path {
+                    if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
+                        NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
+                            response in
+                            if let data = response, let poster_image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    cell.movieImage.image = poster_image
+                                    self.movieArray[indexPath.row].poster_image = data
+                                }
+                            }
+                    }, failure:{ response in
+                            print(response)
+                        })
+                    }
+                }
+            }
             return cell
         } else {
             return UICollectionViewCell()
