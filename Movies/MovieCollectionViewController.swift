@@ -10,6 +10,7 @@ import UIKit
 
 class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var movieCollectionView: UICollectionView!
+    @IBOutlet weak var scrollView: UIScrollView!
     var movieArray:[MovieDetail] = []
 //    var filteredResuls
     var pageNumber = 1
@@ -23,7 +24,7 @@ class MovieCollectionViewController: UIViewController {
 
         movieCollectionView.dataSource = self
         movieCollectionView.delegate = self
-//        self.vie
+        self.scrollView.delegate = self
 //        movieCollectionView.prefetchDataSource = self
         
         self.setCollectionViewLayout()
@@ -148,7 +149,7 @@ extension MovieCollectionViewController : UIScrollViewDelegate {
         {
             // then we are at the top
         }
-        else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+        else if (scrollOffset + scrollViewHeight >= scrollContentSizeHeight)
         {
             // then we are at the end
             self.getPopularMovies()
