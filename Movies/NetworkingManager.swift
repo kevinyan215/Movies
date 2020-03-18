@@ -19,8 +19,13 @@ struct NetworkingManager {
         let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
             if let error = error {
                 failure(error)
-            } else {
-                success(data)
+            } 
+            else {
+                if let response = response as? HTTPURLResponse {
+                    if response.statusCode == 200 {
+                        success(data)
+                    }
+                }
             }
         });
         dataTask.resume()

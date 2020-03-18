@@ -10,19 +10,24 @@ import UIKit
 
 class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var movieCollectionView: UICollectionView!
-    var movieArray:[MovieModel] = []
+    var movieArray:[MovieDetail] = []
+//    var filteredResuls
     var pageNumber = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        movieCollectionView.register(UINib(nibName: movieCollectionViewCellNibName, bundle: nil), forCellWithReuseIdentifier: movieCollectionViewCellNibName)
+        self.navigationItem.title = "Discover"
+        movieCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
+
         movieCollectionView.dataSource = self
+        movieCollectionView.delegate = self
+//        self.vie
+//        movieCollectionView.prefetchDataSource = self
         
         self.setCollectionViewLayout()
         getPopularMovies()
-        
     }
     
     func setCollectionViewLayout() {
@@ -35,24 +40,45 @@ class MovieCollectionViewController: UIViewController {
     }
     
     func getPopularMovies() {
-        let popularMovieUrl = popularMovieBaseUrl + "\(pageNumber)"
-        
-        if let url = URL(string: popularMovieUrl) {
+        if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber)) {
             let urlRequest = URLRequest(url: url)
             NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
                 data in
                 if let data = data {
                     do {
-                        let response = try JSONDecoder().decode(MovieResultModel.self, from: data)
+                        let response = try JSONDecoder().decode(PopularMovies.self, from: data)
                         self.pageNumber += 1
                         for movie in response.results {
-                            if let movie = movie {
-                                self.movieArray.append(movie)
+                            if let movie = movie, let movieId = movie.id {
+                                self.getMovieDetailAt(movieId, success: {
+                                    data in
+                                        if let data = data {
+                                            do {
+                                                var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
+                                                
+                                                if let posterPath = movieResponse.poster_path {
+                                                    if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
+                                                        NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
+                                                            response in
+                                                            if let response = response {
+                                                                movieResponse.poster_image = response
+                                                                self.movieArray.append(movieResponse)
+                                                            }
+                                                            
+                                                            DispatchQueue.main.async {
+                                                                self.movieCollectionView.reloadData()
+                                                            }
+                                                            
+                                                        }, failure:{ response in
+                                                            print(response)
+                                                        })
+                                                    }
+                                                }
+                                                
+                                            } catch {print(error)}}}, failure: {
+                                                result in print(result)
+                                            })
                             }
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.movieCollectionView.reloadData()
                         }
                         
                     } catch {
@@ -64,6 +90,15 @@ class MovieCollectionViewController: UIViewController {
             })
         }
     }
+    
+    func getMovieDetailAt(_ movieId: Int, success: @escaping (Data?)->Void, failure: @escaping (Error?) -> Void) {
+        let movieIdQuery = "\(movieId)?"
+        if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
+            let urlRequest = URLRequest(url: url)
+            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: success, failure: failure)
+        }
+    }
+    
 }
 
 extension MovieCollectionViewController : UICollectionViewDataSource {
@@ -72,40 +107,52 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == movieArray.count - 1 {
-            self.getPopularMovies()
-        }
+//        if indexPath.row == movieArray.count {
+//            self.getPopularMovies()
+//        }
         
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellNibName, for: indexPath) as? MovieCollectionViewCell {
-            
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
             if let data = self.movieArray[indexPath.row].poster_image {
                 if let poster_image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        cell.movieImage.image = poster_image
-                    }
-                }
-            } else {
-                if let posterPath = movieArray[indexPath.row].poster_path {
-                    if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
-                        NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
-                            response in
-                            if let data = response, let poster_image = UIImage(data: data) {
-                                DispatchQueue.main.async {
-                                    cell.movieImage.image = poster_image
-                                    self.movieArray[indexPath.row].poster_image = data
-                                }
-                            }
-                    }, failure:{ response in
-                            print(response)
-                        })
-                    }
+                    cell.movieImage.image = poster_image
                 }
             }
             return cell
         } else {
             return UICollectionViewCell()
         }
+    }
+}
+
+extension MovieCollectionViewController :UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailViewController = MovieDetailViewController()
+        movieDetailViewController.movieDetail = movieArray[indexPath.row]
+        self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+    }
+}
+
+extension MovieCollectionViewController : UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
+    }
+}
+
+extension MovieCollectionViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollViewHeight = scrollView.frame.size.height;
+        let scrollContentSizeHeight = scrollView.contentSize.height;
+        let scrollOffset = scrollView.contentOffset.y;
+        
+        if (scrollOffset == 0)
+        {
+            // then we are at the top
+        }
+        else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+        {
+            // then we are at the end
+            self.getPopularMovies()
+        }
     }
     
     
