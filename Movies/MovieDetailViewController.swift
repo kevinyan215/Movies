@@ -104,13 +104,32 @@ class MovieDetailViewController : UIViewController {
                                             
                                             DispatchQueue.main.async {
                                                 self.castCollectionView.reloadData()
-                                                self.crewCollectionView.reloadData()
                                             }
                                             
                                         }, failure: { error in
                                             print(error)
                                         })
                                     }
+                                }
+                            }
+                            if let crew = self.castCrew?.crew {
+                                for member in crew {
+                                    
+                                    if let profilePathUrl = member.profile_path {
+                                        if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
+                                            NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: url), success: { data in
+                                                member.profile_image = data
+                                                
+                                                DispatchQueue.main.async {
+                                                    self.crewCollectionView.reloadData()
+                                                }
+                                                
+                                            }, failure: { error in
+                                                print(error)
+                                            })
+                                        }
+                                    }
+                                    
                                 }
                             }
                         }
@@ -163,10 +182,10 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                 if let cast = self.castCrew?.cast[indexPath.row] {
                     cell.nameTitleLabel.text = cast.name
                     cell.subTitleLabel.text = cast.character
-                    if let imageData = cast.profile_image {
-                        if let image = UIImage(data: imageData) {
+                    if let imageData = cast.profile_image,
+                        let image = UIImage(data: imageData) {
                             cell.imageView.image = image
-                        }
+                        
                     }
                 }
                 return cell
@@ -176,6 +195,11 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                 if let crew = self.castCrew?.crew[indexPath.row] {
                     cell.nameTitleLabel.text = crew.name
                     cell.subTitleLabel.text = crew.job
+                    if let imageData = crew.profile_image,
+                        let image = UIImage(data: imageData) {
+                            cell.imageView.image = image
+                        
+                    }
                 }
                 return cell
             }

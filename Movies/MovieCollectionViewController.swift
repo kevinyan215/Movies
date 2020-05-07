@@ -10,6 +10,7 @@ import UIKit
 
 class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var movieCollectionView: UICollectionView!
+    @IBOutlet weak var scrollView: UIScrollView!
     var movieArray:[MovieDetail] = []
 //    var filteredResuls
     var pageNumber = 1
@@ -23,7 +24,7 @@ class MovieCollectionViewController: UIViewController {
 
         movieCollectionView.dataSource = self
         movieCollectionView.delegate = self
-//        self.vie
+        self.scrollView.delegate = self
 //        movieCollectionView.prefetchDataSource = self
         
         self.setCollectionViewLayout()
@@ -67,6 +68,7 @@ class MovieCollectionViewController: UIViewController {
                                                             
                                                             DispatchQueue.main.async {
                                                                 self.movieCollectionView.reloadData()
+//                                                                self.movieCollectionView.reloadSections(IndexSet(integer: 0))
                                                             }
                                                             
                                                         }, failure:{ response in
@@ -106,16 +108,13 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
         return movieArray.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.row == movieArray.count {
-//            self.getPopularMovies()
-//        }
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {        
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
-            if let data = self.movieArray[indexPath.row].poster_image {
-                if let poster_image = UIImage(data: data) {
+            if let data = self.movieArray[indexPath.row].poster_image,
+                let poster_image = UIImage(data: data) {
                     cell.movieImage.image = poster_image
-                }
+            } else {
+                cell.movieImage.image = nil
             }
             return cell
         } else {
@@ -148,7 +147,7 @@ extension MovieCollectionViewController : UIScrollViewDelegate {
         {
             // then we are at the top
         }
-        else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+        else if (scrollOffset + scrollViewHeight >= scrollContentSizeHeight)
         {
             // then we are at the end
             self.getPopularMovies()
