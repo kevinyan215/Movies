@@ -68,6 +68,7 @@ class MovieCollectionViewController: UIViewController {
                                                             
                                                             DispatchQueue.main.async {
                                                                 self.movieCollectionView.reloadData()
+//                                                                self.movieCollectionView.reloadSections(IndexSet(integer: 0))
                                                             }
                                                             
                                                         }, failure:{ response in
@@ -107,16 +108,13 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
         return movieArray.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.row == movieArray.count {
-//            self.getPopularMovies()
-//        }
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {        
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
-            if let data = self.movieArray[indexPath.row].poster_image {
-                if let poster_image = UIImage(data: data) {
+            if let data = self.movieArray[indexPath.row].poster_image,
+                let poster_image = UIImage(data: data) {
                     cell.movieImage.image = poster_image
-                }
+            } else {
+                cell.movieImage.image = nil
             }
             return cell
         } else {

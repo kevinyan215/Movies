@@ -27,7 +27,7 @@ class Cast: Codable {
     var profile_image: Data?
 }
 
-struct Crew: Codable {
+class Crew: Codable {
     let credit_id: String
     let department: String
     let gender: Int?
@@ -35,4 +35,6 @@ struct Crew: Codable {
     let job: String
     let name: String
     let profile_path: String?
+    
+    var profile_image: Data?
 }

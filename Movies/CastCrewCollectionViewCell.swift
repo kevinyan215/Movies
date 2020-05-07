@@ -46,12 +46,16 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
         addSubview(nameTitleLabel)
         addSubview(subTitleLabel)
         
-        let views: [String:Any] = ["nameTitleLabel": nameTitleLabel, "subTitleLabel": subTitleLabel, "imageView": imageView]
-        
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[nameTitleLabel]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[subTitleLabel]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[imageView]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[imageView]-[nameTitleLabel]-[subTitleLabel]-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            nameTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            nameTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+            subTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            subTitleLabel.topAnchor.constraint(equalTo: nameTitleLabel.bottomAnchor),
+            subTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
 
 }

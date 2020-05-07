@@ -18,6 +18,7 @@
 		52743EE1226C2E0700DEBB4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52743EE0226C2E0700DEBB4A /* Assets.xcassets */; };
 		52743EE4226C2E0700DEBB4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52743EE2226C2E0700DEBB4A /* LaunchScreen.storyboard */; };
 		5280FF20226C35520092D197 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5280FF1F226C35520092D197 /* NetworkingManager.swift */; };
+		52883EE42463CBE7002C3CEB /* Webservices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52883EE32463CBE7002C3CEB /* Webservices.swift */; };
 		528A72EF2399DFEE00510B0E /* CastCrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A72EE2399DFEE00510B0E /* CastCrew.swift */; };
 		52AC09CE235987C700DEC28B /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC09CD235987C700DEC28B /* MovieDetailViewController.swift */; };
 		52AC09D023598BE900DEC28B /* MovieDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AC09CF23598BE900DEC28B /* MovieDetailViewController.xib */; };
@@ -38,6 +39,7 @@
 		52743EE3226C2E0700DEBB4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52743EE5226C2E0700DEBB4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5280FF1F226C35520092D197 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		52883EE32463CBE7002C3CEB /* Webservices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webservices.swift; sourceTree = "<group>"; };
 		528A72EE2399DFEE00510B0E /* CastCrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCrew.swift; sourceTree = "<group>"; };
 		52AC09CD235987C700DEC28B /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		52AC09CF23598BE900DEC28B /* MovieDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieDetailViewController.xib; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				521A18C02272588300AC8CDF /* MovieCollectionViewCell.xib */,
 				521A18BF2272588300AC8CDF /* MovieCollectionViewCell.swift */,
 				5224551E237FBDF60008E1AE /* VideoCollectionViewCell.swift */,
+				52883EE32463CBE7002C3CEB /* Webservices.swift */,
 				52C6226C23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift */,
 				521A18BB2272444C00AC8CDF /* Constants.swift */,
 				52743EE0226C2E0700DEBB4A /* Assets.xcassets */,
@@ -179,6 +182,7 @@
 				528A72EF2399DFEE00510B0E /* CastCrew.swift in Sources */,
 				52C6226E23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift in Sources */,
 				5280FF20226C35520092D197 /* NetworkingManager.swift in Sources */,
+				52883EE42463CBE7002C3CEB /* Webservices.swift in Sources */,
 				52743EDC226C2E0500DEBB4A /* MovieCollectionViewController.swift in Sources */,
 				521A18C12272588300AC8CDF /* MovieCollectionViewCell.swift in Sources */,
 				52AC09CE235987C700DEC28B /* MovieDetailViewController.swift in Sources */,
@@ -333,14 +337,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GYX9ZA9RA8;
 				INFOPLIST_FILE = Movies/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Kevin.Y.Movies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -352,14 +356,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GYX9ZA9RA8;
 				INFOPLIST_FILE = Movies/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Kevin.Y.Movies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
