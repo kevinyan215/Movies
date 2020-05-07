@@ -52,9 +52,11 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             nameTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             nameTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+            nameTitleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             subTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             subTitleLabel.topAnchor.constraint(equalTo: nameTitleLabel.bottomAnchor),
-            subTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            subTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            subTitleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 
