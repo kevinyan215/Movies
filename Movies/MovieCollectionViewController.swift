@@ -110,11 +110,13 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {        
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
+            cell.movieImage.image = nil
+            if indexPath.row == movieArray.count - 1 {
+                self.getPopularMovies()
+            }
             if let data = self.movieArray[indexPath.row].poster_image,
                 let poster_image = UIImage(data: data) {
                     cell.movieImage.image = poster_image
-            } else {
-                cell.movieImage.image = nil
             }
             return cell
         } else {
@@ -135,24 +137,4 @@ extension MovieCollectionViewController : UICollectionViewDataSourcePrefetching 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
     }
-}
-
-extension MovieCollectionViewController : UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let scrollViewHeight = scrollView.frame.size.height;
-        let scrollContentSizeHeight = scrollView.contentSize.height;
-        let scrollOffset = scrollView.contentOffset.y;
-        
-        if (scrollOffset == 0)
-        {
-            // then we are at the top
-        }
-        else if (scrollOffset + scrollViewHeight >= scrollContentSizeHeight)
-        {
-            // then we are at the end
-            self.getPopularMovies()
-        }
-    }
-    
-    
 }
