@@ -110,11 +110,13 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {        
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
+            cell.movieImage.image = nil
+            if indexPath.row == movieArray.count - 1 {
+                self.getPopularMovies()
+            }
             if let data = self.movieArray[indexPath.row].poster_image,
                 let poster_image = UIImage(data: data) {
                     cell.movieImage.image = poster_image
-            } else {
-                cell.movieImage.image = nil
             }
             return cell
         } else {
