@@ -156,10 +156,16 @@ extension MovieDetailViewController : UICollectionViewDataSource {
             }
         } else if collectionView == castCollectionView {
             if let castCount = castCrew?.cast.count {
+                if castCount > 10 {
+                    return 10
+                }
                 return castCount
             }
         } else if collectionView == crewCollectionView {
             if let crewCount = castCrew?.crew.count {
+                if crewCount > 10 {
+                    return 10
+                }
                 return crewCount
             }
         }
@@ -179,6 +185,9 @@ extension MovieDetailViewController : UICollectionViewDataSource {
             }
         } else if collectionView == castCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: castCrewCollectionViewCellIdentifier, for: indexPath) as? CastCrewCollectionViewCell {
+                cell.nameTitleLabel.text = nil
+                cell.subTitleLabel.text = nil
+                cell.imageView.image = nil
                 if let cast = self.castCrew?.cast[indexPath.row] {
                     cell.nameTitleLabel.text = cast.name
                     cell.subTitleLabel.text = cast.character
@@ -192,6 +201,9 @@ extension MovieDetailViewController : UICollectionViewDataSource {
             }
         } else if collectionView == crewCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: castCrewCollectionViewCellIdentifier, for: indexPath) as? CastCrewCollectionViewCell {
+                cell.nameTitleLabel.text = nil
+                cell.subTitleLabel.text = nil
+                cell.imageView.image = nil
                 if let crew = self.castCrew?.crew[indexPath.row] {
                     cell.nameTitleLabel.text = crew.name
                     cell.subTitleLabel.text = crew.job

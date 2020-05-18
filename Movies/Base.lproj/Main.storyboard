@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tSq-DC-5ek">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wzr-yh-a2V">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Movies-->
         <scene sceneID="cVS-e2-OpP">
             <objects>
                 <navigationController id="tSq-DC-5ek" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Movies" id="FSB-5p-zWy"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WcY-Qj-EL6">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="vuB-YW-uL5"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Go6-sW-Y3d"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4uE-st-NQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-762" y="134"/>
+            <point key="canvasLocation" x="-1057" y="670"/>
         </scene>
-        <!--Movie Collection View Controller-->
+        <!--Discover-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MovieCollectionViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,13 +34,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NUQ-DH-vh5">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yyC-9h-N9b" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4sv-Xf-crL">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ijw-wn-KO2">
                                                     <size key="itemSize" width="50" height="50"/>
@@ -89,7 +88,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xKK-K5-kVP"/>
+                    <tabBarItem key="tabBarItem" title="Item" id="cA5-au-xd4"/>
+                    <navigationItem key="navigationItem" title="Discover" id="xKK-K5-kVP"/>
                     <connections>
                         <outlet property="movieCollectionView" destination="4sv-Xf-crL" id="F3V-O2-vAr"/>
                         <outlet property="scrollView" destination="NUQ-DH-vh5" id="z9R-HE-Cgs"/>
@@ -106,7 +106,94 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="133.59999999999999" y="133.5832083958021"/>
+            <point key="canvasLocation" x="-1058" y="1428"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="3Ut-9U-0q0">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J3C-J2-8ay" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="9kz-iY-MRc" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EGv-GV-ZU7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="G0z-ZB-d8V"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Search" id="sI0-Qy-e3R"/>
+                    <navigationItem key="navigationItem" id="Mmh-ez-YrR"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-114" y="1437"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="hEk-Jo-i5P">
+            <objects>
+                <tabBarController id="Wzr-yh-a2V" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Yri-4u-0BA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="tSq-DC-5ek" kind="relationship" relationship="viewControllers" id="GIu-vh-CPJ"/>
+                        <segue destination="npZ-EK-WTY" kind="relationship" relationship="viewControllers" id="Qxr-Tt-fLB"/>
+                        <segue destination="EJu-90-1xw" kind="relationship" relationship="viewControllers" id="bUX-HD-NTP"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndd-hx-bAO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-479" y="-96"/>
+        </scene>
+        <!--Account-->
+        <scene sceneID="ZMq-m8-iPH">
+            <objects>
+                <navigationController id="EJu-90-1xw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Account" id="Jgj-p2-Vg5"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="83d-jc-I20">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="F27-32-JaF" kind="relationship" relationship="rootViewController" id="516-RS-L2y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="22H-vO-R4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="918" y="670"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="2U5-Zj-Vs5">
+            <objects>
+                <navigationController id="npZ-EK-WTY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" id="kSD-Gr-Fil"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BMe-98-4Cd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="9kz-iY-MRc" kind="relationship" relationship="rootViewController" id="WqW-hM-6Eg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bjz-cd-Wj8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-114" y="670"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="YdM-bC-yHP">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jC3-TA-Ks8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="F27-32-JaF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N84-pD-vul">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="8EA-gm-qeI"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Search" id="V8e-DC-2Aa"/>
+                    <navigationItem key="navigationItem" id="d8n-Y7-I3Q"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="918" y="1436"/>
         </scene>
     </scenes>
 </document>
