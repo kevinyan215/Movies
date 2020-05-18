@@ -156,10 +156,16 @@ extension MovieDetailViewController : UICollectionViewDataSource {
             }
         } else if collectionView == castCollectionView {
             if let castCount = castCrew?.cast.count {
+                if castCount > 10 {
+                    return 10
+                }
                 return castCount
             }
         } else if collectionView == crewCollectionView {
             if let crewCount = castCrew?.crew.count {
+                if crewCount > 10 {
+                    return 10
+                }
                 return crewCount
             }
         }
