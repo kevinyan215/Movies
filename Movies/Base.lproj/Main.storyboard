@@ -112,7 +112,7 @@
         <scene sceneID="3Ut-9U-0q0">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J3C-J2-8ay" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController id="9kz-iY-MRc" sceneMemberID="viewController">
+                <viewController id="9kz-iY-MRc" customClass="SearchViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EGv-GV-ZU7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
