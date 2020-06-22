@@ -29,6 +29,7 @@ class SearchViewController : UIViewController {
     @objc func exitSearchBar() {
         navigationItem.rightBarButtonItem = nil
         searchBar.text = ""
+        searchBar.placeholder = "Search"
         searchBar.resignFirstResponder()
     }
 }
