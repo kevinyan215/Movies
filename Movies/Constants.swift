@@ -9,11 +9,18 @@
 import Foundation
 let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500"
 
-let movieBaseUrl = "https://api.themoviedb.org/3/movie/"
+let theMovieDBBaseURL = "https://api.themoviedb.org/3/"
+let movieBaseUrl = theMovieDBBaseURL + "movie/"
 let popularMovieQuery = "popular?"
-//let castCrewQuery =
-//var movieDetailUrl = movieBaseUrl + "157336?api_key=608b8e34a89c818571631096e34773a3&append_to_response=videos,images"
+let searchQuery = "search/"
+let query = "&query="
 
+private let multiSearchBaseUrl = theMovieDBBaseURL + searchQuery + "multi?"
+private let movieSearchBaseUrl = theMovieDBBaseURL + searchQuery + "movie?"
+
+//let castCrewQuery =
+let multiSearchUrl = multiSearchBaseUrl + APIKey
+let movieSearchUrl = movieSearchBaseUrl + APIKey
 let APIKey = "api_key=\(APIKeyValue)"
 let APIKeyValue = "608b8e34a89c818571631096e34773a3"
 let YoutubeWatchUrl = "https://www.youtube.com/embed/"
@@ -21,3 +28,4 @@ let YoutubeWatchUrl = "https://www.youtube.com/embed/"
 let movieCollectionViewCellIdentifier = "MovieCollectionViewCellIdentifier"
 let videoCollectionViewCellIdentifier = "VideoCollectionViewCellIdentifier"
 let castCrewCollectionViewCellIdentifier = "CastCrewCollectionViewCellIdentifier"
+let SearchResultsTableViewCellIdentifier = "SearchResultsTableViewCellIdentifier"

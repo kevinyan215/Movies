@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PopularMovies: Codable {
+struct MovieList: Codable {
     let page: Int?
     let total_results: Int?
     let total_pages: Int?

@@ -15,6 +15,33 @@ class MovieCollectionViewController: UIViewController {
 //    var filteredResuls
     var pageNumber = 1
     
+    var closure : (success?) = {
+        data in
+            if let data = data {
+                do {
+                    var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
+                    
+                    if let posterPath = movieResponse.poster_path {
+                        if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
+                            NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
+                                response in
+                                if let response = response {
+                                    movieResponse.poster_image = response
+//                                    self.movieArray.append(movieResponse)
+                                }
+                                
+//                                DispatchQueue.main.async {
+//                                    self.movieCollectionView.reloadData()
+//                                }
+                                
+                            }, failure:{ response in
+                                print(response)
+                            })
+                        }
+                    }
+                    
+            } catch {print(error)}}}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -47,7 +74,7 @@ class MovieCollectionViewController: UIViewController {
                 data in
                 if let data = data {
                     do {
-                        let response = try JSONDecoder().decode(PopularMovies.self, from: data)
+                        let response = try JSONDecoder().decode(MovieList.self, from: data)
                         self.pageNumber += 1
                         for movie in response.results {
                             if let movie = movie, let movieId = movie.id {
@@ -93,14 +120,6 @@ class MovieCollectionViewController: UIViewController {
         }
     }
     
-    func getMovieDetailAt(_ movieId: Int, success: @escaping (Data?)->Void, failure: @escaping (Error?) -> Void) {
-        let movieIdQuery = "\(movieId)?"
-        if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
-            let urlRequest = URLRequest(url: url)
-            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: success, failure: failure)
-        }
-    }
-    
 }
 
 extension MovieCollectionViewController : UICollectionViewDataSource {
@@ -138,3 +157,14 @@ extension MovieCollectionViewController : UICollectionViewDataSourcePrefetching 
         
     }
 }
+
+extension UIViewController {
+    func getMovieDetailAt(_ movieId: Int, success: @escaping (Data?)->Void, failure: @escaping (Error?) -> Void) {
+        let movieIdQuery = "\(movieId)?"
+        if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
+            let urlRequest = URLRequest(url: url)
+            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: success, failure: failure)
+        }
+    }
+}
+
