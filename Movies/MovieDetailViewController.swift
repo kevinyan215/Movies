@@ -68,15 +68,37 @@ class MovieDetailViewController : UIViewController {
         return label
     }()
     
+    
+    let runtimeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Runtime"
+        return label
+    }()
+    
     let runtimeDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    let budgetLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Budget"
+        return label
+    }()
+    
     let budgetDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let revenueLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Revenue"
         return label
     }()
     
@@ -138,9 +160,12 @@ class MovieDetailViewController : UIViewController {
         contentView.addSubview(releaseDateLabel)
         contentView.addSubview(genreLabel)
         contentView.addSubview(plotSummaryDescriptionLabel)
-//        view.addSubview(runtimeDescriptionLabel)
-//        view.addSubview(budgetDescriptionLabel)
-//        view.addSubview(revenueDescriptionLabel)
+        contentView.addSubview(runtimeLabel)
+        contentView.addSubview(runtimeDescriptionLabel)
+//        contentView.addSubview(budgetLabel)
+//        contentView.addSubview(budgetDescriptionLabel)
+//        contentView.addSubview(revenueLabel)
+//        contentView.addSubview(revenueDescriptionLabel)
         
         contentView.addSubview(videoCollectionView)
         contentView.addSubview(castCollectionView)
@@ -202,6 +227,10 @@ class MovieDetailViewController : UIViewController {
             crewCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
             crewCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
             crewCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+            
+//            runtimeLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+//            runtimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing)
+//            runtimeLabe
             crewCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
