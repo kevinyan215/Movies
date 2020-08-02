@@ -27,7 +27,7 @@ struct NetworkingManager {
                     }
                 }
             }
-        });
+        })
         dataTask.resume()
     }
 }
