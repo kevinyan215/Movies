@@ -55,6 +55,7 @@ class MovieCollectionViewController: UIViewController {
 //        movieCollectionView.prefetchDataSource = self
         
         self.setCollectionViewLayout()
+
         getPopularMovies()
     }
     
@@ -68,56 +69,28 @@ class MovieCollectionViewController: UIViewController {
     }
     
     func getPopularMovies() {
-        if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber)) {
-            let urlRequest = URLRequest(url: url)
-            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
-                data in
-                if let data = data {
-                    do {
-                        let response = try JSONDecoder().decode(MovieList.self, from: data)
-                        self.pageNumber += 1
-                        for movie in response.results {
-                            if let movie = movie, let movieId = movie.id {
-                                self.getMovieDetailAt(movieId, success: {
-                                    data in
-                                        if let data = data {
-                                            do {
-                                                var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
-                                                
-                                                if let posterPath = movieResponse.poster_path {
-                                                    if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
-                                                        NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
-                                                            response in
-                                                            if let response = response {
-                                                                movieResponse.poster_image = response
-                                                                self.movieArray.append(movieResponse)
-                                                            }
-                                                            
-                                                            DispatchQueue.main.async {
-                                                                self.movieCollectionView.reloadData()
-//                                                                self.movieCollectionView.reloadSections(IndexSet(integer: 0))
-                                                            }
-                                                            
-                                                        }, failure:{ response in
-                                                            print(response)
-                                                        })
-                                                    }
-                                                }
-                                                
-                                            } catch {print(error)}}}, failure: {
-                                                result in print(result)
-                                            })
+        NetworkingManager.shared.getPopularMovies(completion: {
+            response in
+            guard let response = response else { return }
+            for movie in response.results {
+                if let movie = movie, let movieId = movie.id {
+                    NetworkingManager.shared.getMovieDetailAt(movieId, completion:  {
+                        movieResponse in
+                        guard var movieResponse = movieResponse else {return}
+                        NetworkingManager.shared.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                            data in
+                            movieResponse.poster_image = data
+                            self.movieArray.append(movieResponse)
+                            DispatchQueue.main.async {
+                                self.movieCollectionView.reloadData()
                             }
-                        }
-                        
-                    } catch {
-                        print(error)
-                    }
+                            
+                        })
+
+                    })
                 }
-            }, failure: {
-                result in print(result)
-            })
-        }
+            }
+        })
     }
     
 }

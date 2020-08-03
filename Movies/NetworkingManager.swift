@@ -11,10 +11,11 @@ import Foundation
 typealias success = (Data?)->Void
 typealias failure = (Error?)->Void
 
-struct NetworkingManager {
+class NetworkingManager {
     
     static let shared = NetworkingManager()
-    
+    var pageNumber = 1
+
     func getRequest(urlRequest: URLRequest, success: @escaping success, failure: @escaping failure) {
         let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
             if let error = error {
@@ -30,4 +31,63 @@ struct NetworkingManager {
         })
         dataTask.resume()
     }
+    
+     func getPopularMovies(completion: @escaping (MovieList?) -> Void) {
+            if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber)) {
+                let urlRequest = URLRequest(url: url)
+                NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
+                    data in
+                    if let data = data {
+                        do {
+                            let response = try JSONDecoder().decode(MovieList.self, from: data)
+                            self.pageNumber += 1
+                            completion(response)
+                            
+                            
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }, failure: {
+                    result in print(result)
+                })
+            }
+        }
+    
+    func getMovieDetailAt(_ movieId: Int, completion: @escaping (MovieDetail?) -> Void) {
+        let movieIdQuery = "\(movieId)?"
+        if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
+            let urlRequest = URLRequest(url: url)
+            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
+                data in
+                if let data = data {
+                    do {
+                        var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
+                        completion(movieResponse)
+                        
+                    } catch {
+                        print(error)
+                    }
+                }},
+        failure: {
+            results in print(results)
+            })
+        }
+    }
+    
+    func getMoviePosterImagesAt(_ posterPath: String?, completion: @escaping (Data?) -> Void) {
+        if let posterPath = posterPath {
+            if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
+                NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
+                    response in
+                    completion(response)
+                    
+                }, failure:{ response in
+                    print(response)
+                })
+            }
+        }
+    }
+    
+    
 }
