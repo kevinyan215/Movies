@@ -12,35 +12,7 @@ class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var movieCollectionView: UICollectionView!
     @IBOutlet weak var scrollView: UIScrollView!
     var movieArray:[MovieDetail] = []
-//    var filteredResuls
     var pageNumber = 1
-    
-    var closure : (success?) = {
-        data in
-            if let data = data {
-                do {
-                    var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
-                    
-                    if let posterPath = movieResponse.poster_path {
-                        if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
-                            NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
-                                response in
-                                if let response = response {
-                                    movieResponse.poster_image = response
-//                                    self.movieArray.append(movieResponse)
-                                }
-                                
-//                                DispatchQueue.main.async {
-//                                    self.movieCollectionView.reloadData()
-//                                }
-                                
-                            }, failure:{ response in
-                                print(response)
-                            })
-                        }
-                    }
-                    
-            } catch {print(error)}}}
     
     override func viewDidLoad() {
         super.viewDidLoad()
