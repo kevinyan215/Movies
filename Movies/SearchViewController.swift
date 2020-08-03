@@ -86,6 +86,12 @@ extension SearchViewController : UISearchBarDelegate {
                 if let data = data {
                      do {
                         var response = try JSONDecoder().decode(SearchResultList.self, from: data)
+                        if response.results.count == 0 {
+                            self.searchResults = []
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        }
                         for (index,movieTvShow) in response.results.enumerated() {
                             self.getPosterImageAt(posterPath: movieTvShow?.poster_path, success: {
                                 data in

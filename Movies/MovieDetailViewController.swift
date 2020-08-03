@@ -13,19 +13,217 @@ class MovieDetailViewController : UIViewController {
     var movieDetail: MovieDetail?
     var castCrew: CastCrew?
     
-    @IBOutlet var posterImage: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var releaseDateLabel: UILabel!
-    @IBOutlet weak var genreLabel: UILabel!
-    @IBOutlet weak var plotSummaryDescriptionLabel: UILabel!
-    @IBOutlet weak var runtimeDescriptionLabel: UILabel!
-    @IBOutlet weak var budgetDescriptionLabel: UILabel!
-    @IBOutlet weak var revenueDescriptionLabel: UILabel!
-    @IBOutlet weak var videoCollectionView: UICollectionView!
-    @IBOutlet weak var castCollectionView: UICollectionView!
-    @IBOutlet weak var crewCollectionView: UICollectionView!
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.gray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let posterImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        let font = UIFont(name: "Helvetica", size: 20.0)
+        label.font = font
+        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.numberOfLines = 3
+//        label.sizeToFit()
+        label.adjustsFontSizeToFitWidth = true
+        label.allowsDefaultTighteningForTruncation = true
+        return label
+    }()
+    
+    let releaseDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
+    let genreLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 4
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        return label
+    }()
+    
+    let plotSummaryDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 30
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        return label
+    }()
+    
+    
+    let runtimeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Runtime"
+        return label
+    }()
+    
+    let runtimeDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let budgetLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Budget"
+        return label
+    }()
+    
+    let budgetDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let revenueLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Revenue"
+        return label
+    }()
+    
+    let revenueDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let collectionViewFlowLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 130, height: 150)
+        layout.scrollDirection = .horizontal
+        return layout
+    }()
+    
+    
+    lazy var videoCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    lazy var castCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+
+    lazy var crewCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+
+    func setupView() {
+        contentView.backgroundColor = UIColor.gray
+        contentView.addSubview(posterImage)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(releaseDateLabel)
+        contentView.addSubview(genreLabel)
+        contentView.addSubview(plotSummaryDescriptionLabel)
+        contentView.addSubview(runtimeLabel)
+        contentView.addSubview(runtimeDescriptionLabel)
+//        contentView.addSubview(budgetLabel)
+//        contentView.addSubview(budgetDescriptionLabel)
+//        contentView.addSubview(revenueLabel)
+//        contentView.addSubview(revenueDescriptionLabel)
+        
+        contentView.addSubview(videoCollectionView)
+        contentView.addSubview(castCollectionView)
+        contentView.addSubview(crewCollectionView)
+        
+        scrollView.addSubview(contentView)
+        view.addSubview(scrollView)
+        
+    }
+    
+    func setupConstraints() {
+        let collectionViewHeight: CGFloat = 170.0
+        let leadingAnchorSpacing: CGFloat = 20.0
+        let trailingAnchorSpacing: CGFloat = -20.0
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            posterImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: leadingAnchorSpacing),
+            posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            posterImage.heightAnchor.constraint(equalToConstant: 100),
+            posterImage.widthAnchor.constraint(equalToConstant: 100),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            
+            genreLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            genreLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
+            genreLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            
+            releaseDateLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 10),
+            releaseDateLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
+            
+            plotSummaryDescriptionLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor, constant: 30),
+            plotSummaryDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            plotSummaryDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            
+            videoCollectionView.topAnchor.constraint(equalTo: plotSummaryDescriptionLabel.bottomAnchor, constant: 30),
+            videoCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            videoCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            videoCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+
+            castCollectionView.topAnchor.constraint(equalTo: videoCollectionView.bottomAnchor, constant: 20),
+            castCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            castCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            castCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+            
+            crewCollectionView.topAnchor.constraint(equalTo: castCollectionView.bottomAnchor, constant: 20),
+            crewCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            crewCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            crewCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+            
+//            runtimeLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+//            runtimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing)
+//            runtimeLabe
+            crewCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+        ])
+    }
+    
     override func viewDidLoad() {
+        setupView()
+        setupConstraints()
+        
         self.navigationItem.title = movieDetail?.original_title
         self.videoCollectionView.dataSource = self
         self.castCollectionView.dataSource = self
@@ -219,10 +417,4 @@ extension MovieDetailViewController : UICollectionViewDataSource {
        
         return UICollectionViewCell()
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        <#code#>
-//    }
-    
-    
 }
