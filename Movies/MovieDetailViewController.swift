@@ -12,6 +12,7 @@ import WebKit
 class MovieDetailViewController : UIViewController {
     var movieDetail: MovieDetail?
     var castCrew: CastCrew?
+    let networkManager = NetworkingManager()
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -316,7 +317,7 @@ class MovieDetailViewController : UIViewController {
     
         if let movieId = movieDetail?.id, let url = URL(string: movieBaseUrl + "\(movieId)/credits?" + APIKey) {
             let urlRequest = URLRequest(url: url)
-            NetworkingManager().getRequest(urlRequest: urlRequest, success: {
+            networkManager.getRequest(urlRequest: urlRequest, success: {
                 data in
                 if let data = data {
                     do {
@@ -327,7 +328,7 @@ class MovieDetailViewController : UIViewController {
                             for actor in cast {
                                 if let profilePathUrl = actor.profile_path {
                                     if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                        NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: url), success: { data in
+                                        self.networkManager.getRequest(urlRequest: URLRequest(url: url), success: { data in
                                             actor.profile_image = data
                                             
                                             DispatchQueue.main.async {
@@ -345,7 +346,7 @@ class MovieDetailViewController : UIViewController {
                                     
                                     if let profilePathUrl = member.profile_path {
                                         if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                            NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: url), success: { data in
+                                            self.networkManager.getRequest(urlRequest: URLRequest(url: url), success: { data in
                                                 member.profile_image = data
                                                 
                                                 DispatchQueue.main.async {
