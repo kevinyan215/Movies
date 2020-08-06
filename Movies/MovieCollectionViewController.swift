@@ -18,7 +18,7 @@ class MovieCollectionViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.navigationItem.title = "Discover"
+        self.navigationItem.title = "Popular Movies"
         movieCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
 
         movieCollectionView.dataSource = self
