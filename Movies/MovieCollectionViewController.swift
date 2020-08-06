@@ -106,13 +106,3 @@ extension MovieCollectionViewController : UICollectionViewDataSourcePrefetching 
     }
 }
 
-extension UIViewController {
-    func getMovieDetailAt(_ movieId: Int, success: @escaping (Data?)->Void, failure: @escaping (Error?) -> Void) {
-        let movieIdQuery = "\(movieId)?"
-        if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
-            let urlRequest = URLRequest(url: url)
-            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: success, failure: failure)
-        }
-    }
-}
-

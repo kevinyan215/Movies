@@ -93,17 +93,15 @@ extension SearchViewController : UISearchBarDelegate {
                             }
                         }
                         for (index,movieTvShow) in response.results.enumerated() {
-                            self.getPosterImageAt(posterPath: movieTvShow?.poster_path, success: {
+                            NetworkingManager.shared.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
                                 data in
                                 response.results[index]?.poster_image = data
                                 self.searchResults = response.results
                                 DispatchQueue.main.async {
                                    self.tableView.reloadData()
                                 }
-                            }, failure: {
-                                response in
-                                print(response)
                             })
+                            
                         }
 
                         
@@ -152,47 +150,24 @@ extension SearchViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let searchId = searchResults[indexPath.row]?.id {
-            self.getMovieDetailAt(searchId, success: {
-                data in
-                    if let data = data {
-                        do {
-                            var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
-                            self.getPosterImageAt(posterPath: movieResponse.poster_path, success:
-                                {
-                                    response in
-                                    if let response = response {
-                                        movieResponse.poster_image = response
-                                        
-                                        DispatchQueue.main.async {
-                                            let movieDetailViewController = MovieDetailViewController()
-                                            movieDetailViewController.movieDetail = movieResponse
-                                            self.navigationController?.pushViewController(movieDetailViewController, animated: true)
-                                        }
-                                    }
-                                }, failure: {
-                                    response in
-                                    print(response)
-                                })
-                            
-                            
-                        } catch {print(error)}}}, failure: {
-                response in
-                print(response)
+            NetworkingManager.shared.getMovieDetailAt(searchId, completion: {
+                movieDetailResponse in
+                guard var movieDetailResponse = movieDetailResponse else { return }
+                NetworkingManager.shared.getMoviePosterImagesAt(movieDetailResponse.poster_path, completion: {
+                    response in
+                    movieDetailResponse.poster_image = response
+                    
+                    DispatchQueue.main.async {
+                        let movieDetailViewController = MovieDetailViewController()
+                        movieDetailViewController.movieDetail = movieDetailResponse
+                        self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+                    }
+                })
             })
         }
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
-    }
-}
-
-extension UIViewController {
-    func getPosterImageAt(posterPath: String?, success: @escaping (Data?)->Void, failure: @escaping (Error?) -> Void) {
-        if let posterPath = posterPath {
-            if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
-                NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success: success, failure: failure)
-            }
-        }
     }
 }
