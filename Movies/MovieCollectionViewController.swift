@@ -13,6 +13,7 @@ class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     var movieArray:[MovieDetail] = []
     var pageNumber = 1
+    let networkManager = NetworkingManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +42,15 @@ class MovieCollectionViewController: UIViewController {
     }
     
     func getPopularMovies() {
-        NetworkingManager.shared.getPopularMovies(completion: {
+        networkManager.getPopularMovies(completion: {
             response in
             guard let response = response else { return }
             for movie in response.results {
                 if let movie = movie, let movieId = movie.id {
-                    NetworkingManager.shared.getMovieDetailAt(movieId, completion:  {
+                    self.networkManager.getMovieDetailAt(movieId, completion:  {
                         movieResponse in
                         guard var movieResponse = movieResponse else {return}
-                        NetworkingManager.shared.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                        self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
                             data in
                             movieResponse.poster_image = data
                             self.movieArray.append(movieResponse)
