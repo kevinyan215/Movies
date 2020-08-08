@@ -15,6 +15,7 @@ class NetworkingManager {
     
     static let shared = NetworkingManager()
     var pageNumber = 1
+    var nowPlayingMoviesPageNumber = 1
 
     func getRequest(urlRequest: URLRequest, success: @escaping success, failure: @escaping failure) {
         let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
@@ -35,7 +36,7 @@ class NetworkingManager {
      func getPopularMovies(completion: @escaping (MovieList?) -> Void) {
             if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber)) {
                 let urlRequest = URLRequest(url: url)
-                NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
+                self.getRequest(urlRequest: urlRequest, success: {
                     data in
                     if let data = data {
                         do {
@@ -54,11 +55,31 @@ class NetworkingManager {
             }
         }
     
+    func getNowPlayingMovies(completion: @escaping (MovieList?) -> Void) {
+        if let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=608b8e34a89c818571631096e34773a3&language=en-US&page=1&region=US") {
+            let urlRequest = URLRequest(url: url)
+            self.getRequest(urlRequest: urlRequest, success: {
+                data in
+                if let data = data {
+                    do {
+                        let response = try JSONDecoder().decode(MovieList.self, from: data)
+                        self.nowPlayingMoviesPageNumber += 1
+                        completion(response)
+                    } catch {
+                        print(error)
+                    }
+                }
+            }, failure: {
+                result in print(result)
+            })
+        }
+    }
+    
     func getMovieDetailAt(_ movieId: Int, completion: @escaping (MovieDetail?) -> Void) {
         let movieIdQuery = "\(movieId)?"
         if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
             let urlRequest = URLRequest(url: url)
-            NetworkingManager.shared.getRequest(urlRequest: urlRequest, success: {
+            self.getRequest(urlRequest: urlRequest, success: {
                 data in
                 if let data = data {
                     do {
@@ -78,7 +99,7 @@ class NetworkingManager {
     func getMoviePosterImagesAt(_ posterPath: String?, completion: @escaping (Data?) -> Void) {
         if let posterPath = posterPath {
             if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
-                NetworkingManager.shared.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
+                self.getRequest(urlRequest: URLRequest(url: posterPathUrl), success:{
                     response in
                     completion(response)
                     
