@@ -38,45 +38,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yyC-9h-N9b" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
-                                        <subviews>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4sv-Xf-crL">
-                                                <rect key="frame" x="0.0" y="100" width="375" height="474"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ijw-wn-KO2">
-                                                    <size key="itemSize" width="50" height="50"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xK3-ih-5wT">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </view>
-                                                    </collectionViewCell>
-                                                </cells>
-                                            </collectionView>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6G-XQ-fJE">
-                                                <rect key="frame" x="29" y="26" width="53" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Popular"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSG-80-nmC">
-                                                <rect key="frame" x="96" y="26" width="84" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Now Playing"/>
-                                            </button>
-                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="4sv-Xf-crL" secondAttribute="trailing" id="5O5-1p-XSy"/>
-                                            <constraint firstAttribute="bottom" secondItem="4sv-Xf-crL" secondAttribute="bottom" id="9Sr-Gy-RSB"/>
-                                            <constraint firstItem="4sv-Xf-crL" firstAttribute="leading" secondItem="yyC-9h-N9b" secondAttribute="leading" id="VSF-2v-HF9"/>
-                                            <constraint firstItem="4sv-Xf-crL" firstAttribute="top" secondItem="yyC-9h-N9b" secondAttribute="top" constant="100" id="nze-2g-NHV"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -101,7 +63,6 @@
                     <tabBarItem key="tabBarItem" title="Item" id="cA5-au-xd4"/>
                     <navigationItem key="navigationItem" title="Discover" id="xKK-K5-kVP"/>
                     <connections>
-                        <outlet property="movieCollectionView" destination="4sv-Xf-crL" id="F3V-O2-vAr"/>
                         <outlet property="scrollView" destination="NUQ-DH-vh5" id="z9R-HE-Cgs"/>
                         <outlet property="searchDisplayController" destination="1Ty-ZY-HOn" id="N9y-Ar-LhA"/>
                     </connections>
