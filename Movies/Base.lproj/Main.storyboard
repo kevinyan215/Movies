@@ -63,6 +63,7 @@
                     <tabBarItem key="tabBarItem" title="Item" id="cA5-au-xd4"/>
                     <navigationItem key="navigationItem" title="Discover" id="xKK-K5-kVP"/>
                     <connections>
+                        <outlet property="contentView" destination="yyC-9h-N9b" id="Gql-4p-8HR"/>
                         <outlet property="scrollView" destination="NUQ-DH-vh5" id="z9R-HE-Cgs"/>
                         <outlet property="searchDisplayController" destination="1Ty-ZY-HOn" id="N9y-Ar-LhA"/>
                     </connections>

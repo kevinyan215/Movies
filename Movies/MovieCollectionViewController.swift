@@ -9,6 +9,7 @@
 import UIKit
 
 class MovieCollectionViewController: UIViewController, UICollectionViewDataSource {
+    @IBOutlet weak var contentView: UIView!
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -27,9 +28,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
 //    @IBOutlet weak var movieCollectionView: UICollectionView!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    let movieTabBar: MovieTabBar = {
+    
+    lazy var movieTabBar: MovieTabBar = {
         let tabBar = MovieTabBar()
         tabBar.translatesAutoresizingMaskIntoConstraints = false
+        tabBar.movieCollectionViewController = self
         return tabBar
     }()
     
@@ -44,36 +47,41 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         moviesCollectionView.delegate = self
         self.scrollView.delegate = self
         
-//        movieCollectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-//        movieCollectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+//        moviesCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+//        moviesCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         setupCollectionView()
         setupMovieTabBar()
     }
     
+    func scrollToMenuIndex(menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        moviesCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
     func setupCollectionView() {
-        self.view.addSubview(self.moviesCollectionView)
+        self.contentView.addSubview(self.moviesCollectionView)
         self.setupCollectionViewConstraints()
     }
     
     func setupCollectionViewConstraints() {
         NSLayoutConstraint.activate([
-            moviesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            moviesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            moviesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            moviesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            moviesCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0), //-87
+            moviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            moviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            moviesCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     func setupMovieTabBar() {
-        self.view.addSubview(movieTabBar)
+        self.contentView.addSubview(movieTabBar)
         setupMovieTabBarConstraints()
     }
     
     func setupMovieTabBarConstraints() {
         NSLayoutConstraint.activate([
-            movieTabBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            movieTabBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            movieTabBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            movieTabBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            movieTabBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            movieTabBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 //            movieTabBar.bottomAnchor.constraint(equalTo: movieCollectionView.topAnchor, constant: 0)
             movieTabBar.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -104,6 +112,10 @@ extension MovieCollectionViewController : UICollectionViewDelegateFlowLayout {
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        movieTabBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 5
     }
 }
 

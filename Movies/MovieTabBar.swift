@@ -18,11 +18,28 @@ class MovieTabBar: UIView {
         return collectionView
     }()
     var tabSelections = ["Popular", "Now Playing", "Latest", "Top Rated", "Upcoming"]
+    var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
+    var movieCollectionViewController: MovieCollectionViewController?
+    
+    func setupHorizontalBar() {
+        let horizontalBarView = UIView()
+        horizontalBarView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(horizontalBarView)
+        
+        horizontalBarLeftAnchorConstraint = horizontalBarView.leftAnchor.constraint(equalTo: self.leftAnchor)
+        horizontalBarLeftAnchorConstraint?.isActive = true
+        
+        horizontalBarView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        horizontalBarView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1/4).isActive = true
+        horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: "MenuCell")
         setupView()
+        setupHorizontalBar()
         backgroundColor = UIColor.gray
     }
     
@@ -61,8 +78,12 @@ extension MovieTabBar : UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
-    
-    
+}
+
+extension MovieTabBar : UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        movieCollectionViewController?.scrollToMenuIndex(menuIndex: indexPath.item)
+    }
 }
 
 extension MovieTabBar: UICollectionViewDelegateFlowLayout {
