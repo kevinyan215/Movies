@@ -13,6 +13,7 @@ class MovieTabBar: UIView {
     lazy var menuTabsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -55,17 +56,13 @@ class MovieTabBar: UIView {
     }
     
     func setupConstraints() {
-//        guard let superView = superview else {return}
         
-//        NSLayoutConstraint.activate([
-//            menuTabsCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-//            menuTabsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-//            menuTabsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-//            menuTabsCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-//        ])
-        
-        addConstraintsWithFormat("H:|[v0]|", views: menuTabsCollectionView)
-        addConstraintsWithFormat("V:|[v0]|", views: menuTabsCollectionView)
+        NSLayoutConstraint.activate([
+            menuTabsCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            menuTabsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            menuTabsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            menuTabsCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
 }
 

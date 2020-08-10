@@ -27,6 +27,7 @@ class MenuCell: BaseCell {
     
     let label: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.rgb(red: 91, green: 14, blue: 13)
         return label
     }()
@@ -47,8 +48,10 @@ class MenuCell: BaseCell {
         super.setupViews()
         
         addSubview(label)
-        addConstraintsWithFormat("H:[v0(75)]", views: label)
-        addConstraintsWithFormat("V:[v0(75)]", views: label)
+        NSLayoutConstraint.activate([
+            label.widthAnchor.constraint(equalToConstant: 75),
+            label.heightAnchor.constraint(equalToConstant: 75)
+        ])
         
         addConstraint(NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
