@@ -20,7 +20,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     lazy var moviesCollectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
-        collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundColor = UIColor.gray
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 //        collectionView.contentInsetAdjustmentBehavior = .never
 //        collectionView.contentInset = UIEdgeInsets(top: -20,left: 0,bottom: 0,right: 0)
@@ -64,7 +64,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     func setupCollectionViewConstraints() {
         NSLayoutConstraint.activate([
-            moviesCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0), //-87
+            moviesCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             moviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             moviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             moviesCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
