@@ -40,7 +40,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         // Do any additional setup after loading the view, typically from a nib.
         
         self.navigationItem.title = movieTabBar.tabSelections[0]
-        UINavigationBar.appearance().barTintColor = UIColor.gray
+//        UINavigationBar.appearance().barTintColor = UIColor.gray
         moviesCollectionView.register(MovieTabBarCell.self, forCellWithReuseIdentifier: "MovieTabBarCell")
         moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
