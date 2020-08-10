@@ -49,7 +49,7 @@ class MenuCell: BaseCell {
         
         addSubview(label)
         NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalToConstant: 75),
+            label.widthAnchor.constraint(equalToConstant: 90),
             label.heightAnchor.constraint(equalToConstant: 75),
             label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: self.centerYAnchor)

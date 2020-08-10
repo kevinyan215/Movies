@@ -18,7 +18,7 @@ class MovieTabBar: UIView {
         collectionView.delegate = self
         return collectionView
     }()
-    var tabSelections = ["Popular", "Now Playing", "Latest", "Top Rated", "Upcoming"]
+    var tabSelections = ["Popular", "Latest", "Upcoming"] //["Popular", "Latest", "Now Playing", "Top Rated", "Upcoming"] 
     var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
     var movieCollectionViewController: MovieCollectionViewController?
     
