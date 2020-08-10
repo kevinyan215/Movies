@@ -14,6 +14,7 @@ class MovieTabBar: UIView {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = UIColor.gray
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -73,7 +74,7 @@ extension MovieTabBar : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuCell", for: indexPath) as? MenuCell {
-            cell.backgroundColor = UIColor.blue
+//            cell.backgroundColor = UIColor.blue
             cell.label.text = tabSelections[indexPath.row]
             return cell
         }
