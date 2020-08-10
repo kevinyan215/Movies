@@ -10,6 +10,8 @@ import UIKit
 
 class MovieCollectionViewController: UIViewController, UICollectionViewDataSource {
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -20,14 +22,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        collectionView.contentInsetAdjustmentBehavior = .never
+//        collectionView.contentInset = UIEdgeInsets(top: -20,left: 0,bottom: 0,right: 0)
         collectionView.isPagingEnabled = true
         return collectionView
     }()
-    
-    var tabSelections = ["Popular", "Now Playing"]
-//    @IBOutlet weak var movieCollectionView: UICollectionView!
-    
-    @IBOutlet weak var scrollView: UIScrollView!
     
     lazy var movieTabBar: MovieTabBar = {
         let tabBar = MovieTabBar()
@@ -40,7 +39,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.navigationItem.title = tabSelections[0]
+        self.navigationItem.title = movieTabBar.tabSelections[0]
         UINavigationBar.appearance().barTintColor = UIColor.gray
         moviesCollectionView.register(MovieTabBarCell.self, forCellWithReuseIdentifier: "MovieTabBarCell")
         moviesCollectionView.dataSource = self
@@ -82,7 +81,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
             movieTabBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             movieTabBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             movieTabBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            movieTabBar.bottomAnchor.constraint(equalTo: movieCollectionView.topAnchor, constant: 0)
             movieTabBar.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
@@ -90,7 +88,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
 
 extension MovieCollectionViewController {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tabSelections.count
+        return movieTabBar.tabSelections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,7 +113,18 @@ extension MovieCollectionViewController : UICollectionViewDelegateFlowLayout {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        movieTabBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 5
+        movieTabBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / CGFloat(movieTabBar.tabSelections.count)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let index = Int(targetContentOffset.pointee.x / view.frame.width)
+        let indexPath = IndexPath(item: index, section: 0)
+        movieTabBar.menuTabsCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        setTitleForIndex(index: index)
+    }
+    
+    func setTitleForIndex(index: Int) {
+        navigationItem.title = "\(movieTabBar.tabSelections[index])"
     }
 }
 

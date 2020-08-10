@@ -10,7 +10,7 @@ import UIKit
 
 class MovieTabBar: UIView {
     
-    lazy var collectionView: UICollectionView = {
+    lazy var menuTabsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
@@ -31,16 +31,18 @@ class MovieTabBar: UIView {
         horizontalBarLeftAnchorConstraint?.isActive = true
         
         horizontalBarView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        horizontalBarView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1/4).isActive = true
+        horizontalBarView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1/CGFloat(tabSelections.count)).isActive = true
         horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        collectionView.register(MenuCell.self, forCellWithReuseIdentifier: "MenuCell")
+        menuTabsCollectionView.register(MenuCell.self, forCellWithReuseIdentifier: "MenuCell")
         setupView()
         setupHorizontalBar()
-        backgroundColor = UIColor.gray
+
+        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        menuTabsCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .bottom)
     }
     
     required init?(coder aDecoder: NSCoder){
@@ -48,20 +50,22 @@ class MovieTabBar: UIView {
     }
     
     func setupView() {
-        self.addSubview(collectionView)
+        self.addSubview(menuTabsCollectionView)
         setupConstraints()
     }
     
     func setupConstraints() {
+//        guard let superView = superview else {return}
+        
 //        NSLayoutConstraint.activate([
-//            collectionView.topAnchor.constraint(equalTo: self.topAnchor),
-//            collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//            menuTabsCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+//            menuTabsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+//            menuTabsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+//            menuTabsCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
 //        ])
         
-        addConstraintsWithFormat("H:|[v0]|", views: collectionView)
-        addConstraintsWithFormat("V:|[v0]|", views: collectionView)
+        addConstraintsWithFormat("H:|[v0]|", views: menuTabsCollectionView)
+        addConstraintsWithFormat("V:|[v0]|", views: menuTabsCollectionView)
     }
 }
 
@@ -88,78 +92,10 @@ extension MovieTabBar : UICollectionViewDelegate {
 
 extension MovieTabBar: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 5, height: frame.height)
+        return CGSize(width: frame.width / CGFloat(tabSelections.count), height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
-    }
-}
- 
-class MenuCell: BaseCell {
-    
-    let label: UILabel = {
-        let label = UILabel()
-        label.tintColor = UIColor.rgb(red: 91, green: 14, blue: 13)
-        return label
-    }()
-    
-    override var isHighlighted: Bool {
-        didSet {
-            label.tintColor = isHighlighted ? UIColor.white : UIColor.rgb(red: 91, green: 14, blue: 13)
-        }
-    }
-    
-    override var isSelected: Bool {
-        didSet {
-            label.tintColor = isSelected ? UIColor.white : UIColor.rgb(red: 91, green: 14, blue: 13)
-        }
-    }
-    
-    override func setupViews() {
-        super.setupViews()
-        
-        addSubview(label)
-        addConstraintsWithFormat("H:[v0(75)]", views: label)
-        addConstraintsWithFormat("V:[v0(75)]", views: label)
-        
-        addConstraint(NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-    }
-    
-}
-
-class BaseCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    func setupViews() {
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-extension UIColor {
-    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
-    }
-}
-
-extension UIView {
-    func addConstraintsWithFormat(_ format: String, views: UIView...) {
-        var viewsDictionary = [String: UIView]()
-        for (index, view) in views.enumerated() {
-            let key = "v\(index)"
-            view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDictionary[key] = view
-        }
-        
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
     }
 }
