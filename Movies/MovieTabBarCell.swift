@@ -100,6 +100,7 @@ extension MovieTabBarCell : UICollectionViewDataSource {
                 let poster_image = UIImage(data: data) {
                     cell.movieImage.image = poster_image
             }
+            cell.ratingView.configureViewFor(voteAverage: movies[indexPath.item].vote_average ?? 0.0)
             return cell
         } else {
             return UICollectionViewCell()
