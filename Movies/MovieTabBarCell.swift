@@ -65,10 +65,10 @@ class MovieTabBarCell : UICollectionViewCell {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            moviesCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 150),
-            moviesCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            moviesCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            moviesCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            moviesCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            moviesCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            moviesCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            moviesCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 
         ])
     }
