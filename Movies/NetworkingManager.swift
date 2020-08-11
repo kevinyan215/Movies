@@ -16,7 +16,9 @@ class NetworkingManager {
     static let shared = NetworkingManager()
     var pageNumber = 1
     var nowPlayingMoviesPageNumber = 1
-
+    var upcomingMoviesPageNumber = 1
+    var topRatedMoviesPageNumber = 1
+    
     func getRequest(urlRequest: URLRequest, success: @escaping success, failure: @escaping failure) {
         let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
             if let error = error {
@@ -62,6 +64,46 @@ class NetworkingManager {
                     do {
                         let response = try JSONDecoder().decode(MovieList.self, from: data)
                         self.nowPlayingMoviesPageNumber += 1
+                        completion(response)
+                    } catch {
+                        print(error)
+                    }
+                }
+            }, failure: {
+                result in print(result)
+            })
+        }
+    }
+    
+    func getUpcomingMovies(completion: @escaping (MovieList?) -> Void) {
+        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(upcomingMoviesPageNumber) + region + USRegion){
+            let urlRequest = URLRequest(url: url)
+            self.getRequest(urlRequest: urlRequest, success: {
+                data in
+                if let data = data {
+                    do {
+                        let response = try JSONDecoder().decode(MovieList.self, from: data)
+                        self.upcomingMoviesPageNumber += 1
+                        completion(response)
+                    } catch {
+                        print(error)
+                    }
+                }
+            }, failure: {
+                result in print(result)
+            })
+        }
+    }
+    
+    func getTopRated(completion: @escaping (MovieList?) -> Void) {
+        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(topRatedMoviesPageNumber) + region + USRegion){
+            let urlRequest = URLRequest(url: url)
+            self.getRequest(urlRequest: urlRequest, success: {
+                data in
+                if let data = data {
+                    do {
+                        let response = try JSONDecoder().decode(MovieList.self, from: data)
+                        self.topRatedMoviesPageNumber += 1
                         completion(response)
                     } catch {
                         print(error)
