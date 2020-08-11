@@ -12,12 +12,10 @@ protocol MovieTabBarCellDelegate : class {
     func didTapMovieTabBarCellWith(movieDetail: MovieDetail?)
 }
 
-class MovieTabBarCell : UICollectionViewCell {
+class MovieTabBarCell : BaseCell {
     weak var delegate: MovieTabBarCellDelegate?
-//    var dict: [Int:[MovieDetail]] = [:]
     var tabSectionSelected: Int = 0
-    var popularMovies:[MovieDetail] = []
-    var nowPlayingMovies: [MovieDetail] = []
+    var movies:[MovieDetail] = []
     var firstTimePopularMovieCall = true
     var firstTimeNowPlayingMovieCall = true
 
@@ -40,26 +38,41 @@ class MovieTabBarCell : UICollectionViewCell {
         return collectionView
     }()
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+    func fetchMovies() {
+        
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupView()
-//        fatalError("init(coder:) has not been implemented")
+    lazy var fetchMovieClosure: (MovieList?) -> Void = {
+        response in
+        guard let response = response else { return }
+        for movie in response.results {
+            if let movie = movie, let movieId = movie.id {
+                self.networkManager.getMovieDetailAt(movieId, completion:  {
+                    movieResponse in
+                    guard var movieResponse = movieResponse else {return}
+                    self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                        data in
+                        movieResponse.poster_image = data
+                        self.movies.append(movieResponse)
+                        DispatchQueue.main.async {
+                            self.moviesCollectionView.reloadData()
+                        }
+                        
+                    })
+
+                })
+            }
+        }
     }
-    
-    func setupView() {
+    override func setupViews() {
+        super.setupViews()
+        self.fetchMovies()
+
         self.addSubview(moviesCollectionView)
         moviesCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
         self.moviesCollectionView.dataSource = self
         self.moviesCollectionView.delegate = self
         
-//        dict[0] = popularMovies
-//        dict[1] = nowPlayingMovies
         self.setupConstraints()
     }
 
@@ -72,88 +85,18 @@ class MovieTabBarCell : UICollectionViewCell {
 
         ])
     }
-    
-    func getNowPlayingMovies() {
-        networkManager.getNowPlayingMovies(completion: {
-            response in
-            guard let response = response else { return }
-            for movie in response.results {
-                if let movie = movie, let movieId = movie.id {
-                    self.networkManager.getMovieDetailAt(movieId, completion:  {
-                        movieResponse in
-                        guard var movieResponse = movieResponse else {return}
-                        self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
-                            data in
-                            movieResponse.poster_image = data
-//                            self.dict[1]?.append(movieResponse)
-                            self.nowPlayingMovies.append(movieResponse)
-                            DispatchQueue.main.async {
-                                self.moviesCollectionView.reloadData()
-                            }
-                            
-                        })
-
-                    })
-                }
-            }
-        })
-    }
-    func getPopularMovies() {
-        networkManager.getPopularMovies(completion: {
-            response in
-            guard let response = response else { return }
-            for movie in response.results {
-                if let movie = movie, let movieId = movie.id {
-                    self.networkManager.getMovieDetailAt(movieId, completion:  {
-                        movieResponse in
-                        guard var movieResponse = movieResponse else {return}
-                        self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
-                            data in
-                            movieResponse.poster_image = data
-                            self.popularMovies.append(movieResponse)
-//                            self.dict[0]?.append(movieResponse)
-                            DispatchQueue.main.async {
-                                self.moviesCollectionView.reloadData()
-                            }
-                            
-                        })
-
-                    })
-                }
-            }
-        })
-    }
 }
 
 
 extension MovieTabBarCell : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if tabSectionSelected == 0 && firstTimePopularMovieCall {
-            self.getPopularMovies()
-            firstTimePopularMovieCall = false
-        } else if tabSectionSelected == 1 && firstTimeNowPlayingMovieCall {
-            self.getNowPlayingMovies()
-            firstTimeNowPlayingMovieCall = false
-        }
-        if tabSectionSelected == 0 {
-            return popularMovies.count
-        } else if tabSectionSelected == 1 {
-            return nowPlayingMovies.count
-        }
-        return 0
-//        return dict[tabSectionSelected]?.count ?? 0
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
             cell.movieImage.image = nil
-            var movieArray:[MovieDetail] = []
-            if tabSectionSelected == 0 {
-                movieArray = popularMovies
-            } else if tabSectionSelected == 1 {
-                movieArray = nowPlayingMovies
-            }
-            if let data = movieArray[indexPath.row].poster_image,
+            if let data = movies[indexPath.item].poster_image,
                 let poster_image = UIImage(data: data) {
                     cell.movieImage.image = poster_image
             }
@@ -166,30 +109,13 @@ extension MovieTabBarCell : UICollectionViewDataSource {
 
 extension MovieTabBarCell :UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        delegate?.didTapMovieTabBarCellWith(movieDetail: dict[tabSectionSelected]?[indexPath.row])
-        if tabSectionSelected == 0  {
-            delegate?.didTapMovieTabBarCellWith(movieDetail: popularMovies[indexPath.row])
-        } else if tabSectionSelected == 1  {
-            delegate?.didTapMovieTabBarCellWith(movieDetail: nowPlayingMovies[indexPath.row])
-        }
+        delegate?.didTapMovieTabBarCellWith(movieDetail: movies[indexPath.item])
+
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if let tab = dict[tabSectionSelected] {
-//            if tabSectionSelected == 0 //&& indexPath.row == tab.count - 1
-//            {
-//                self.getPopularMovies()
-//            }
-//            if tabSectionSelected == 1 //&& indexPath.row == tab.count - 1
-//            {
-//                self.getNowPlayingMovies()
-//            }
-//        }
-        print(tabSectionSelected)
-        if tabSectionSelected == 0 && indexPath.row == popularMovies.count - 1 {
-            self.getPopularMovies()
-        } else if tabSectionSelected == 1 && indexPath.row == nowPlayingMovies.count - 1 {
-            self.getNowPlayingMovies()
+        if indexPath.item == movies.count - 1 {
+            self.fetchMovies()
         }
     }
 }

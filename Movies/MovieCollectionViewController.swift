@@ -26,6 +26,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         collectionView.contentInset = UIEdgeInsets(top: 200,left: 0,bottom: 0,right: 0)
 //        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50,left: 0,bottom: 0,right: 0)
         collectionView.isPagingEnabled = true
+        collectionView.register(PopularMoviesCell.self, forCellWithReuseIdentifier: PopularMoviesCellId)
+        collectionView.register(NowPlayingMoviesCell.self, forCellWithReuseIdentifier: NowPlayingMoviesCellId)
+        collectionView.register(TopRatedMoviesCell.self, forCellWithReuseIdentifier: TopRatedMoviesCellId)
+        collectionView.register(UpcomingMoviesCell.self, forCellWithReuseIdentifier: UpcomingMoviesCellId)
+        collectionView.register(MovieTabBarCell.self, forCellWithReuseIdentifier: MovieTabBarCellId)
         return collectionView
     }()
     
@@ -42,7 +47,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         self.navigationItem.title = movieTabBar.tabSelections[0]
 //        UINavigationBar.appearance().barTintColor = UIColor.gray
-        moviesCollectionView.register(MovieTabBarCell.self, forCellWithReuseIdentifier: "MovieTabBarCell")
         moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
         self.scrollView.delegate = self
@@ -91,9 +95,21 @@ extension MovieCollectionViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieTabBarCell", for: indexPath) as? MovieTabBarCell {
+        let identifier: String
+        if indexPath.item == 0 {
+            identifier = PopularMoviesCellId
+        } else if indexPath.item == 1 {
+            identifier = NowPlayingMoviesCellId
+        } else if indexPath.item == 2  {
+            identifier = TopRatedMoviesCellId
+        } else if indexPath.item == 3 {
+            identifier = UpcomingMoviesCellId
+        }
+        else {
+            identifier =  MovieTabBarCellId
+        }
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? MovieTabBarCell {
             cell.delegate = self
-            cell.tabSectionSelected = indexPath.row
             return cell
         } else {
             return UICollectionViewCell()

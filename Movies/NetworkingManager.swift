@@ -76,7 +76,7 @@ class NetworkingManager {
     }
     
     func getUpcomingMovies(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(upcomingMoviesPageNumber) + region + USRegion){
+        if let url = URL(string: movieBaseUrl + upcomingQuery + APIKey + "&page=" + String(upcomingMoviesPageNumber) + region + USRegion){
             let urlRequest = URLRequest(url: url)
             self.getRequest(urlRequest: urlRequest, success: {
                 data in
@@ -96,7 +96,7 @@ class NetworkingManager {
     }
     
     func getTopRated(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(topRatedMoviesPageNumber) + region + USRegion){
+        if let url = URL(string: movieBaseUrl + topRatedQuery + APIKey + "&page=" + String(topRatedMoviesPageNumber) + region + USRegion){
             let urlRequest = URLRequest(url: url)
             self.getRequest(urlRequest: urlRequest, success: {
                 data in
