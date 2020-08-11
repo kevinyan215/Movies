@@ -34,7 +34,7 @@ class NetworkingManager {
     }
     
      func getPopularMovies(completion: @escaping (MovieList?) -> Void) {
-            if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber) + USRegion) {
+            if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) {
                 let urlRequest = URLRequest(url: url)
                 self.getRequest(urlRequest: urlRequest, success: {
                     data in
@@ -43,8 +43,6 @@ class NetworkingManager {
                             let response = try JSONDecoder().decode(MovieList.self, from: data)
                             self.pageNumber += 1
                             completion(response)
-                            
-                            
                         } catch {
                             print(error)
                         }
@@ -56,7 +54,7 @@ class NetworkingManager {
         }
     
     func getNowPlayingMovies(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(nowPlayingMoviesPageNumber) + USRegion){
+        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(nowPlayingMoviesPageNumber) + region + USRegion){
             let urlRequest = URLRequest(url: url)
             self.getRequest(urlRequest: urlRequest, success: {
                 data in
