@@ -99,9 +99,9 @@ extension MovieCollectionViewController {
         if indexPath.item == 0 {
             identifier = PopularMoviesCellId
         } else if indexPath.item == 1 {
-            identifier = NowPlayingMoviesCellId
-        } else if indexPath.item == 2  {
             identifier = TopRatedMoviesCellId
+        } else if indexPath.item == 2  {
+            identifier = NowPlayingMoviesCellId
         } else if indexPath.item == 3 {
             identifier = UpcomingMoviesCellId
         }
