@@ -46,10 +46,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         moviesCollectionView.delegate = self
         self.scrollView.delegate = self
         
-//        moviesCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-//        moviesCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        setupCollectionView()
+        moviesCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        moviesCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         setupMovieTabBar()
+        setupCollectionView()
     }
     
     func scrollToMenuIndex(menuIndex: Int) {
@@ -64,7 +64,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     func setupCollectionViewConstraints() {
         NSLayoutConstraint.activate([
-            moviesCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            moviesCollectionView.topAnchor.constraint(equalTo: movieTabBar.bottomAnchor, constant: 0),
             moviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             moviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             moviesCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
