@@ -22,8 +22,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = UIColor.gray
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        collectionView.contentInsetAdjustmentBehavior = .never
-//        collectionView.contentInset = UIEdgeInsets(top: -20,left: 0,bottom: 0,right: 0)
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.contentInset = UIEdgeInsets(top: 200,left: 0,bottom: 0,right: 0)
+//        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50,left: 0,bottom: 0,right: 0)
         collectionView.isPagingEnabled = true
         return collectionView
     }()
@@ -45,9 +46,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
         self.scrollView.delegate = self
-        
-        moviesCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        moviesCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+    
         setupMovieTabBar()
         setupCollectionView()
     }
