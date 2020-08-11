@@ -12,9 +12,10 @@ let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500"
 let theMovieDBBaseURL = "https://api.themoviedb.org/3/"
 let movieBaseUrl = theMovieDBBaseURL + "movie/"
 let popularMovieQuery = "popular?"
+let nowPlayingQuery = "now_playing?"
 let searchQuery = "search/"
 let query = "&query="
-
+let USRegion = "&region=US"
 private let multiSearchBaseUrl = theMovieDBBaseURL + searchQuery + "multi?"
 private let movieSearchBaseUrl = theMovieDBBaseURL + searchQuery + "movie?"
 

@@ -34,7 +34,7 @@ class NetworkingManager {
     }
     
      func getPopularMovies(completion: @escaping (MovieList?) -> Void) {
-            if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber)) {
+            if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber) + USRegion) {
                 let urlRequest = URLRequest(url: url)
                 self.getRequest(urlRequest: urlRequest, success: {
                     data in
@@ -56,7 +56,7 @@ class NetworkingManager {
         }
     
     func getNowPlayingMovies(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=608b8e34a89c818571631096e34773a3&language=en-US&page=\(nowPlayingMoviesPageNumber)&region=US") {
+        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(nowPlayingMoviesPageNumber) + USRegion){
             let urlRequest = URLRequest(url: url)
             self.getRequest(urlRequest: urlRequest, success: {
                 data in
