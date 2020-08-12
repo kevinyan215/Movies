@@ -16,6 +16,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    let ratingView : RatingView = {
+        let ratingView = RatingView()
+        ratingView.translatesAutoresizingMaskIntoConstraints = false
+        return ratingView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -29,6 +35,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     func setupView() {
         self.addSubview(movieImage)
+        self.addSubview(ratingView)
         setupConstraints()
     }
     
@@ -38,6 +45,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
             movieImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             movieImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             movieImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            ratingView.topAnchor.constraint(equalTo: movieImage.topAnchor),
+            ratingView.trailingAnchor.constraint(equalTo: movieImage.trailingAnchor),
+            ratingView.heightAnchor.constraint(equalToConstant: 50),
+            ratingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
     

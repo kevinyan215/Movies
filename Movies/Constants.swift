@@ -7,7 +7,7 @@
 //
 
 import Foundation
-let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500"
+let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w780"
 
 let theMovieDBBaseURL = "https://api.themoviedb.org/3/"
 let movieBaseUrl = theMovieDBBaseURL + "movie/"
