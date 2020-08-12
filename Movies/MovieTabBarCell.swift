@@ -26,7 +26,7 @@ class MovieTabBarCell : BaseCell {
         let numberOfCellsPerRow: CGFloat = 2
         let horizontalSpacing = layout.scrollDirection == .vertical ? layout.minimumInteritemSpacing : layout.minimumLineSpacing
         let cellWidth = (self.frame.width - max(0, numberOfCellsPerRow - 1)*horizontalSpacing)/numberOfCellsPerRow
-        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth + 40)
         return layout
     }()
     
@@ -35,6 +35,9 @@ class MovieTabBarCell : BaseCell {
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -69,10 +72,6 @@ class MovieTabBarCell : BaseCell {
         self.fetchMovies()
 
         self.addSubview(moviesCollectionView)
-        moviesCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
-        self.moviesCollectionView.dataSource = self
-        self.moviesCollectionView.delegate = self
-        
         self.setupConstraints()
     }
 
