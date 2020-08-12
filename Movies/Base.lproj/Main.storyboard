@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wzr-yh-a2V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wzr-yh-a2V">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -33,40 +33,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NUQ-DH-vh5">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NUQ-DH-vh5">
                                 <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yyC-9h-N9b" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
-                                        <subviews>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4sv-Xf-crL">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ijw-wn-KO2">
-                                                    <size key="itemSize" width="50" height="50"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xK3-ih-5wT">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </view>
-                                                    </collectionViewCell>
-                                                </cells>
-                                            </collectionView>
-                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="4sv-Xf-crL" secondAttribute="trailing" id="5O5-1p-XSy"/>
-                                            <constraint firstAttribute="bottom" secondItem="4sv-Xf-crL" secondAttribute="bottom" id="9Sr-Gy-RSB"/>
-                                            <constraint firstItem="4sv-Xf-crL" firstAttribute="leading" secondItem="yyC-9h-N9b" secondAttribute="leading" id="VSF-2v-HF9"/>
-                                            <constraint firstItem="4sv-Xf-crL" firstAttribute="top" secondItem="yyC-9h-N9b" secondAttribute="top" id="nze-2g-NHV"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -79,7 +51,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NUQ-DH-vh5" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="9KG-7N-w5A"/>
                             <constraint firstItem="NUQ-DH-vh5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="N4m-bz-g7N"/>
@@ -91,7 +63,7 @@
                     <tabBarItem key="tabBarItem" title="Item" id="cA5-au-xd4"/>
                     <navigationItem key="navigationItem" title="Discover" id="xKK-K5-kVP"/>
                     <connections>
-                        <outlet property="movieCollectionView" destination="4sv-Xf-crL" id="F3V-O2-vAr"/>
+                        <outlet property="contentView" destination="yyC-9h-N9b" id="Gql-4p-8HR"/>
                         <outlet property="scrollView" destination="NUQ-DH-vh5" id="z9R-HE-Cgs"/>
                         <outlet property="searchDisplayController" destination="1Ty-ZY-HOn" id="N9y-Ar-LhA"/>
                     </connections>

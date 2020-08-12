@@ -10,7 +10,36 @@ import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var movieImage: UIImageView!
+    let movieImage : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupView()
+//        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView() {
+        self.addSubview(movieImage)
+        setupConstraints()
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            movieImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            movieImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            movieImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            movieImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+        ])
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
