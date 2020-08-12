@@ -31,6 +31,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         collectionView.register(TopRatedMoviesCell.self, forCellWithReuseIdentifier: TopRatedMoviesCellId)
         collectionView.register(UpcomingMoviesCell.self, forCellWithReuseIdentifier: UpcomingMoviesCellId)
         collectionView.register(MovieTabBarCell.self, forCellWithReuseIdentifier: MovieTabBarCellId)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -47,9 +49,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         self.navigationItem.title = movieTabBar.tabSelections[0]
 //        UINavigationBar.appearance().barTintColor = UIColor.gray
-        moviesCollectionView.dataSource = self
-        moviesCollectionView.delegate = self
-        self.scrollView.delegate = self
+
+//        self.scrollView.delegate = self
     
         setupMovieTabBar()
         setupCollectionView()
@@ -116,8 +117,6 @@ extension MovieCollectionViewController {
         }
     }
 }
-
-
 
 extension MovieCollectionViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
