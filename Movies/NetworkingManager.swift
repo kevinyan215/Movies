@@ -52,6 +52,41 @@ class NetworkingManager {
         dataTask.resume()
     }
     
+    func request<T: Decodable>(with request: URLRequest,
+                                    decodingType: T.Type,
+                                    completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        let dataTask = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let error = error {
+                completion(data,error)
+            }
+            else {
+                if let response = response as? HTTPURLResponse {
+                    if response.statusCode == 200 {
+                        if let data = data {
+                            do {
+                                let response = try JSONDecoder().decode(decodingType.self, from: data)
+                                completion(response,error)
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        dataTask.resume()
+    }
+    
+    func getWatchListFor(sessionId: String, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue),
+                          URLQueryItem(name: "language", value: "en-US"),
+                          URLQueryItem(name: "session_id", value: sessionId)]
+        var urlComps = URLComponents(string: "https://api.themoviedb.org/3/account/%7Baccount_id%7D/watchlist/movies?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
+    }
+    
     func newSession(requestToken: String, completion: @escaping(String) -> Void) {
         let queryItems = [URLQueryItem(name: "request_token", value: requestToken), URLQueryItem(name: "api_key", value: APIKeyValue)]
         var urlComps = URLComponents(string: newSessionUrl)
@@ -121,105 +156,33 @@ class NetworkingManager {
         }
     }
     
-     func getPopularMovies(completion: @escaping (MovieList?) -> Void) {
-            if let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) {
-                let urlRequest = URLRequest(url: url)
-                self.request(urlRequest: urlRequest, success: {
-                    data in
-                    if let data = data {
-                        do {
-                            let response = try JSONDecoder().decode(MovieList.self, from: data)
-                            self.pageNumber += 1
-                            completion(response)
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }, failure: {
-                    result in print(result)
-                })
-            }
+    func getPopularMoviesWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        guard let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
         }
     
-    func getNowPlayingMovies(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(nowPlayingMoviesPageNumber) + region + USRegion){
-            let urlRequest = URLRequest(url: url)
-            self.request(urlRequest: urlRequest, success: {
-                data in
-                if let data = data {
-                    do {
-                        let response = try JSONDecoder().decode(MovieList.self, from: data)
-                        self.nowPlayingMoviesPageNumber += 1
-                        completion(response)
-                    } catch {
-                        print(error)
-                    }
-                }
-            }, failure: {
-                result in print(result)
-            })
-        }
+    func getNowPlayingMoviesWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        guard let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
-    func getUpcomingMovies(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: movieBaseUrl + upcomingQuery + APIKey + "&page=" + String(upcomingMoviesPageNumber) + region + USRegion){
-            let urlRequest = URLRequest(url: url)
-            self.request(urlRequest: urlRequest, success: {
-                data in
-                if let data = data {
-                    do {
-                        let response = try JSONDecoder().decode(MovieList.self, from: data)
-                        self.upcomingMoviesPageNumber += 1
-                        completion(response)
-                    } catch {
-                        print(error)
-                    }
-                }
-            }, failure: {
-                result in print(result)
-            })
-        }
+    
+    func getUpcomingMoviesWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        guard let url = URL(string: movieBaseUrl + upcomingQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
+
     }
     
-    func getTopRated(completion: @escaping (MovieList?) -> Void) {
-        if let url = URL(string: movieBaseUrl + topRatedQuery + APIKey + "&page=" + String(topRatedMoviesPageNumber) + region + USRegion){
-            let urlRequest = URLRequest(url: url)
-            self.request(urlRequest: urlRequest, success: {
-                data in
-                if let data = data {
-                    do {
-                        let response = try JSONDecoder().decode(MovieList.self, from: data)
-                        self.topRatedMoviesPageNumber += 1
-                        completion(response)
-                    } catch {
-                        print(error)
-                    }
-                }
-            }, failure: {
-                result in print(result)
-            })
-        }
+    func getTopRatedWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        guard let url = URL(string: movieBaseUrl + topRatedQuery + APIKey + "&page=" + String(topRatedMoviesPageNumber) + region + USRegion) else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
-    func getMovieDetailAt(_ movieId: Int, completion: @escaping (MovieDetail?) -> Void) {
+    func getMovieDetailAt(_ movieId: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
         let movieIdQuery = "\(movieId)?"
-        if let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images" ) {
-            let urlRequest = URLRequest(url: url)
-            self.request(urlRequest: urlRequest, success: {
-                data in
-                if let data = data {
-                    do {
-                        var movieResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
-                        completion(movieResponse)
-                        
-                    } catch {
-                        print(error)
-                    }
-                }},
-        failure: {
-            results in print(results)
-            })
-        }
+        guard let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images") else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieDetail.self, completionHandler: completion)
+        
     }
     
     func getMoviePosterImagesAt(_ posterPath: String?, completion: @escaping (Data?) -> Void) {

@@ -10,6 +10,7 @@ import UIKit
 
 class PopularMoviesCell : MovieTabBarCell {
     override func fetchMovies() {
-        networkManager.getPopularMovies(completion: fetchMovieClosure)
+        networkManager.getPopularMoviesWith(pageNumber: pageNumber, completionHandler: fetchMovieClosure)
+        super.fetchMovies()
     }
 }

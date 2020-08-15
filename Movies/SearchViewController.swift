@@ -151,9 +151,9 @@ extension SearchViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let searchId = searchResults[indexPath.row]?.id {
-            NetworkingManager.shared.getMovieDetailAt(searchId, completion: {
-                movieDetailResponse in
-                guard var movieDetailResponse = movieDetailResponse else { return }
+            NetworkingManager.shared.getMovieDetailAt(searchId, completionHandler: {
+                movieDetailResponse, error  in
+                guard var movieDetailResponse = movieDetailResponse as? MovieDetail else { return }
                 NetworkingManager.shared.getMoviePosterImagesAt(movieDetailResponse.poster_path, completion: {
                     response in
                     movieDetailResponse.poster_image = response

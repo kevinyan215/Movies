@@ -10,6 +10,7 @@ import UIKit
 
 class TopRatedMoviesCell : MovieTabBarCell {
     override func fetchMovies() {
-        networkManager.getTopRated(completion: fetchMovieClosure)
+        networkManager.getTopRatedWith(pageNumber: pageNumber, completionHandler: fetchMovieClosure)
+        super.fetchMovies()
     }
 }

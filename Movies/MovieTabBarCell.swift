@@ -14,10 +14,8 @@ protocol MovieTabBarCellDelegate : class {
 
 class MovieTabBarCell : BaseCell {
     weak var delegate: MovieTabBarCellDelegate?
-    var tabSectionSelected: Int = 0
     var movies:[MovieDetail] = []
-    var firstTimePopularMovieCall = true
-    var firstTimeNowPlayingMovieCall = true
+    var pageNumber: Int = 1
 
     let networkManager = NetworkingManager.shared
 
@@ -42,17 +40,17 @@ class MovieTabBarCell : BaseCell {
     }()
     
     func fetchMovies() {
-        
+        self.pageNumber += 1
     }
     
-    lazy var fetchMovieClosure: (MovieList?) -> Void = {
-        response in
-        guard let response = response else { return }
+    lazy var fetchMovieClosure: (Decodable?, Error?) -> Void = {
+        response, error in
+        guard let response = response as? MovieList else { return }
         for movie in response.results {
             if let movie = movie, let movieId = movie.id {
-                self.networkManager.getMovieDetailAt(movieId, completion:  {
-                    movieResponse in
-                    guard var movieResponse = movieResponse else {return}
+                self.networkManager.getMovieDetailAt(movieId, completionHandler:  {
+                    movieResponse, error in
+                    guard var movieResponse = movieResponse as? MovieDetail else {return}
                     self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
                         data in
                         movieResponse.poster_image = data
@@ -67,6 +65,7 @@ class MovieTabBarCell : BaseCell {
             }
         }
     }
+    
     override func setupViews() {
         super.setupViews()
         self.fetchMovies()
