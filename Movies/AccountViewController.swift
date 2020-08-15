@@ -24,20 +24,6 @@ class AccountViewController : UIViewController {
         return view
     }()
     
-    let usernameTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = UIColor.yellow
-        return textField
-    }()
-    
-    let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = UIColor.yellow
-        return textField
-    }()
-    
     let loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -77,24 +63,13 @@ class AccountViewController : UIViewController {
     }
     
     func setupView(){
-        view.addSubview(usernameTextField)
-        view.addSubview(passwordTextField)
         view.addSubview(loginButton)
         setupConstraints()
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-//            usernameTextField.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            usernameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            usernameTextField.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            usernameTextField.widthAnchor.constraint(equalToConstant: 300),
-            usernameTextField.heightAnchor.constraint(equalToConstant: 50),
-            passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 10),
-            passwordTextField.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            passwordTextField.widthAnchor.constraint(equalToConstant: 300),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10),
+            loginButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 10),
             loginButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             loginButton.widthAnchor.constraint(equalToConstant: 300),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
