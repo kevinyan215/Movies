@@ -7,10 +7,20 @@
 //
 
 import Foundation
-let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w780"
+
+let APIKeyValue = "608b8e34a89c818571631096e34773a3"
 
 let theMovieDBBaseURL = "https://api.themoviedb.org/3/"
-let movieBaseUrl = theMovieDBBaseURL + "movie/"
+let movieBaseUrl = theMovieDBBaseURL + movie
+let requestNewTokenUrl = theMovieDBBaseURL + authentication + token + new + APIKey
+let validateWithLoginUrl = theMovieDBBaseURL + authentication + token + validateWithLogin
+let newSessionUrl = theMovieDBBaseURL + authentication + session + new
+let authentication = "authentication/"
+let session = "session/"
+let token = "token/"
+let new = "new?"
+let validateWithLogin = "validate_with_login?"
+let movie = "movie/"
 let popularMovieQuery = "popular?"
 let nowPlayingQuery = "now_playing?"
 let upcomingQuery = "upcoming?"
@@ -21,12 +31,12 @@ let region = "&region="
 let USRegion = "US"
 private let multiSearchBaseUrl = theMovieDBBaseURL + searchQuery + "multi?"
 private let movieSearchBaseUrl = theMovieDBBaseURL + searchQuery + "movie?"
+let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w780"
 
 //let castCrewQuery =
 let multiSearchUrl = multiSearchBaseUrl + APIKey
 let movieSearchUrl = movieSearchBaseUrl + APIKey
 let APIKey = "api_key=\(APIKeyValue)"
-let APIKeyValue = "608b8e34a89c818571631096e34773a3"
 let YoutubeWatchUrl = "https://www.youtube.com/embed/"
 
 let movieCollectionViewCellIdentifier = "MovieCollectionViewCellIdentifier"
