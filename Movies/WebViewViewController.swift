@@ -62,7 +62,7 @@ extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
         print("dismissed")
         NetworkingManager.shared.newSession(requestToken: requestToken ?? "", completion: {
             session in
-            UserDefaults.standard.set(session, forKey: "session")
+            UserDefaults.standard.set(session, forKey: sessionIdIdentifier)
         })
     }
 }
