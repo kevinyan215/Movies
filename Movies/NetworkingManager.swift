@@ -52,6 +52,22 @@ class NetworkingManager {
         dataTask.resume()
     }
     
+    func request(urlRequest: URLRequest, completionHandler completion: @escaping (Data?,Error?) -> Void) {
+        let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            if let error = error {
+                completion(data,error)
+            }
+            else {
+                if let response = response as? HTTPURLResponse {
+                    if response.statusCode == 200 {
+                        completion(data, error)
+                    }
+                }
+            }
+        })
+        dataTask.resume()
+    }
+    
     func request<T: Decodable>(with request: URLRequest,
                                     decodingType: T.Type,
                                     completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
@@ -185,19 +201,12 @@ class NetworkingManager {
         
     }
     
-    func getMoviePosterImagesAt(_ posterPath: String?, completion: @escaping (Data?) -> Void) {
+    func getMoviePosterImagesAt(_ posterPath: String?, completion: @escaping (Data?, Error?) -> Void) {
         if let posterPath = posterPath {
             if let posterPathUrl = URL(string: tmdbImageBaseUrl + posterPath) {
-                self.request(urlRequest: URLRequest(url: posterPathUrl), success:{
-                    response in
-                    completion(response)
-                    
-                }, failure:{ response in
-                    print(response)
-                })
+                self.request(urlRequest: URLRequest(url: posterPathUrl), completionHandler: completion)
             }
         }
     }
-    
     
 }

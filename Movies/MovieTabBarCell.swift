@@ -52,7 +52,7 @@ class MovieTabBarCell : BaseCell {
                     movieResponse, error in
                     guard var movieResponse = movieResponse as? MovieDetail else {return}
                     self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
-                        data in
+                        data,error  in
                         movieResponse.poster_image = data
                         self.movies.append(movieResponse)
                         DispatchQueue.main.async {

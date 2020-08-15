@@ -95,7 +95,7 @@ extension SearchViewController : UISearchBarDelegate {
                         }
                         for (index,movieTvShow) in response.results.enumerated() {
                             self.networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
-                                data in
+                                data,error in
                                 response.results[index]?.poster_image = data
                                 self.searchResults = response.results
                                 DispatchQueue.main.async {
@@ -155,7 +155,7 @@ extension SearchViewController : UITableViewDelegate {
                 movieDetailResponse, error  in
                 guard var movieDetailResponse = movieDetailResponse as? MovieDetail else { return }
                 NetworkingManager.shared.getMoviePosterImagesAt(movieDetailResponse.poster_path, completion: {
-                    response in
+                    response,error in
                     movieDetailResponse.poster_image = response
                     
                     DispatchQueue.main.async {
