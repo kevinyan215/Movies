@@ -42,18 +42,6 @@ class AccountViewController : UIViewController {
                 vc.requestToken = token
                 self.navigationController?.present(vc, animated: true, completion: nil)
             }
-      
-//            DispatchQueue.main.async {
-//               self.networkManager.validateWithLogin(username: self.usernameTextField.text ?? "", password: self.passwordTextField.text ?? "", requestToken: token ?? "", completion: {
-//                 token in
-////                 print(data)
-//                self.networkManager.newSession(requestToken: token ?? "", completion: {
-//                    session in
-//                    print(session)
-//                    UserDefaults.standard.set(session, forKey: "session")
-//                })
-//             })
-//            }
      
         })
     }
