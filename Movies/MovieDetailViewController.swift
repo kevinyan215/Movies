@@ -317,7 +317,7 @@ class MovieDetailViewController : UIViewController {
     
         if let movieId = movieDetail?.id, let url = URL(string: movieBaseUrl + "\(movieId)/credits?" + APIKey) {
             let urlRequest = URLRequest(url: url)
-            networkManager.getRequest(urlRequest: urlRequest, success: {
+            networkManager.request(urlRequest: urlRequest, success: {
                 data in
                 if let data = data {
                     do {
@@ -328,7 +328,7 @@ class MovieDetailViewController : UIViewController {
                             for actor in cast {
                                 if let profilePathUrl = actor.profile_path {
                                     if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                        self.networkManager.getRequest(urlRequest: URLRequest(url: url), success: { data in
+                                        self.networkManager.request(urlRequest: URLRequest(url: url), success: { data in
                                             actor.profile_image = data
                                             
                                             DispatchQueue.main.async {
@@ -346,7 +346,7 @@ class MovieDetailViewController : UIViewController {
                                     
                                     if let profilePathUrl = member.profile_path {
                                         if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                            self.networkManager.getRequest(urlRequest: URLRequest(url: url), success: { data in
+                                            self.networkManager.request(urlRequest: URLRequest(url: url), success: { data in
                                                 member.profile_image = data
                                                 
                                                 DispatchQueue.main.async {

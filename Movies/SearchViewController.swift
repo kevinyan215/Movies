@@ -82,7 +82,7 @@ extension SearchViewController : UISearchBarDelegate {
         print(urlString)
         if let url = URL(string: urlString) {
             let urlRequest = URLRequest(url: url)
-            networkManager.getRequest(urlRequest: urlRequest, success: {
+            networkManager.request(urlRequest: urlRequest, success: {
                 data in
                 if let data = data {
                      do {
