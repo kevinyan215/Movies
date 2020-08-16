@@ -11,6 +11,9 @@ import Foundation
 typealias success = (Data?)->Void
 typealias failure = (Error?)->Void
 
+//typealias success = (Decodable?) -> Void
+//typealias failure = (Error?) -> Void
+
 class NetworkingManager {
     
     static let shared = NetworkingManager()
@@ -93,6 +96,32 @@ class NetworkingManager {
         dataTask.resume()
     }
     
+    func request<T: Decodable>(with request: URLRequest,
+                                    decodingType: T.Type,
+                                    success: @escaping (Decodable?) -> Void,
+                                    failure: @escaping (Error?) -> Void) {
+        let dataTask = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let error = error {
+                failure(error)
+            }
+            else {
+                if let response = response as? HTTPURLResponse {
+//                    if response.statusCode == 200 {
+                        if let data = data {
+                            do {
+                                let response = try JSONDecoder().decode(decodingType.self, from: data)
+                                success(response)
+                            } catch {
+                                print(error)
+                            }
+                        }
+//                    }
+                }
+            }
+        })
+        dataTask.resume()
+    }
+    
     func getWatchListFor(sessionId: String, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue),
                           URLQueryItem(name: "language", value: "en-US"),
@@ -103,27 +132,14 @@ class NetworkingManager {
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
-    func newSession(requestToken: String, completion: @escaping(String) -> Void) {
+    func newSession(requestToken: String, success: @escaping(Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
         let queryItems = [URLQueryItem(name: "request_token", value: requestToken), URLQueryItem(name: "api_key", value: APIKeyValue)]
         var urlComps = URLComponents(string: newSessionUrl)
         urlComps?.queryItems = queryItems
         if let url = urlComps?.url {
-            self.request(url: url, success: {
-                data in
-                if let data = data {
-                    
-                    var response: [String:Any]?
-                    do {
-                        response = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]
-                        completion(response?["session_id"] as? String ?? "")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }, failure: {
-                result in print(result)
-            })
+            self.request(with: URLRequest(url: url), decodingType: Session.self, success: success, failure: failure)
         }
+        
     }
     
     func validateWithLogin(username: String, password: String, requestToken: String, completion: @escaping (String?) -> Void) {
@@ -150,25 +166,9 @@ class NetworkingManager {
         }
     }
     
-    func getRequestToken(completion: @escaping (String) -> Void) {
+    func getRequestToken(success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
         if let url = URL(string: requestNewTokenUrl) {
-            self.request(url: url, success: {
-                data in
-                if let data = data {
-                    
-                    var response: [String:Any]?
-                    do {
-                        response = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]
-                    } catch {
-                        print(error)
-                    }
-                    
-                    guard let requestToken = response?["request_token"] as? String else {return}
-                   completion(requestToken)
-                }
-            }, failure: {
-                result in print(result)
-            })
+            self.request(with: URLRequest(url: url), decodingType: RequestToken.self, success: success, failure: failure)
         }
     }
     
