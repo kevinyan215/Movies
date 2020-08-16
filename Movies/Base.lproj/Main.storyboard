@@ -23,12 +23,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4uE-st-NQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1057" y="670"/>
+            <point key="canvasLocation" x="-1300" y="670"/>
         </scene>
         <!--My Movies-->
         <scene sceneID="1Xl-Mj-9ZY">
             <objects>
-                <viewController id="8e2-Tt-EgW" sceneMemberID="viewController">
+                <viewController id="8e2-Tt-EgW" customClass="MyMoviesViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jGD-xg-iNv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,10 +36,11 @@
                         <viewLayoutGuide key="safeArea" id="y0M-Vt-aPF"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="My Movies" id="e9Q-KH-3U4"/>
+                    <navigationItem key="navigationItem" id="bI3-Uo-0H1"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ceb-K5-bPo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-420" y="670"/>
+            <point key="canvasLocation" x="-508" y="1426"/>
         </scene>
         <!--Discover-->
         <scene sceneID="tne-QT-ifu">
@@ -94,7 +95,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-1058" y="1428"/>
+            <point key="canvasLocation" x="-1300" y="1426"/>
         </scene>
         <!--Search-->
         <scene sceneID="3Ut-9U-0q0">
@@ -111,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J3C-J2-8ay" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-114" y="1437"/>
+            <point key="canvasLocation" x="318" y="1425"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hEk-Jo-i5P">
@@ -124,7 +125,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="tSq-DC-5ek" kind="relationship" relationship="viewControllers" id="GIu-vh-CPJ"/>
-                        <segue destination="8e2-Tt-EgW" kind="relationship" relationship="viewControllers" id="B9i-nQ-XUh"/>
+                        <segue destination="WYg-nf-Gvo" kind="relationship" relationship="viewControllers" id="nB6-zG-Cm6"/>
                         <segue destination="npZ-EK-WTY" kind="relationship" relationship="viewControllers" id="Qxr-Tt-fLB"/>
                         <segue destination="EJu-90-1xw" kind="relationship" relationship="viewControllers" id="bUX-HD-NTP"/>
                     </connections>
@@ -148,7 +149,24 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="22H-vO-R4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="996" y="670"/>
+            <point key="canvasLocation" x="1090" y="670"/>
+        </scene>
+        <!--My Movies-->
+        <scene sceneID="16U-8q-DrA">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DI9-dx-1KG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController id="WYg-nf-Gvo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Movies" id="1UX-bq-N1V"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4td-tO-rmd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8e2-Tt-EgW" kind="relationship" relationship="rootViewController" id="sdf-35-G4C"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-508" y="670"/>
         </scene>
         <!--Search-->
         <scene sceneID="2U5-Zj-Vs5">
@@ -165,7 +183,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bjz-cd-Wj8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="670"/>
+            <point key="canvasLocation" x="319" y="670"/>
         </scene>
         <!--Account-->
         <scene sceneID="YdM-bC-yHP">
@@ -182,7 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jC3-TA-Ks8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="918" y="1436"/>
+            <point key="canvasLocation" x="1089" y="1425"/>
         </scene>
     </scenes>
 </document>

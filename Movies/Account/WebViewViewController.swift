@@ -59,10 +59,18 @@ class WebViewViewController : UIViewController, WKNavigationDelegate {
 
 extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("dismissed")
-        NetworkingManager.shared.newSession(requestToken: requestToken ?? "", completion: {
+        newSession()
+    }
+    
+    func newSession() {
+        NetworkingManager.shared.newSession(requestToken: requestToken ?? "", success: {
             session in
-            UserDefaults.standard.set(session, forKey: sessionIdIdentifier)
+            if let session = session as? Session, session.success {
+                UserDefaults.standard.set(session.session_id, forKey: sessionIdIdentifier)
+            }
+        }, failure: {
+            error in
+            print(error)
         })
     }
 }

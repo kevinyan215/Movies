@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class AccountViewController : UIViewController {
+class SignInViewController : UIViewController {
     let networkManager = NetworkingManager()
     
     let scrollView: UIScrollView = {
@@ -35,15 +35,23 @@ class AccountViewController : UIViewController {
     }()
     
     @objc func loginButtonClicked() {
-        networkManager.getRequestToken(completion: {
-            token in
-            DispatchQueue.main.async {
-                let vc = WebViewViewController()
-                vc.requestToken = token
-                self.navigationController?.present(vc, animated: true, completion: nil)
-            }
-     
-        })
+        getRequestToken()
+    }
+    
+    func getRequestToken() {
+        networkManager.getRequestToken(success: {
+           requestToken in
+           DispatchQueue.main.async {
+               if let requestToken = requestToken as? RequestToken {
+                   let vc = WebViewViewController()
+                   vc.requestToken = requestToken.request_token
+                   self.navigationController?.present(vc, animated: true, completion: nil)
+               }
+           }
+       }, failure: {
+           error in
+           print(error)
+       })
     }
     
     override func viewDidLoad() {
