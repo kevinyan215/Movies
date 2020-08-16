@@ -154,7 +154,6 @@
         <!--My Movies-->
         <scene sceneID="16U-8q-DrA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DI9-dx-1KG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="WYg-nf-Gvo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Movies" id="1UX-bq-N1V"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4td-tO-rmd">
@@ -165,6 +164,7 @@
                         <segue destination="8e2-Tt-EgW" kind="relationship" relationship="rootViewController" id="sdf-35-G4C"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DI9-dx-1KG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-508" y="670"/>
         </scene>
@@ -188,7 +188,7 @@
         <!--Account-->
         <scene sceneID="YdM-bC-yHP">
             <objects>
-                <viewController id="F27-32-JaF" customClass="AccountViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="F27-32-JaF" customClass="SignInViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N84-pD-vul">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
