@@ -16,6 +16,7 @@
 		52556E7C24E8B472002FBD47 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52556E7B24E8B472002FBD47 /* Session.swift */; };
 		52556E7F24E8C8E7002FBD47 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52556E7E24E8C8E7002FBD47 /* AccountViewController.swift */; };
 		52556E8124E8F838002FBD47 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52556E8024E8F838002FBD47 /* MainTabBarController.swift */; };
+		52556E8324E905B2002FBD47 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52556E8224E905B2002FBD47 /* Utility.swift */; };
 		525D7C4A24DE5FAC00F66056 /* MovieTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525D7C4924DE5FAC00F66056 /* MovieTabBarCell.swift */; };
 		525D7C4E24DF73C600F66056 /* MovieTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525D7C4D24DF73C600F66056 /* MovieTabBar.swift */; };
 		525D7C5024E08CDC00F66056 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525D7C4F24E08CDC00F66056 /* MenuCell.swift */; };
@@ -27,6 +28,7 @@
 		525D7C6524E33FCE00F66056 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525D7C6424E33FCE00F66056 /* RatingView.swift */; };
 		525D7C6724E3BE3100F66056 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525D7C6624E3BE3000F66056 /* SignInViewController.swift */; };
 		525ECE2C24E62C56003D7DF0 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525ECE2B24E62C56003D7DF0 /* WebViewViewController.swift */; };
+		526B0FDA24EA2B430060D905 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B0FD924EA2B430060D905 /* Account.swift */; };
 		52743EDA226C2E0500DEBB4A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52743ED9226C2E0500DEBB4A /* AppDelegate.swift */; };
 		52743EDC226C2E0500DEBB4A /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52743EDB226C2E0500DEBB4A /* MovieCollectionViewController.swift */; };
 		52743EDF226C2E0500DEBB4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52743EDD226C2E0500DEBB4A /* Main.storyboard */; };
@@ -52,6 +54,7 @@
 		52556E7B24E8B472002FBD47 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		52556E7E24E8C8E7002FBD47 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		52556E8024E8F838002FBD47 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		52556E8224E905B2002FBD47 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		525D7C4924DE5FAC00F66056 /* MovieTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTabBarCell.swift; sourceTree = "<group>"; };
 		525D7C4D24DF73C600F66056 /* MovieTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTabBar.swift; sourceTree = "<group>"; };
 		525D7C4F24E08CDC00F66056 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		525D7C6424E33FCE00F66056 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		525D7C6624E3BE3000F66056 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		525ECE2B24E62C56003D7DF0 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		526B0FD924EA2B430060D905 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		526DB9AF247230D1009B309B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		52743ED6226C2E0500DEBB4A /* Movies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52743ED9226C2E0500DEBB4A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 				52CC6DE324C372D900A416E3 /* SearchResult.swift */,
 				52556E7924E8AB54002FBD47 /* RequestToken.swift */,
 				52556E7B24E8B472002FBD47 /* Session.swift */,
+				526B0FD924EA2B430060D905 /* Account.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -165,6 +170,7 @@
 				52C6226C23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift */,
 				52CC6DE124AADF4800A416E3 /* SearchResultsTableViewCell.swift */,
 				521A18BB2272444C00AC8CDF /* Constants.swift */,
+				52556E8224E905B2002FBD47 /* Utility.swift */,
 				52743EE0226C2E0700DEBB4A /* Assets.xcassets */,
 				52743EE2226C2E0700DEBB4A /* LaunchScreen.storyboard */,
 				52743EE5226C2E0700DEBB4A /* Info.plist */,
@@ -259,10 +265,12 @@
 				525ECE2C24E62C56003D7DF0 /* WebViewViewController.swift in Sources */,
 				52883EE42463CBE7002C3CEB /* Webservices.swift in Sources */,
 				52743EDC226C2E0500DEBB4A /* MovieCollectionViewController.swift in Sources */,
+				52556E8324E905B2002FBD47 /* Utility.swift in Sources */,
 				525D7C4A24DE5FAC00F66056 /* MovieTabBarCell.swift in Sources */,
 				52CC6DE024AADBA500A416E3 /* SearchViewController.swift in Sources */,
 				525D7C4E24DF73C600F66056 /* MovieTabBar.swift in Sources */,
 				521A18C12272588300AC8CDF /* MovieCollectionViewCell.swift in Sources */,
+				526B0FDA24EA2B430060D905 /* Account.swift in Sources */,
 				52CC6DE424C372D900A416E3 /* SearchResult.swift in Sources */,
 				52556E7F24E8C8E7002FBD47 /* AccountViewController.swift in Sources */,
 				52AC09CE235987C700DEC28B /* MovieDetailViewController.swift in Sources */,

@@ -50,9 +50,9 @@ class MyMoviesViewController : UIViewController {
     @objc func segmentedControlChange(_ segmentedControl: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            rowsToDisplay = watchList
+            self.setRowsToDisplay(list: self.watchList)
         default:
-            rowsToDisplay = favoritesList
+            self.setRowsToDisplay(list: self.favoritesList)
         }
         moviesCollectionView.reloadData()
     }
@@ -98,16 +98,25 @@ class MyMoviesViewController : UIViewController {
     }
     
     func resetWatchList() {
-        self.watchList = []
+        self.clearWatchList()
         DispatchQueue.main.async {
             self.moviesCollectionView.reloadData()
         }
     }
     
+    func clearWatchList() {
+        self.watchList = []
+        self.setRowsToDisplay(list: self.watchList)
+    }
+    
+    func setRowsToDisplay(list: [MovieDetail]) {
+        self.rowsToDisplay = list
+    }
+    
     lazy var fetchMovieClosure: (Decodable?, Error?) -> Void = {
         response, error in
         if error != nil {
-            self.resetWatchList()
+            self.clearWatchList()
         }
         guard let response = response as? MovieList else { return }
         self.watchList = []
@@ -120,7 +129,7 @@ class MyMoviesViewController : UIViewController {
                         data,error  in
                         movieResponse.poster_image = data
                         self.watchList.append(movieResponse)
-                        self.rowsToDisplay = self.watchList
+                        self.setRowsToDisplay(list: self.watchList)
                         DispatchQueue.main.async {
                             self.moviesCollectionView.reloadData()
                         }

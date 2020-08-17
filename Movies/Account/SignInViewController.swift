@@ -27,9 +27,9 @@ class SignInViewController : UIViewController {
     let loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.red
+        button.backgroundColor = .red
         button.setTitle("Login", for: .normal)
-        button.setTitleColor(UIColor.blue, for: .normal)
+        button.setTitleColor(.blue, for: .normal)
         button.addTarget(self, action: #selector(loginButtonClicked), for: .touchDown)
         return button
     }()
@@ -42,11 +42,12 @@ class SignInViewController : UIViewController {
         networkManager.getRequestToken(success: {
            requestToken in
            DispatchQueue.main.async {
-               if let requestToken = requestToken as? RequestToken {
-                   let vc = WebViewViewController()
-                   vc.requestToken = requestToken.request_token
-                   self.navigationController?.present(vc, animated: true, completion: nil)
-               }
+                if let requestToken = requestToken as? RequestToken {
+                    let vc = WebViewViewController()
+                    vc.delegate = self
+                    vc.requestToken = requestToken.request_token
+                    self.navigationController?.present(vc, animated: true, completion: nil)
+                }
            }
        }, failure: {
            error in
@@ -55,7 +56,13 @@ class SignInViewController : UIViewController {
     }
     
     override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.gray
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
     }
     
     func setupView(){
@@ -71,4 +78,19 @@ class SignInViewController : UIViewController {
             loginButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
+}
+
+extension SignInViewController : WebViewViewControllerDelegate {
+    func webViewDidDismiss() {
+        showProfileView()
+    }
+    
+    func showProfileView() {
+        DispatchQueue.main.async {
+            let vc = AccountViewController()
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
+    }
+    
+    
 }

@@ -132,6 +132,15 @@ class NetworkingManager {
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
+    func getAccountDetailsWith(sessionId: String, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: sessionId)]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account?")
+        urlComps?.queryItems = queryItems
+        if let url = urlComps?.url {
+            self.request(with: URLRequest(url: url), decodingType: Account.self, success: success, failure: failure)
+        }
+    }
+    
     func newSession(requestToken: String, success: @escaping(Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
         let queryItems = [URLQueryItem(name: "request_token", value: requestToken), URLQueryItem(name: "api_key", value: APIKeyValue)]
         var urlComps = URLComponents(string: newSessionUrl)

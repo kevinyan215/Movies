@@ -49,4 +49,5 @@ let NowPlayingMoviesCellId = "NowPlayingMoviesCellId"
 let TopRatedMoviesCellId = "TopRatedMoviesCellId"
 let UpcomingMoviesCellId = "UpcomingMoviesCellId"
 
-let sessionIdIdentifier = "sessionId"
+let sessionIdIdentifier = "sessionIdIdentifier"
+let accountIdIdentifier = "accountIdIdentifier"

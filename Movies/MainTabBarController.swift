@@ -24,7 +24,15 @@ class MainTabBarController : UITabBarController {
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         searchVC.tabBarItem.title = "Search"
         
-        let accountVC = UINavigationController(rootViewController: SignInViewController())
+        var accountVC: UIViewController
+        if userIsSignedIn() {
+            accountVC = UINavigationController(rootViewController: SignInViewController())
+            accountVC.addChild(AccountViewController())
+
+        } else {
+            accountVC = UINavigationController(rootViewController: SignInViewController())
+
+        }
         accountVC.tabBarItem.title = "Account"
         
         viewControllers = [movieCollectionVC, myMoviesVC, searchVC, accountVC]

@@ -9,14 +9,13 @@
 import UIKit
 import WebKit
 
-//protocol WebViewViewControllerDelegate : class {
-//
-//}
+protocol WebViewViewControllerDelegate : class {
+    func webViewDidDismiss()
+}
 
 class WebViewViewController : UIViewController, WKNavigationDelegate {
-    
     var requestToken: String?
-//    weak var delegate : WebViewViewControllerDelegate?
+    weak var delegate : WebViewViewControllerDelegate?
     lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero
             , configuration: WKWebViewConfiguration())
@@ -63,10 +62,24 @@ extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
     }
     
     func newSession() {
-        NetworkingManager.shared.newSession(requestToken: requestToken ?? "", success: {
+        networkManager.newSession(requestToken: requestToken ?? "", success: {
             session in
             if let session = session as? Session, session.success {
-                UserDefaults.standard.set(session.session_id, forKey: sessionIdIdentifier)
+                userDefaults.set(session.session_id, forKey: sessionIdIdentifier)
+                self.getAccountDetailsWith(sessionId: session.session_id ?? "")
+            }
+        }, failure: {
+            error in
+            print(error)
+        })
+    }
+    
+    func getAccountDetailsWith(sessionId: String){
+        networkManager.getAccountDetailsWith(sessionId: sessionId, success: {
+            account in
+            if let account = account as? Account {
+                userDefaults.set(account.username, forKey: accountIdIdentifier)
+                self.delegate?.webViewDidDismiss()
             }
         }, failure: {
             error in
