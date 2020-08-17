@@ -61,9 +61,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
 
 //        self.scrollView.delegate = self
     
-        setupScrollView()
-        setupMovieTabBar()
-        setupCollectionView()
+        setupUI()
+        setupConstraints()
     }
     
     func scrollToMenuIndex(menuIndex: Int) {
@@ -71,14 +70,29 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         moviesCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
-    func setupScrollView() {
+    func setupUI() {
         view.addSubview(scrollView)
         view.addSubview(contentView)
+        self.contentView.addSubview(self.moviesCollectionView)
+        self.contentView.addSubview(movieTabBar)
         
-        setupScrollViewConstraints()
+        let paddedStackView = UIStackView(arrangedSubviews: [movieTabBar])
+          
+        let stackView = UIStackView(arrangedSubviews: [paddedStackView,  moviesCollectionView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            paddedStackView.heightAnchor.constraint(equalToConstant: 50),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+        ])
     }
     
-    func setupScrollViewConstraints() {
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -88,34 +102,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-        ])
-    }
-    
-    func setupCollectionView() {
-        self.contentView.addSubview(self.moviesCollectionView)
-        self.setupCollectionViewConstraints()
-    }
-    
-    func setupCollectionViewConstraints() {
-        NSLayoutConstraint.activate([
-            moviesCollectionView.topAnchor.constraint(equalTo: movieTabBar.bottomAnchor, constant: 0),
-            moviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            moviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            moviesCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-    }
-    
-    func setupMovieTabBar() {
-        self.contentView.addSubview(movieTabBar)
-        setupMovieTabBarConstraints()
-    }
-    
-    func setupMovieTabBarConstraints() {
-        NSLayoutConstraint.activate([
-            movieTabBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            movieTabBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            movieTabBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            movieTabBar.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
