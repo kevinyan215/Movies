@@ -152,6 +152,7 @@
 			children = (
 				52743EDD226C2E0500DEBB4A /* Main.storyboard */,
 				52743ED9226C2E0500DEBB4A /* AppDelegate.swift */,
+				52743EE0226C2E0700DEBB4A /* Assets.xcassets */,
 				52556E8024E8F838002FBD47 /* MainTabBarController.swift */,
 				52556E7D24E8B9D1002FBD47 /* Account */,
 				52556E7724E771BF002FBD47 /* MyMoviesViewController.swift */,
@@ -171,7 +172,6 @@
 				52CC6DE124AADF4800A416E3 /* SearchResultsTableViewCell.swift */,
 				521A18BB2272444C00AC8CDF /* Constants.swift */,
 				52556E8224E905B2002FBD47 /* Utility.swift */,
-				52743EE0226C2E0700DEBB4A /* Assets.xcassets */,
 				52743EE2226C2E0700DEBB4A /* LaunchScreen.storyboard */,
 				52743EE5226C2E0700DEBB4A /* Info.plist */,
 			);
