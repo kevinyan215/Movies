@@ -10,8 +10,6 @@ import UIKit
 import WebKit
 
 class SignInViewController : UIViewController {
-    let networkManager = NetworkingManager()
-    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false

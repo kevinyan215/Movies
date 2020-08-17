@@ -13,7 +13,6 @@ protocol MyMoviesViewControllerDelegate : class {
 }
 
 class MyMoviesViewController : UIViewController {
-    let networkManager = NetworkingManager.shared
     var watchList: [MovieDetail] = []
     var favoritesList: [MovieDetail] = []
     lazy var rowsToDisplay: [MovieDetail] = watchList
@@ -122,10 +121,10 @@ class MyMoviesViewController : UIViewController {
         self.watchList = []
         for movie in response.results {
             if let movie = movie, let movieId = movie.id {
-                self.networkManager.getMovieDetailAt(movieId, completionHandler:  {
+                networkManager.getMovieDetailAt(movieId, completionHandler:  {
                     movieResponse, error in
                     guard var movieResponse = movieResponse as? MovieDetail else {return}
-                    self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                    networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
                         data,error  in
                         movieResponse.poster_image = data
                         self.watchList.append(movieResponse)

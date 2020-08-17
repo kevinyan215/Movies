@@ -17,8 +17,6 @@ class MovieTabBarCell : BaseCell {
     var movies:[MovieDetail] = []
     var pageNumber: Int = 1
 
-    let networkManager = NetworkingManager.shared
-
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         let numberOfCellsPerRow: CGFloat = 2
@@ -48,10 +46,10 @@ class MovieTabBarCell : BaseCell {
         guard let response = response as? MovieList else { return }
         for movie in response.results {
             if let movie = movie, let movieId = movie.id {
-                self.networkManager.getMovieDetailAt(movieId, completionHandler:  {
+                networkManager.getMovieDetailAt(movieId, completionHandler:  {
                     movieResponse, error in
                     guard var movieResponse = movieResponse as? MovieDetail else {return}
-                    self.networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                    networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
                         data,error  in
                         movieResponse.poster_image = data
                         self.movies.append(movieResponse)

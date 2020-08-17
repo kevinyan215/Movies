@@ -9,8 +9,6 @@
 import UIKit
 
 class SearchViewController : UIViewController {
-    
-    let networkManager = NetworkingManager.shared
     let searchBar = UISearchBar()
     let tableView : UITableView = {
         let tableView = UITableView()
@@ -94,7 +92,7 @@ extension SearchViewController : UISearchBarDelegate {
                             }
                         }
                         for (index,movieTvShow) in response.results.enumerated() {
-                            self.networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
+                            networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
                                 data,error in
                                 response.results[index]?.poster_image = data
                                 self.searchResults = response.results

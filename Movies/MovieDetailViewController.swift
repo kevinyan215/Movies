@@ -12,7 +12,6 @@ import WebKit
 class MovieDetailViewController : UIViewController {
     var movieDetail: MovieDetail?
     var castCrew: CastCrew?
-    let networkManager = NetworkingManager()
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -328,7 +327,7 @@ class MovieDetailViewController : UIViewController {
                             for actor in cast {
                                 if let profilePathUrl = actor.profile_path {
                                     if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                        self.networkManager.request(urlRequest: URLRequest(url: url), success: { data in
+                                        networkManager.request(urlRequest: URLRequest(url: url), success: { data in
                                             actor.profile_image = data
                                             
                                             DispatchQueue.main.async {
@@ -346,7 +345,7 @@ class MovieDetailViewController : UIViewController {
                                     
                                     if let profilePathUrl = member.profile_path {
                                         if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                            self.networkManager.request(urlRequest: URLRequest(url: url), success: { data in
+                                            networkManager.request(urlRequest: URLRequest(url: url), success: { data in
                                                 member.profile_image = data
                                                 
                                                 DispatchQueue.main.async {
