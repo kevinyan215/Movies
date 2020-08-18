@@ -65,10 +65,10 @@ class MovieTabBar: UIView {
     func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            menuTabsCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            menuTabsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            menuTabsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            menuTabsCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            menuTabsCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            menuTabsCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            menuTabsCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            menuTabsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }
