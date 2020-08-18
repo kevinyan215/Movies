@@ -48,7 +48,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     lazy var movieTabBar: MovieTabBar = {
         let tabBar = MovieTabBar(tabSelections: ["Popular", "Top Rated", "Now Playing", "Upcoming"], frame: .zero)
         tabBar.translatesAutoresizingMaskIntoConstraints = false
-        tabBar.movieCollectionViewController = self
+        tabBar.delegate = self
         return tabBar
     }()
     
@@ -63,11 +63,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     
         setupUI()
         setupConstraints()
-    }
-    
-    func scrollToMenuIndex(menuIndex: Int) {
-        let indexPath = IndexPath(item: menuIndex, section: 0)
-        moviesCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     func setupUI() {
@@ -155,6 +150,13 @@ extension MovieCollectionViewController : UICollectionViewDelegateFlowLayout {
     
     func setTitleForIndex(index: Int) {
         navigationItem.title = "\(movieTabBar.tabSelections[index])"
+    }
+}
+
+extension MovieCollectionViewController : MovieTabBarDelegate {
+    func scrollToMenuIndex(menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        moviesCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 }
 

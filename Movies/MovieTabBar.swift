@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MovieTabBarDelegate : class {
+    func scrollToMenuIndex(menuIndex: Int)
+}
+
 class MovieTabBar: UIView {
     
     lazy var menuTabsCollectionView: UICollectionView = {
@@ -22,6 +26,7 @@ class MovieTabBar: UIView {
     var tabSelections:[String]
     var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
     var movieCollectionViewController: MovieCollectionViewController?
+    weak var delegate: MovieTabBarDelegate?
     
     func setupHorizontalBar() {
         let horizontalBarView = UIView()
@@ -85,7 +90,7 @@ extension MovieTabBar : UICollectionViewDataSource {
 
 extension MovieTabBar : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        movieCollectionViewController?.scrollToMenuIndex(menuIndex: indexPath.item)
+        delegate?.scrollToMenuIndex(menuIndex: indexPath.item)
     }
 }
 
