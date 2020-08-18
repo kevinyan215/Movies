@@ -19,7 +19,7 @@ class MovieTabBar: UIView {
         collectionView.delegate = self
         return collectionView
     }()
-    var tabSelections = ["Popular", "Top Rated", "Now Playing",  "Upcoming"] //["Popular", "Latest", "Now Playing", "Top Rated", "Upcoming"] 
+    var tabSelections:[String]
     var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
     var movieCollectionViewController: MovieCollectionViewController?
     
@@ -37,7 +37,8 @@ class MovieTabBar: UIView {
         horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     }
     
-    override init(frame: CGRect) {
+    init(tabSelections: [String], frame: CGRect) {
+        self.tabSelections = tabSelections
         super.init(frame: frame)
         menuTabsCollectionView.register(MenuCell.self, forCellWithReuseIdentifier: "MenuCell")
         setupView()

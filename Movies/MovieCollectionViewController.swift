@@ -46,7 +46,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     }()
     
     lazy var movieTabBar: MovieTabBar = {
-        let tabBar = MovieTabBar()
+        let tabBar = MovieTabBar(tabSelections: ["Popular", "Top Rated", "Now Playing", "Upcoming"], frame: .zero)
         tabBar.translatesAutoresizingMaskIntoConstraints = false
         tabBar.movieCollectionViewController = self
         return tabBar
