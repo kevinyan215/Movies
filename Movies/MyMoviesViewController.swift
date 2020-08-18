@@ -84,13 +84,11 @@ class MyMoviesViewController : UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
-    
-    
-    
+        
     func getWatchList() {
         let sessionId = UserDefaults.standard.value(forKey: sessionIdIdentifier) as? String
         if let sessionId = sessionId {
-            networkManager.getWatchListFor(sessionId: sessionId, completionHandler: fetchMovieClosure)
+            networkManager.getWatchListFor(sessionId: sessionId, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
         } else {
             resetWatchList()
         }
@@ -112,33 +110,54 @@ class MyMoviesViewController : UIViewController {
         self.rowsToDisplay = list
     }
     
-    lazy var fetchMovieClosure: (Decodable?, Error?) -> Void = {
-        response, error in
-        if error != nil {
+    func getMovieList(completionHandler: @escaping (Decodable?, Error?) -> ()) -> (Decodable?, Error?) -> Void {
+        return {
+            response, error in
+            if error != nil {
+                self.clearWatchList()
+            }
+            guard let response = response as? MovieList else { return }
             self.clearWatchList()
-        }
-        guard let response = response as? MovieList else { return }
-        self.watchList = []
-        for movie in response.results {
-            if let movie = movie, let movieId = movie.id {
-                networkManager.getMovieDetailAt(movieId, completionHandler:  {
-                    movieResponse, error in
-                    guard var movieResponse = movieResponse as? MovieDetail else {return}
-                    networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
-                        data,error  in
-                        movieResponse.poster_image = data
-                        self.watchList.append(movieResponse)
-                        self.setRowsToDisplay(list: self.watchList)
-                        DispatchQueue.main.async {
-                            self.moviesCollectionView.reloadData()
-                        }
-                        
-                    })
-
-                })
+            for movie in response.results {
+                if let movie = movie, let movieId = movie.id {
+                    self.getMovieDetailAt(movieId: movieId, completionHandler: completionHandler)
+                }
             }
         }
+        
     }
+    
+    func getMovieDetailAt(movieId: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        networkManager.getMovieDetailAt(movieId, completionHandler: completion)
+    }
+    
+    func getMoviePosterImagesAt(completionHandler: @escaping (MovieDetail) -> ()) -> (Decodable?, Error?) -> Void {
+        return { movieResponse, error in
+            guard var movieResponse = movieResponse as? MovieDetail else {return}
+            networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: { data,error  in
+                movieResponse.poster_image = data
+                completionHandler(movieResponse)
+                DispatchQueue.main.async {
+                    self.moviesCollectionView.reloadData()
+                }
+            })
+        }
+    }
+    
+    lazy var favoritesListResponse = getMoviePosterImagesAt { response in
+        self.favoritesList.append(response)
+        self.setRowsToDisplay(list: self.favoritesList)
+    }
+    
+    lazy var fetchWatchListResponse = getMoviePosterImagesAt { response in
+        self.watchList.append(response)
+        self.setRowsToDisplay(list: self.watchList)
+    }
+    
+    
+   
+    
+    
 }
 
 extension MyMoviesViewController : UICollectionViewDataSource {
