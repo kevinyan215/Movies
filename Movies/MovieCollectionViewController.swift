@@ -29,10 +29,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     lazy var moviesCollectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
-        collectionView.backgroundColor = UIColor.gray
+        collectionView.backgroundColor = .gray
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.contentInset = UIEdgeInsets(top: 200,left: 0,bottom: 0,right: 0)
+//        collectionView.contentInset = UIEdgeInsets(top: 200,left: 0,bottom: 0,right: 0)
 //        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50,left: 0,bottom: 0,right: 0)
         collectionView.isPagingEnabled = true
         collectionView.register(PopularMoviesCell.self, forCellWithReuseIdentifier: PopularMoviesCellId)
@@ -76,7 +76,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         let stackView = UIStackView(arrangedSubviews: [paddedStackView,  moviesCollectionView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        view.addSubview(stackView)
+        self.contentView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
             paddedStackView.heightAnchor.constraint(equalToConstant: 50),
@@ -131,7 +131,8 @@ extension MovieCollectionViewController {
 
 extension MovieCollectionViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        let spacing = view.safeAreaInsets.top + view.safeAreaInsets.bottom + movieTabBar.frame.height + 60
+        return CGSize(width: view.frame.width, height: view.frame.height - spacing)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
