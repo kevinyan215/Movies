@@ -55,7 +55,8 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 130),
+            imageView.heightAnchor.constraint(equalToConstant: 160),
             
             subTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             subTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
