@@ -19,15 +19,6 @@ class RatingView: UIView {
         return label
     }()
     
-    var percentLabel : UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.white
-        label.font = UIFont.init(descriptor: UIFontDescriptor(name: "Helvetica Nue", size: 5), size: 5)
-        label.text = "%"
-        return label
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -78,19 +69,14 @@ class RatingView: UIView {
     }
     func setupViews() {
         addSubview(percentValueLabel)
-        addSubview(percentLabel)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            percentValueLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor, constant: 0),
-            percentValueLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
+            percentValueLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            percentValueLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
             percentValueLabel.widthAnchor.constraint(equalToConstant: 20),
             percentValueLabel.heightAnchor.constraint(equalToConstant: 20),
-            percentLabel.leadingAnchor.constraint(equalTo: percentValueLabel.trailingAnchor, constant: 0),
-            percentLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            percentLabel.widthAnchor.constraint(equalToConstant: 7),
-            percentLabel.heightAnchor.constraint(equalToConstant: 7)
         ])
     }
 }
