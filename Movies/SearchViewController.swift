@@ -152,20 +152,16 @@ extension SearchViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         if let searchId = searchResults[indexPath.row]?.id {
             NetworkingManager.shared.getMovieDetailAt(searchId, completionHandler: {
                 movieDetailResponse, error  in
                 guard var movieDetailResponse = movieDetailResponse as? MovieDetail else { return }
-                NetworkingManager.shared.getMoviePosterImagesAt(movieDetailResponse.poster_path, completion: {
-                    response,error in
-                    movieDetailResponse.poster_image = response
-                    
-                    DispatchQueue.main.async {
-                        let movieDetailViewController = MovieDetailViewController()
-                        movieDetailViewController.movieDetail = movieDetailResponse
-                        self.navigationController?.pushViewController(movieDetailViewController, animated: true)
-                    }
-                })
+                DispatchQueue.main.async {
+                    let movieDetailViewController = MovieDetailViewController()
+                    movieDetailViewController.movieDetail = movieDetailResponse
+                    self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+                }
             })
         }
     }

@@ -167,12 +167,6 @@ class MovieDetailViewController : UIViewController {
         self.videoCollectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: videoCollectionViewCellIdentifier)
         self.castCollectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: castCrewCollectionViewCellIdentifier)
         self.crewCollectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: castCrewCollectionViewCellIdentifier)
-
-        if let data = self.movieDetail?.poster_image {
-            if let poster_image = UIImage(data: data) {
-                self.posterImage.image = poster_image
-            }
-        }
         
         self.titleLabel.text = movieDetail?.title
 //        self.titleLabel.adjustsFontSizeToFitWidth = true
@@ -219,6 +213,7 @@ class MovieDetailViewController : UIViewController {
             self.revenueDescriptionLabel.text = numberFormatter.string(for: revenue)
         }
         
+        getMoviePosterImage()
         if let movieId = movieDetail?.id, let url = URL(string: movieBaseUrl + "\(movieId)/credits?" + APIKey) {
             let urlRequest = URLRequest(url: url)
             networkManager.request(urlRequest: urlRequest, success: {
@@ -276,7 +271,27 @@ class MovieDetailViewController : UIViewController {
         }
     }
     
+    func getMoviePosterImage() {
+        if self.movieDetail?.poster_image != nil {
+            getUIImage()
+        } else {
+            networkManager.getMoviePosterImagesAt(self.movieDetail?.poster_path, completion: {
+                response,error in
+                self.movieDetail?.poster_image = response
+                self.getUIImage()
+            })
+        }
+    }
     
+    func getUIImage() {
+        if let data = self.movieDetail?.poster_image {
+            if let poster_image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.posterImage.image = poster_image
+                }
+            }
+        }
+    }
     func setupView() {
         contentView.backgroundColor = UIColor.gray
         contentView.addSubview(posterImage)
