@@ -130,11 +130,15 @@ extension SearchViewController : UITableViewDataSource {
 //            if searchResults[indexPath.row]?.media_type == "tv" {
 //                cell.movieTitlelabel.text = searchResults[indexPath.row]?.name
 //            } else if searchResults[indexPath.row]?.media_type == "movie" {
-                cell.movieTitlelabel.text = searchResults[indexPath.row]?.title
-                if let data = searchResults[indexPath.row]?.poster_image,
-                    let poster_image = UIImage(data: data) {
-                        cell.moviePosterImage.image = poster_image
-                }
+            cell.moviePosterImage.image = nil
+            cell.movieTitlelabel.text = nil
+            if let title = searchResults[indexPath.row]?.title {
+                cell.movieTitlelabel.text = title
+            }
+            if let data = searchResults[indexPath.row]?.poster_image,
+                let poster_image = UIImage(data: data) {
+                cell.moviePosterImage.image = poster_image
+            }
 //            }
             return cell
         }
