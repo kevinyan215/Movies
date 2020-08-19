@@ -205,12 +205,16 @@ class MovieDetailViewController : UIViewController {
         numberFormatter.numberStyle = .currency
         numberFormatter.maximumFractionDigits = 0
         
-        if let budget = movieDetail?.budget {
+        if let budget = movieDetail?.budget, budget != 0 {
             self.budgetDescriptionLabel.text = numberFormatter.string(for: budget)
+        } else {
+            self.budgetDescriptionLabel.text = "N/A"
         }
         
-        if let revenue = movieDetail?.revenue {
+        if let revenue = movieDetail?.revenue, revenue != 0 {
             self.revenueDescriptionLabel.text = numberFormatter.string(for: revenue)
+        } else {
+            self.revenueDescriptionLabel.text = "N/A"
         }
         
         getMoviePosterImage()
