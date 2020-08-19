@@ -108,7 +108,7 @@ class MovieDetailViewController : UIViewController {
         return label
     }()
     
-    let collectionViewFlowLayout: UICollectionViewFlowLayout = {
+    let videoCollectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
 //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
         layout.itemSize = CGSize(width: 130, height: 200)
@@ -116,9 +116,25 @@ class MovieDetailViewController : UIViewController {
         return layout
     }()
     
+    let castCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+            layout.itemSize = CGSize(width: 130, height: 200)
+            layout.scrollDirection = .horizontal
+            return layout
+        }()
+    
+    let crewCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+            layout.itemSize = CGSize(width: 130, height: 200)
+            layout.scrollDirection = .horizontal
+            return layout
+        }()
+    
     
     lazy var videoCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: videoCollectionViewFlowLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -126,7 +142,7 @@ class MovieDetailViewController : UIViewController {
     }()
     
     lazy var castCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: castCollectionViewFlowLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -134,7 +150,7 @@ class MovieDetailViewController : UIViewController {
     }()
 
     lazy var crewCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: crewCollectionViewFlowLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
