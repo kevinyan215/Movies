@@ -14,7 +14,9 @@ class VideoCollectionViewCell: UICollectionViewCell {
     let videoTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
         return label
     }()
     
@@ -40,10 +42,21 @@ class VideoCollectionViewCell: UICollectionViewCell {
         addSubview(videoTitle)
         addSubview(webView)
 
-        let views: [String:Any] = ["videoTitle": videoTitle, "webView": webView]
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]-15-[videoTitle]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[videoTitle]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            webView.topAnchor.constraint(equalTo: self.topAnchor),
+            webView.widthAnchor.constraint(equalToConstant: 130),
+            webView.heightAnchor.constraint(equalToConstant: 145),
+            videoTitle.topAnchor.constraint(equalTo: webView.bottomAnchor),
+            videoTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            videoTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            videoTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        
+//        let views: [String:Any] = ["videoTitle": videoTitle, "webView": webView]
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]-15-[videoTitle]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[videoTitle]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
     }
 
     func loadVideoFrom(_ urlRequest: URLRequest) {
