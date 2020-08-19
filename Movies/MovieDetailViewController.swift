@@ -284,16 +284,16 @@ class MovieDetailViewController : UIViewController {
         contentView.addSubview(releaseDateLabel)
         contentView.addSubview(genreLabel)
         contentView.addSubview(plotSummaryDescriptionLabel)
-//        contentView.addSubview(runtimeLabel)
-//        contentView.addSubview(runtimeDescriptionLabel)
-//        contentView.addSubview(budgetLabel)
-//        contentView.addSubview(budgetDescriptionLabel)
-//        contentView.addSubview(revenueLabel)
-//        contentView.addSubview(revenueDescriptionLabel)
+        contentView.addSubview(runtimeLabel)
+        contentView.addSubview(runtimeDescriptionLabel)
+        contentView.addSubview(budgetLabel)
+        contentView.addSubview(budgetDescriptionLabel)
+        contentView.addSubview(revenueLabel)
+        contentView.addSubview(revenueDescriptionLabel)
         
         contentView.addSubview(videoCollectionView)
-//        contentView.addSubview(castCollectionView)
-//        contentView.addSubview(crewCollectionView)
+        contentView.addSubview(castCollectionView)
+        contentView.addSubview(crewCollectionView)
         
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
@@ -345,49 +345,48 @@ class MovieDetailViewController : UIViewController {
             videoCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
             videoCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
             videoCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
-            videoCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
 
+            
+            castCollectionView.topAnchor.constraint(equalTo: videoCollectionView.bottomAnchor, constant: 20),
+            castCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
+            castCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            castCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
-//            castCollectionView.topAnchor.constraint(equalTo: videoCollectionView.bottomAnchor, constant: 20),
-//            castCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
-//            castCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
-//            castCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
-//
-//            crewCollectionView.topAnchor.constraint(equalTo: castCollectionView.bottomAnchor, constant: 20),
-//            crewCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
-//            crewCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
-//            crewCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
-//
-//            runtimeLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
-//            runtimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
-//            runtimeLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
-//            runtimeLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
-//
-//            runtimeDescriptionLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
-//            runtimeDescriptionLabel.leadingAnchor.constraint(equalTo: runtimeLabel.trailingAnchor, constant: 5),
-//            runtimeDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
-//            runtimeDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
-//
-//            budgetLabel.topAnchor.constraint(equalTo: runtimeLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
-//            budgetLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
-//            budgetLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
-//            budgetLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
-//
-//            budgetDescriptionLabel.topAnchor.constraint(equalTo: runtimeDescriptionLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
-//            budgetDescriptionLabel.leadingAnchor.constraint(equalTo: budgetLabel.trailingAnchor, constant: 5),
-//            budgetDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
-//            budgetDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
-//
-//            revenueLabel.topAnchor.constraint(equalTo: budgetLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
-//            revenueLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
-//            revenueLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
-//            revenueLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
-//
-//            revenueDescriptionLabel.topAnchor.constraint(equalTo: budgetDescriptionLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
-//            revenueDescriptionLabel.leadingAnchor.constraint(equalTo: budgetLabel.trailingAnchor, constant: 5),
-//            revenueDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
-//            revenueDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
-//            revenueDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            crewCollectionView.topAnchor.constraint(equalTo: castCollectionView.bottomAnchor, constant: 20),
+            crewCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
+            crewCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            crewCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+
+            runtimeLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            runtimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            runtimeLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
+            runtimeLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+
+            runtimeDescriptionLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            runtimeDescriptionLabel.leadingAnchor.constraint(equalTo: runtimeLabel.trailingAnchor, constant: 5),
+            runtimeDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
+            runtimeDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+
+            budgetLabel.topAnchor.constraint(equalTo: runtimeLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
+            budgetLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            budgetLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
+            budgetLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+
+            budgetDescriptionLabel.topAnchor.constraint(equalTo: runtimeDescriptionLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
+            budgetDescriptionLabel.leadingAnchor.constraint(equalTo: budgetLabel.trailingAnchor, constant: 5),
+            budgetDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
+            budgetDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+
+            revenueLabel.topAnchor.constraint(equalTo: budgetLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
+            revenueLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            revenueLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
+            revenueLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+
+            revenueDescriptionLabel.topAnchor.constraint(equalTo: budgetDescriptionLabel.bottomAnchor, constant: topBottomSpacingMovieFacts),
+            revenueDescriptionLabel.leadingAnchor.constraint(equalTo: budgetLabel.trailingAnchor, constant: 5),
+            revenueDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
+            revenueDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+            revenueDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 }
