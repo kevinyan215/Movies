@@ -70,6 +70,10 @@ extension SearchViewController : UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.exitSearchBar()
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchNetworkCallWith(searchText)
     }
