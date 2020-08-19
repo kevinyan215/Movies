@@ -31,33 +31,41 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
+        setupConstraints()
         //        fatalError("init(coder:) has not been implemented")
     }
     
     func setupView() {
-        backgroundColor = UIColor.brown
+        backgroundColor = UIColor.clear
         
         addSubview(imageView)
         addSubview(nameTitleLabel)
         addSubview(subTitleLabel)
         
+        
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            nameTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            nameTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
-            nameTitleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            
+            subTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             subTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: nameTitleLabel.bottomAnchor),
-            subTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            subTitleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
+            subTitleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            
+            nameTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            nameTitleLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor),
+            nameTitleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            nameTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            nameTitleLabel.heightAnchor.constraint(equalTo: subTitleLabel.heightAnchor)
         ])
     }
-
 }
