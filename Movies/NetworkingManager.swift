@@ -182,24 +182,36 @@ class NetworkingManager {
     }
     
     func getPopularMoviesWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
-        guard let url = URL(string: movieBaseUrl + popularMovieQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) else { return  }
+        let queryItems = [URLQueryItem(name: "page", value: String(pageNumber)), URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "region", value: "US")]
+        var urlComps = URLComponents(string: movieBaseUrl + popularMovieQuery)
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
         }
     
     func getNowPlayingMoviesWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
-        guard let url = URL(string: movieBaseUrl + nowPlayingQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) else { return  }
+        let queryItems = [URLQueryItem(name: "page", value: String(pageNumber)), URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "region", value: "US")]
+        var urlComps = URLComponents(string: movieBaseUrl + nowPlayingQuery)
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
     
     func getUpcomingMoviesWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
-        guard let url = URL(string: movieBaseUrl + upcomingQuery + APIKey + "&page=" + String(pageNumber) + region + USRegion) else { return  }
+        let queryItems = [URLQueryItem(name: "page", value: String(pageNumber)), URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "region", value: "US")]
+        var urlComps = URLComponents(string: movieBaseUrl + upcomingQuery)
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
 
     }
     
     func getTopRatedWith(pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
-        guard let url = URL(string: movieBaseUrl + topRatedQuery + APIKey + "&page=" + String(topRatedMoviesPageNumber) + region + USRegion) else { return  }
+        let queryItems = [URLQueryItem(name: "page", value: String(pageNumber)), URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "region", value: "US")]
+        var urlComps = URLComponents(string: movieBaseUrl + topRatedQuery)
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
