@@ -15,7 +15,8 @@ protocol MovieTabBarCellDelegate : class {
 class MovieTabBarCell : BaseCell {
     weak var delegate: MovieTabBarCellDelegate?
     var movies:[MovieDetail] = []
-    var pageNumber: Int = 1
+    var pageNumber: Int = 0
+    var isWaiting = false
 
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -55,8 +56,8 @@ class MovieTabBarCell : BaseCell {
                         self.movies.append(movieResponse)
                         DispatchQueue.main.async {
                             self.moviesCollectionView.reloadData()
+                            self.isWaiting = false
                         }
-                        
                     })
 
                 })
@@ -111,8 +112,9 @@ extension MovieTabBarCell :UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == movies.count - 1 {
+        if indexPath.item == movies.count - 1 && !isWaiting {
             self.fetchMovies()
+            self.isWaiting = true
         }
     }
 }
