@@ -438,7 +438,8 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                     if let imageData = cast.profile_image,
                         let image = UIImage(data: imageData) {
                             cell.imageView.image = image
-                        
+                    } else {
+                        cell.imageView.image = UIImage(named: "anonymous_profile")
                     }
                 }
                 return cell
@@ -454,7 +455,8 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                     if let imageData = crew.profile_image,
                         let image = UIImage(data: imageData) {
                             cell.imageView.image = image
-                        
+                    } else {
+                        cell.imageView.image = UIImage(named: "anonymous_profile")
                     }
                 }
                 return cell
