@@ -31,7 +31,7 @@ let region = "&region="
 let USRegion = "US"
 private let multiSearchBaseUrl = theMovieDBBaseURL + searchQuery + "multi?"
 private let movieSearchBaseUrl = theMovieDBBaseURL + searchQuery + "movie?"
-let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w780"
+let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500"
 
 //let castCrewQuery =
 let multiSearchUrl = multiSearchBaseUrl + APIKey
