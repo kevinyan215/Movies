@@ -56,6 +56,12 @@ class SearchViewController : UIViewController {
 //        searchBar.placeholder = "Search"
         searchBar.resignFirstResponder()
     }
+    func resetTableView() {
+        searchResults = []
+        searchBar.text = ""
+        searchBar.placeholder = "Search"
+        self.tableView.reloadData()
+    }
 }
 
 extension SearchViewController : UISearchBarDelegate {
@@ -75,11 +81,16 @@ extension SearchViewController : UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchNetworkCallWith(searchText)
+        if let searchText = searchBar.text, searchText != "" {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
+            self.perform(#selector(searchNetworkCall), with: nil, afterDelay: 0.5)
+        } else {
+            self.resetTableView()
+        }
     }
     
-    func searchNetworkCallWith(_ searchText: String) {
-        let searchTextUrlEncoded = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    @objc func searchNetworkCall() {
+        let searchTextUrlEncoded = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = movieSearchUrl + query + searchTextUrlEncoded
         print(urlString)
         if let url = URL(string: urlString) {
