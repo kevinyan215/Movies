@@ -36,7 +36,7 @@ class SearchViewController : UIViewController {
         tableView.backgroundColor = UIColor.lightGray
         
         let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(exitSearchBar))
+                                                action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
@@ -50,12 +50,16 @@ class SearchViewController : UIViewController {
         ])
     }
     
-    @objc func exitSearchBar() {
+    @objc func dismissKeyboard() {
         navigationItem.rightBarButtonItem = nil
-//        searchBar.text = ""
-//        searchBar.placeholder = "Search"
         searchBar.resignFirstResponder()
     }
+    
+    @objc func cancelBarButtonItemClicked() {
+        self.dismissKeyboard()
+        self.resetTableView()
+    }
+    
     func resetTableView() {
         searchResults = []
         searchBar.text = ""
@@ -68,16 +72,17 @@ extension SearchViewController : UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                             target: self,
-                                                            action: #selector(exitSearchBar))
+                                                            action: #selector(cancelBarButtonItemClicked))
         searchBar.placeholder = nil
         
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.exitSearchBar()
+        self.dismissKeyboard()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
