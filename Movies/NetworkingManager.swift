@@ -122,11 +122,32 @@ class NetworkingManager {
         dataTask.resume()
     }
     
-    func getWatchListFor(sessionId: String, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+    func postWatchListFor(mediaId: Int, onWatchList:Bool, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId())]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/watchlist?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let jsonDict:[String:Any] = ["media_type": "movie", "media_id": mediaId, "watchlist": onWatchList]
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDict, options: [])
+            request.httpBody = data
+        } catch {
+            
+        }
+
+        self.request(with: request, decodingType: AccountResponse.self, success: success, failure: failure)
+    }
+    
+    func getWatchListFor(sessionId: String, pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue),
                           URLQueryItem(name: "language", value: "en-US"),
+                          URLQueryItem(name: "page", value: String(pageNumber)),
                           URLQueryItem(name: "session_id", value: sessionId)]
-        var urlComps = URLComponents(string: "https://api.themoviedb.org/3/account/%7Baccount_id%7D/watchlist/movies?")
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/watchlist/movies?")
         urlComps?.queryItems = queryItems
         guard let url = urlComps?.url else { return  }
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)

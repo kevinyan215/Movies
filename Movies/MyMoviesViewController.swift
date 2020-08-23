@@ -15,6 +15,7 @@ protocol MyMoviesViewControllerDelegate : class {
 class MyMoviesViewController : UIViewController {
     var watchList: [MovieDetail] = []
     var favoritesList: [MovieDetail] = []
+    var watchListPageNumber = 1
     lazy var rowsToDisplay: [MovieDetail] = watchList
     weak var delegate: MyMoviesViewControllerDelegate?
     
@@ -86,9 +87,8 @@ class MyMoviesViewController : UIViewController {
     }
         
     func getWatchList() {
-        let sessionId = UserDefaults.standard.value(forKey: sessionIdIdentifier) as? String
-        if let sessionId = sessionId {
-            networkManager.getWatchListFor(sessionId: sessionId, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+        if getSessionId() != "" {
+            networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: 1, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
         } else {
             resetWatchList()
         }

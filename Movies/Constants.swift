@@ -51,3 +51,4 @@ let UpcomingMoviesCellId = "UpcomingMoviesCellId"
 
 let sessionIdIdentifier = "sessionIdIdentifier"
 let accountIdIdentifier = "accountIdIdentifier"
+let accountUsernameIdentifier = "accountUsernameIdentifier"

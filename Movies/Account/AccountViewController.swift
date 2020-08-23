@@ -14,7 +14,7 @@ class AccountViewController : UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .red
         button.setTitleColor(.blue, for: .normal)
-        let name = userDefaults.value(forKey: accountIdIdentifier) as? String
+        let name = userDefaults.value(forKey: accountUsernameIdentifier) as? String
         button.setTitle("\(name ?? "") Sign Out", for: .normal)
         button.addTarget(self, action: #selector(signOutButtonClicked), for: .touchDown)
         return button

@@ -78,7 +78,8 @@ extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
         networkManager.getAccountDetailsWith(sessionId: sessionId, success: {
             account in
             if let account = account as? Account {
-                userDefaults.set(account.username, forKey: accountIdIdentifier)
+                userDefaults.set(account.username, forKey: accountUsernameIdentifier)
+                userDefaults.set(account.id, forKey: accountIdIdentifier)
                 self.delegate?.webViewDidDismiss()
             }
         }, failure: {

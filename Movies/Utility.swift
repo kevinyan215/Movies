@@ -15,6 +15,14 @@ func userIsSignedIn() -> Bool {
     return userDefaults.value(forKey: sessionIdIdentifier) != nil
 }
 
+func getSessionId() -> String {
+    return UserDefaults.standard.value(forKey: sessionIdIdentifier) as? String ?? ""
+}
+
+func getAccountId() -> Int {
+    return userDefaults.integer(forKey: accountIdIdentifier)
+}
+
 func signOutUser() {
     userDefaults.removeObject(forKey: sessionIdIdentifier)
 }

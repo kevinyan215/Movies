@@ -218,6 +218,44 @@ class MovieDetailViewController : UIViewController {
         }
         
         getMoviePosterImage()
+        getCastAndCrew()
+        
+//        addShareBarButtonItem()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if userIsSignedIn() {
+            addWatchListBarButtonItem()
+        }
+    }
+    
+    private func addWatchListBarButtonItem() {
+        let watchListItem = UIBarButtonItem(image: UIImage(named: "watchlist_icon"), style: .plain, target: self, action: #selector(watchListBarButtonOnClick))
+        navigationItem.rightBarButtonItem = watchListItem
+    }
+    
+    @objc private func watchListBarButtonOnClick() {
+        if let movieId = movieDetail?.id {
+            networkManager.postWatchListFor(mediaId: movieId, onWatchList: !(self.movieDetail?.watchlist ?? false), success: {
+                response in
+                print(response)
+//                self.movieDetail?.watchlist = !(self.movieDetail?.watchlist ?? false)
+            }, failure: {
+                error in
+                print(error)
+            })
+        }
+    }
+    
+    fileprivate func addShareBarButtonItem() {
+        let shareText = movieDetail?.homepage == "" ? "Check out \(movieDetail?.title) www.youtube.com!" : movieDetail?.homepage
+        let activityViewController = UIActivityViewController(activityItems: [shareText],
+                                                              applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
+    private func getCastAndCrew() {
         if let movieId = movieDetail?.id, let url = URL(string: movieBaseUrl + "\(movieId)/credits?" + APIKey) {
             let urlRequest = URLRequest(url: url)
             networkManager.request(urlRequest: urlRequest, success: {

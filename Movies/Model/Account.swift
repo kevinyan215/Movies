@@ -21,3 +21,8 @@ struct Account: Codable {
 struct Gravatar: Codable {
     let hash: String
 }
+
+struct AccountResponse: Codable {
+    let status_code: Int
+    let status_message: String
+}
