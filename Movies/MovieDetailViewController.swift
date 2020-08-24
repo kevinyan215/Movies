@@ -157,6 +157,28 @@ class MovieDetailViewController : UIViewController {
         return collectionView
     }()
     
+    lazy var watchListBarButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(image: UIImage(named: "watchlist_icon"), style: .plain, target: self, action: #selector(watchListBarButtonOnClick))
+        return item
+    }()
+    
+    var isFavorite: Bool = false
+    
+    var isWatchList: Bool = false
+    {
+        didSet {
+            if isWatchList {
+                DispatchQueue.main.async {
+                    self.watchListBarButtonItem.tintColor = .blue
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.watchListBarButtonItem.tintColor = .none
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         setupView()
         setupConstraints()
@@ -219,9 +241,8 @@ class MovieDetailViewController : UIViewController {
         
         getMoviePosterImage()
         getCastAndCrew()
-        
+        getMovieAccountState()
 //        addShareBarButtonItem()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -230,20 +251,31 @@ class MovieDetailViewController : UIViewController {
         }
     }
     
+    private func getMovieAccountState() {
+        guard let movieId = self.movieDetail?.id else { return }
+        networkManager.getMovieStateFor(movieId: movieId, success: {
+            response in
+            guard let response = response as? MovieAccountState else { return }
+            self.isFavorite = response.favorite
+            self.isWatchList = response.watchlist
+        }, failure: {
+            error in
+            print(error)
+        })
+    }
+    
     private func addWatchListBarButtonItem() {
-        let watchListItem = UIBarButtonItem(image: UIImage(named: "watchlist_icon"), style: .plain, target: self, action: #selector(watchListBarButtonOnClick))
-        navigationItem.rightBarButtonItem = watchListItem
+        navigationItem.rightBarButtonItem = watchListBarButtonItem
     }
     
     @objc private func watchListBarButtonOnClick() {
         if let movieId = movieDetail?.id {
-            networkManager.postWatchListFor(mediaId: movieId, onWatchList: !(self.movieDetail?.watchlist ?? false), success: {
+            networkManager.postWatchListFor(mediaId: movieId, onWatchList: !(self.isWatchList), success: {
                 response in
-                print(response)
-//                self.movieDetail?.watchlist = !(self.movieDetail?.watchlist ?? false)
-            }, failure: {
+                self.getMovieAccountState()
+        }, failure: {
                 error in
-                print(error)
+                self.getMovieAccountState()
             })
         }
     }

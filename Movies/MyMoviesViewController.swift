@@ -65,7 +65,11 @@ class MyMoviesViewController : UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getWatchList()
+        if !userIsSignedIn() {
+            resetWatchList()
+        } else {
+            getWatchList()
+        }
     }
     
     func setupStackViews() {
@@ -85,17 +89,10 @@ class MyMoviesViewController : UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
-        
-    func getWatchList() {
-        if getSessionId() != "" {
-            networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: 1, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
-        } else {
-            resetWatchList()
-        }
-    }
     
     func resetWatchList() {
         self.clearWatchList()
+        self.watchListPageNumber = 1
         DispatchQueue.main.async {
             self.moviesCollectionView.reloadData()
         }
@@ -110,14 +107,19 @@ class MyMoviesViewController : UIViewController {
         self.rowsToDisplay = list
     }
     
+    func getWatchList() {
+        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: self.watchListPageNumber, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+    }
+    
     func getMovieList(completionHandler: @escaping (Decodable?, Error?) -> ()) -> (Decodable?, Error?) -> Void {
         return {
             response, error in
-            if error != nil {
-                self.clearWatchList()
+            if error == nil {
+//                self.clearWatchList()
             }
+//            self.watchListPageNumber += 1
             guard let response = response as? MovieList else { return }
-            self.clearWatchList()
+//            self.clearWatchList()
             for movie in response.results {
                 if let movie = movie, let movieId = movie.id {
                     self.getMovieDetailAt(movieId: movieId, completionHandler: completionHandler)
@@ -185,6 +187,13 @@ extension MyMoviesViewController :UICollectionViewDelegate {
         let movieDetailViewController = MovieDetailViewController()
         movieDetailViewController.movieDetail = rowsToDisplay[indexPath.item]
         self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if indexPath.item == rowsToDisplay.count - 1 {
+//            self.watchListPageNumber += 1
+//            self.getWatchList()
+//        }
     }
 }
 

@@ -112,7 +112,7 @@ class NetworkingManager {
                                 let response = try JSONDecoder().decode(decodingType.self, from: data)
                                 success(response)
                             } catch {
-                                print(error)
+                                failure(error)
                             }
                         }
 //                    }
@@ -120,6 +120,15 @@ class NetworkingManager {
             }
         })
         dataTask.resume()
+    }
+    
+    func getMovieStateFor(movieId: Int, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId()), URLQueryItem(name: "movie_id", value: String(movieId))]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + movie + "\(movieId)/account_states?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        self.request(with: URLRequest(url: url), decodingType: MovieAccountState.self, success: success, failure: failure)
+        
     }
     
     func postWatchListFor(mediaId: Int, onWatchList:Bool, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
