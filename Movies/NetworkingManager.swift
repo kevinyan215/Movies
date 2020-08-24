@@ -86,7 +86,7 @@ class NetworkingManager {
                                 let response = try JSONDecoder().decode(decodingType.self, from: data)
                                 completion(response,error)
                             } catch {
-                                print(error)
+                                completion(data,error)
                             }
                         }
                     }

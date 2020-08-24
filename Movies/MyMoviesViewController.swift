@@ -15,10 +15,9 @@ protocol MyMoviesViewControllerDelegate : class {
 class MyMoviesViewController : UIViewController {
     var watchList: [MovieDetail] = []
     var favoritesList: [MovieDetail] = []
-    var watchListPageNumber = 1
     lazy var rowsToDisplay: [MovieDetail] = watchList
     weak var delegate: MyMoviesViewControllerDelegate?
-    
+
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
            let layout = UICollectionViewFlowLayout()
            let numberOfCellsPerRow: CGFloat = 2
@@ -68,7 +67,8 @@ class MyMoviesViewController : UIViewController {
         if !userIsSignedIn() {
             resetWatchList()
         } else {
-            getWatchList()
+//            getWatchList()
+            getNumberOfPages()
         }
     }
     
@@ -92,7 +92,6 @@ class MyMoviesViewController : UIViewController {
     
     func resetWatchList() {
         self.clearWatchList()
-        self.watchListPageNumber = 1
         DispatchQueue.main.async {
             self.moviesCollectionView.reloadData()
         }
@@ -105,21 +104,39 @@ class MyMoviesViewController : UIViewController {
     
     func setRowsToDisplay(list: [MovieDetail]) {
         self.rowsToDisplay = list
+        self.rowsToDisplay.sort(by: {
+            first, second in
+            guard let first = first.title, let second = second.title else { return false }
+            return first < second
+        })
     }
     
-    func getWatchList() {
-        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: self.watchListPageNumber, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+    func getWatchListFor(pageNumber: Int) {
+        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: pageNumber, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+    }
+    
+    func getNumberOfPages() {
+        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: 1, completionHandler: getWatchList())
+    }
+    
+    func getWatchList() -> (Decodable?, Error?) -> Void {
+        return {
+            response, error in
+            if let response = response as? MovieList, let totalPages = response.total_pages {
+                for pageNumber in 1...totalPages {
+                    networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: pageNumber, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+                }
+            }
+        }
     }
     
     func getMovieList(completionHandler: @escaping (Decodable?, Error?) -> ()) -> (Decodable?, Error?) -> Void {
         return {
             response, error in
             if error == nil {
-//                self.clearWatchList()
             }
-//            self.watchListPageNumber += 1
+            self.clearWatchList()
             guard let response = response as? MovieList else { return }
-//            self.clearWatchList()
             for movie in response.results {
                 if let movie = movie, let movieId = movie.id {
                     self.getMovieDetailAt(movieId: movieId, completionHandler: completionHandler)
@@ -170,11 +187,13 @@ extension MyMoviesViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier, for: indexPath) as? MovieCollectionViewCell {
             cell.movieImage.image = nil
-            if let data = rowsToDisplay[indexPath.item].poster_image,
-                let poster_image = UIImage(data: data) {
-                    cell.movieImage.image = poster_image
+            if rowsToDisplay.count > 0 {
+                if let data = rowsToDisplay[indexPath.item].poster_image,
+                    let poster_image = UIImage(data: data) {
+                        cell.movieImage.image = poster_image
+                }
+                cell.ratingView.configureViewFor(voteAverage: rowsToDisplay[indexPath.item].vote_average ?? 0.0)
             }
-            cell.ratingView.configureViewFor(voteAverage: rowsToDisplay[indexPath.item].vote_average ?? 0.0)
             return cell
         } else {
             return UICollectionViewCell()
@@ -187,13 +206,6 @@ extension MyMoviesViewController :UICollectionViewDelegate {
         let movieDetailViewController = MovieDetailViewController()
         movieDetailViewController.movieDetail = rowsToDisplay[indexPath.item]
         self.navigationController?.pushViewController(movieDetailViewController, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if indexPath.item == rowsToDisplay.count - 1 {
-//            self.watchListPageNumber += 1
-//            self.getWatchList()
-//        }
     }
 }
 
