@@ -29,6 +29,10 @@ class MenuCell: BaseCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.rgb(red: 91, green: 14, blue: 13)
+        label.font = UIFont(name: "helvetica neue", size: 15)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.sizeToFit()
         return label
     }()
     

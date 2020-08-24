@@ -41,10 +41,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            movieImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            movieImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            movieImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            movieImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            movieImage.topAnchor.constraint(equalTo: self.topAnchor),
+            movieImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            movieImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            movieImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             ratingView.topAnchor.constraint(equalTo: movieImage.topAnchor),
             ratingView.trailingAnchor.constraint(equalTo: movieImage.trailingAnchor),
             ratingView.heightAnchor.constraint(equalToConstant: 50),

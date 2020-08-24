@@ -23,7 +23,24 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4uE-st-NQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1057" y="670"/>
+            <point key="canvasLocation" x="-1300" y="670"/>
+        </scene>
+        <!--My Movies-->
+        <scene sceneID="1Xl-Mj-9ZY">
+            <objects>
+                <viewController id="8e2-Tt-EgW" customClass="MyMoviesViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jGD-xg-iNv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="y0M-Vt-aPF"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Movies" id="e9Q-KH-3U4"/>
+                    <navigationItem key="navigationItem" id="bI3-Uo-0H1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ceb-K5-bPo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-508" y="1426"/>
         </scene>
         <!--Discover-->
         <scene sceneID="tne-QT-ifu">
@@ -78,7 +95,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-1058" y="1428"/>
+            <point key="canvasLocation" x="-1300" y="1426"/>
         </scene>
         <!--Search-->
         <scene sceneID="3Ut-9U-0q0">
@@ -95,29 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J3C-J2-8ay" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-114" y="1437"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="XrQ-kb-TMj">
-            <objects>
-                <viewController id="yZb-JJ-aHx" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="PV4-T5-oj2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sch-PC-IPl">
-                                <rect key="frame" x="54" y="100" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="VKo-Ig-pKQ"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ngB-xl-atc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-564" y="2159"/>
+            <point key="canvasLocation" x="318" y="1425"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hEk-Jo-i5P">
@@ -130,6 +125,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="tSq-DC-5ek" kind="relationship" relationship="viewControllers" id="GIu-vh-CPJ"/>
+                        <segue destination="WYg-nf-Gvo" kind="relationship" relationship="viewControllers" id="nB6-zG-Cm6"/>
                         <segue destination="npZ-EK-WTY" kind="relationship" relationship="viewControllers" id="Qxr-Tt-fLB"/>
                         <segue destination="EJu-90-1xw" kind="relationship" relationship="viewControllers" id="bUX-HD-NTP"/>
                     </connections>
@@ -153,7 +149,24 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="22H-vO-R4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="918" y="670"/>
+            <point key="canvasLocation" x="1090" y="670"/>
+        </scene>
+        <!--My Movies-->
+        <scene sceneID="16U-8q-DrA">
+            <objects>
+                <navigationController id="WYg-nf-Gvo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Movies" id="1UX-bq-N1V"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4td-tO-rmd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8e2-Tt-EgW" kind="relationship" relationship="rootViewController" id="sdf-35-G4C"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DI9-dx-1KG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-508" y="670"/>
         </scene>
         <!--Search-->
         <scene sceneID="2U5-Zj-Vs5">
@@ -170,24 +183,24 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bjz-cd-Wj8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-114" y="670"/>
+            <point key="canvasLocation" x="319" y="670"/>
         </scene>
-        <!--Search-->
+        <!--Account-->
         <scene sceneID="YdM-bC-yHP">
             <objects>
-                <viewController id="F27-32-JaF" sceneMemberID="viewController">
+                <viewController id="F27-32-JaF" customClass="SignInViewController" customModule="Movies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N84-pD-vul">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="8EA-gm-qeI"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search" id="V8e-DC-2Aa"/>
+                    <tabBarItem key="tabBarItem" title="Account" id="V8e-DC-2Aa"/>
                     <navigationItem key="navigationItem" id="d8n-Y7-I3Q"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jC3-TA-Ks8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="918" y="1436"/>
+            <point key="canvasLocation" x="1089" y="1425"/>
         </scene>
     </scenes>
 </document>

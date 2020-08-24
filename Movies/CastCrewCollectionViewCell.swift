@@ -13,12 +13,18 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
     let nameTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
         return label
     }()
     
     let subTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
         return label
     }()
     
@@ -55,7 +61,8 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 130),
+            imageView.heightAnchor.constraint(equalToConstant: 160),
             
             subTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             subTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),

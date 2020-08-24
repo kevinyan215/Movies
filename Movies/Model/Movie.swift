@@ -64,6 +64,8 @@ struct MovieDetail: Codable {
     let images: Images?
     
     var poster_image: Data?
+    var watchlist: Bool?
+    var favorite: Bool?
 }
 
 struct Collection: Codable {

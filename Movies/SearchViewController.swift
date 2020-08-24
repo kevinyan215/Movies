@@ -9,8 +9,6 @@
 import UIKit
 
 class SearchViewController : UIViewController {
-    
-    let networkManager = NetworkingManager.shared
     let searchBar = UISearchBar()
     let tableView : UITableView = {
         let tableView = UITableView()
@@ -38,7 +36,7 @@ class SearchViewController : UIViewController {
         tableView.backgroundColor = UIColor.lightGray
         
         let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(exitSearchBar))
+                                                action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
@@ -52,11 +50,21 @@ class SearchViewController : UIViewController {
         ])
     }
     
-    @objc func exitSearchBar() {
+    @objc func dismissKeyboard() {
         navigationItem.rightBarButtonItem = nil
-//        searchBar.text = ""
-//        searchBar.placeholder = "Search"
         searchBar.resignFirstResponder()
+    }
+    
+    @objc func cancelBarButtonItemClicked() {
+        self.dismissKeyboard()
+        self.resetTableView()
+    }
+    
+    func resetTableView() {
+        searchResults = []
+        searchBar.text = ""
+        searchBar.placeholder = "Search"
+        self.tableView.reloadData()
     }
 }
 
@@ -64,25 +72,35 @@ extension SearchViewController : UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                             target: self,
-                                                            action: #selector(exitSearchBar))
+                                                            action: #selector(cancelBarButtonItemClicked))
         searchBar.placeholder = nil
         
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.dismissKeyboard()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchNetworkCallWith(searchText)
+        if let searchText = searchBar.text, searchText != "" {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
+            self.perform(#selector(searchNetworkCall), with: nil, afterDelay: 0.5)
+        } else {
+            self.resetTableView()
+        }
     }
     
-    func searchNetworkCallWith(_ searchText: String) {
-        let searchTextUrlEncoded = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    @objc func searchNetworkCall() {
+        let searchTextUrlEncoded = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = movieSearchUrl + query + searchTextUrlEncoded
         print(urlString)
         if let url = URL(string: urlString) {
             let urlRequest = URLRequest(url: url)
-            networkManager.getRequest(urlRequest: urlRequest, success: {
+            networkManager.request(urlRequest: urlRequest, success: {
                 data in
                 if let data = data {
                      do {
@@ -94,8 +112,8 @@ extension SearchViewController : UISearchBarDelegate {
                             }
                         }
                         for (index,movieTvShow) in response.results.enumerated() {
-                            self.networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
-                                data in
+                            networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
+                                data,error in
                                 response.results[index]?.poster_image = data
                                 self.searchResults = response.results
                                 DispatchQueue.main.async {
@@ -132,11 +150,15 @@ extension SearchViewController : UITableViewDataSource {
 //            if searchResults[indexPath.row]?.media_type == "tv" {
 //                cell.movieTitlelabel.text = searchResults[indexPath.row]?.name
 //            } else if searchResults[indexPath.row]?.media_type == "movie" {
-                cell.movieTitlelabel.text = searchResults[indexPath.row]?.title
-                if let data = searchResults[indexPath.row]?.poster_image,
-                    let poster_image = UIImage(data: data) {
-                        cell.moviePosterImage.image = poster_image
-                }
+            cell.moviePosterImage.image = nil
+            cell.movieTitlelabel.text = nil
+            if let title = searchResults[indexPath.row]?.title {
+                cell.movieTitlelabel.text = title
+            }
+            if let data = searchResults[indexPath.row]?.poster_image,
+                let poster_image = UIImage(data: data) {
+                cell.moviePosterImage.image = poster_image
+            }
 //            }
             return cell
         }
@@ -150,20 +172,16 @@ extension SearchViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         if let searchId = searchResults[indexPath.row]?.id {
-            NetworkingManager.shared.getMovieDetailAt(searchId, completion: {
-                movieDetailResponse in
-                guard var movieDetailResponse = movieDetailResponse else { return }
-                NetworkingManager.shared.getMoviePosterImagesAt(movieDetailResponse.poster_path, completion: {
-                    response in
-                    movieDetailResponse.poster_image = response
-                    
-                    DispatchQueue.main.async {
-                        let movieDetailViewController = MovieDetailViewController()
-                        movieDetailViewController.movieDetail = movieDetailResponse
-                        self.navigationController?.pushViewController(movieDetailViewController, animated: true)
-                    }
-                })
+            NetworkingManager.shared.getMovieDetailAt(searchId, completionHandler: {
+                movieDetailResponse, error  in
+                guard var movieDetailResponse = movieDetailResponse as? MovieDetail else { return }
+                DispatchQueue.main.async {
+                    let movieDetailViewController = MovieDetailViewController()
+                    movieDetailViewController.movieDetail = movieDetailResponse
+                    self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+                }
             })
         }
     }
