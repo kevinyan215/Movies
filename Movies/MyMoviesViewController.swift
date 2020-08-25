@@ -33,6 +33,7 @@ class MyMoviesViewController : UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
+        collectionView.refreshControl = self.refreshControl
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -56,20 +57,31 @@ class MyMoviesViewController : UIViewController {
         moviesCollectionView.reloadData()
     }
     
+    var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
+    
+    @objc func refresh() {
+        DispatchQueue.main.async {
+            self.getNumberOfPages()
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.white
         setupStackViews()
-
         
+        if !userIsSignedIn() {
+             resetWatchList()
+         } else {
+             getNumberOfPages()
+         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if !userIsSignedIn() {
-            resetWatchList()
-        } else {
-//            getWatchList()
-            getNumberOfPages()
-        }
     }
     
     func setupStackViews() {
