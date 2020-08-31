@@ -9,8 +9,8 @@
 import UIKit
 
 class NowPlayingMoviesCell : MovieTabBarCell {
-    override func fetchMovies() {
-        super.fetchMovies()
-        networkManager.getNowPlayingMoviesWith(pageNumber: pageNumber, completionHandler: fetchMovieClosure)
+    override func getMovies() {
+        super.getMovies()
+        networkManager.getNowPlayingMoviesWith(pageNumber: pageNumber, completionHandler: getMovieClosure)
     }
 }

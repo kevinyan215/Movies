@@ -38,11 +38,11 @@ class MovieTabBarCell : BaseCell {
         return collectionView
     }()
     
-    func fetchMovies() {
+    func getMovies() {
         self.pageNumber += 1
     }
     
-    lazy var fetchMovieClosure: (Decodable?, Error?) -> Void = {
+    lazy var getMovieClosure: (Decodable?, Error?) -> Void = {
         response, error in
         guard let response = response as? MovieList else { return }
         for movie in response.results {
@@ -67,7 +67,7 @@ class MovieTabBarCell : BaseCell {
     
     override func setupViews() {
         super.setupViews()
-        self.fetchMovies()
+        self.getMovies()
 
         self.addSubview(moviesCollectionView)
         self.setupConstraints()
@@ -113,7 +113,7 @@ extension MovieTabBarCell :UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == movies.count - 1 && !isWaiting {
-            self.fetchMovies()
+            self.getMovies()
             self.isWaiting = true
         }
     }
