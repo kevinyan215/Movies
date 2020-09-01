@@ -73,15 +73,14 @@ class MyMoviesViewController : UIViewController {
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.white
         setupStackViews()
-        
-        if !userIsSignedIn() {
-             resetWatchList()
-         } else {
-             getNumberOfPages()
-         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if !userIsSignedIn() {
+            resetWatchList()
+        } else {
+            getNumberOfPages()
+        }
     }
     
     func setupStackViews() {
