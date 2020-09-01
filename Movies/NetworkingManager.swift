@@ -131,6 +131,26 @@ class NetworkingManager {
         
     }
     
+    func postFavoriteFor(mediaId: Int, onFavoriteList: Bool, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId())]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/favorite?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let jsonDict:[String:Any] = ["media_type": "movie", "media_id": mediaId, "favorite": onFavoriteList]
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDict, options: [])
+            request.httpBody = data
+        } catch {
+            
+        }
+
+        self.request(with: request, decodingType: AccountResponse.self, success: success, failure: failure)
+    }
+    
     func postWatchListFor(mediaId: Int, onWatchList:Bool, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId())]
         var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/watchlist?")
