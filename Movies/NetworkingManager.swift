@@ -122,6 +122,25 @@ class NetworkingManager {
         dataTask.resume()
     }
     
+    func logoutUser(success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue)]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + authentication + "session?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let jsonDict = ["session_id": getSessionId()]
+        do {
+            let json = try JSONSerialization.data(withJSONObject: jsonDict, options: [])
+            urlRequest.httpBody = json
+        } catch {
+            
+        }
+        self.request(with: urlRequest, decodingType: DeleteSessionResponse.self, success: success, failure: failure)
+        
+    }
+    
     func getMovieStateFor(movieId: Int, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId()), URLQueryItem(name: "movie_id", value: String(movieId))]
         var urlComps = URLComponents(string: theMovieDBBaseURL + movie + "\(movieId)/account_states?")

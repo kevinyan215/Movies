@@ -21,8 +21,19 @@ class AccountViewController : UIViewController {
     }()
     
     @objc func signOutButtonClicked() {
-        signOutUser()
-        self.navigationController?.popViewController(animated: true)
+        networkManager.logoutUser(success: {
+            response in
+            if let response = response as? DeleteSessionResponse, response.success {
+                deleteUserData()
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }, failure: {
+            error in
+            print(error)
+        })
+
     }
     
     override func viewDidLoad() {

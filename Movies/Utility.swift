@@ -23,6 +23,7 @@ func getAccountId() -> Int {
     return userDefaults.integer(forKey: accountIdIdentifier)
 }
 
-func signOutUser() {
+func deleteUserData() {
     userDefaults.removeObject(forKey: sessionIdIdentifier)
+    userDefaults.removeObject(forKey: accountIdIdentifier)
 }
