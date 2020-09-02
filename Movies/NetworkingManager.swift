@@ -171,6 +171,17 @@ class NetworkingManager {
         self.request(with: request, decodingType: AccountResponse.self, success: success, failure: failure)
     }
     
+    func getFavoritesListFor(sessionId: String, pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue),
+                          URLQueryItem(name: "language", value: "en-US"),
+                          URLQueryItem(name: "page", value: String(pageNumber)),
+                          URLQueryItem(name: "session_id", value: sessionId)]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/favorite/movies?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
+    }
+    
     func getWatchListFor(sessionId: String, pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue),
                           URLQueryItem(name: "language", value: "en-US"),
