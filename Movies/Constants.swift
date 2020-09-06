@@ -49,6 +49,9 @@ let NowPlayingMoviesCellId = "NowPlayingMoviesCellId"
 let TopRatedMoviesCellId = "TopRatedMoviesCellId"
 let UpcomingMoviesCellId = "UpcomingMoviesCellId"
 
+let AccountUserNameTableViewCellId = "AccountUserNameTableViewCellId"
+let AccountSignOutTableViewCellId = "AccountSignOutTableViewCellId"
+
 let sessionIdIdentifier = "sessionIdIdentifier"
 let accountIdIdentifier = "accountIdIdentifier"
 let accountUsernameIdentifier = "accountUsernameIdentifier"
