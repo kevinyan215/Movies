@@ -25,9 +25,10 @@ class SignInViewController : UIViewController {
     let loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .red
+        button.backgroundColor = .blue
         button.setTitle("Login", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(loginButtonClicked), for: .touchDown)
         return button
     }()
