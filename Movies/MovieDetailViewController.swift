@@ -167,6 +167,11 @@ class MovieDetailViewController : UIViewController {
         return item
     }()
     
+    lazy var shareBarButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareBarButtonItemClicked))
+        return item
+    }()
+    
     var isFavorite: Bool = false {
         didSet {
             if isFavorite {
@@ -199,7 +204,7 @@ class MovieDetailViewController : UIViewController {
         setupView()
         setupConstraints()
         
-        self.navigationItem.title = movieDetail?.original_title
+//        self.navigationItem.title = movieDetail?.original_title
 
         
         self.videoCollectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: videoCollectionViewCellIdentifier)
@@ -280,8 +285,21 @@ class MovieDetailViewController : UIViewController {
         })
     }
     
+    @objc private func shareBarButtonItemClicked() {
+        var shareText = "Check out this movie! "
+        if let videoCount = movieDetail?.videos?.results.count, videoCount > 0, let videoUrl = movieDetail?.videos?.results[0].key {
+            shareText.append(YoutubeWatchUrl + videoUrl)
+        } else if let title = movieDetail?.title {
+            shareText.append(title)
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: [shareText],
+                                                              applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
     private func addFavoriteWatchListBarButtonItems() {
-        navigationItem.rightBarButtonItems = [watchListBarButtonItem,favoriteBarButtonItem]
+        navigationItem.rightBarButtonItems = [shareBarButtonItem,watchListBarButtonItem,favoriteBarButtonItem]
     }
     
     @objc private func favoriteBarButtonClicked() {
@@ -306,13 +324,6 @@ class MovieDetailViewController : UIViewController {
                 self.getMovieAccountState()
             })
         }
-    }
-    
-    fileprivate func addShareBarButtonItem() {
-        let shareText = movieDetail?.homepage == "" ? "Check out \(movieDetail?.title) www.youtube.com!" : movieDetail?.homepage
-        let activityViewController = UIActivityViewController(activityItems: [shareText],
-                                                              applicationActivities: nil)
-        present(activityViewController, animated: true, completion: nil)
     }
     
     private func getCastAndCrew() {
@@ -536,7 +547,7 @@ extension MovieDetailViewController : UICollectionViewDataSource {
         if collectionView == videoCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoCollectionViewCellIdentifier, for: indexPath) as? VideoCollectionViewCell {
                 if let youtubeVideoUrlKey = movieDetail?.videos?.results[indexPath.row].key,
-                    let url = URL(string: YoutubeWatchUrl + youtubeVideoUrlKey)
+                    let url = URL(string: YoutubeEmbedUrl + youtubeVideoUrlKey)
                 {
                     cell.loadVideoFrom(URLRequest(url: url))
                 }
