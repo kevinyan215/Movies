@@ -13,7 +13,6 @@ class AccountViewController : UIViewController {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isUserInteractionEnabled = true
-//        tableView.allowsSelection = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AccountUserNameTableViewCell.self, forCellReuseIdentifier: AccountUserNameTableViewCellId)
@@ -71,6 +70,14 @@ extension AccountViewController : AccountSignOutTableViewCellDelegate {
 }
 
 extension AccountViewController : UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 100.0
+        } else {
+            return 50
+        }
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
