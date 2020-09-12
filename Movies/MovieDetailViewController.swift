@@ -158,14 +158,35 @@ class MovieDetailViewController : UIViewController {
     }()
     
     lazy var watchListBarButtonItem: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(named: "watchlist_icon"), style: .plain, target: self, action: #selector(watchListBarButtonOnClick))
+        let item = UIBarButtonItem(image: UIImage(named: "watchlist_icon"), style: .plain, target: self, action: #selector(watchListBarButtonClicked))
         return item
     }()
     
-    var isFavorite: Bool = false
+    lazy var favoriteBarButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(image: UIImage(named: "unfilled_star_icon"), style: .plain, target: self, action: #selector(favoriteBarButtonClicked))
+        return item
+    }()
     
-    var isWatchList: Bool = false
-    {
+    lazy var shareBarButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareBarButtonItemClicked))
+        return item
+    }()
+    
+    var isFavorite: Bool = false {
+        didSet {
+            if isFavorite {
+                DispatchQueue.main.async {
+                    self.favoriteBarButtonItem.image = UIImage(named: "filled_star_icon")
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.favoriteBarButtonItem.image = UIImage(named: "unfilled_star_icon")
+                }
+            }
+        }
+    }
+    
+    var isWatchList: Bool = false {
         didSet {
             if isWatchList {
                 DispatchQueue.main.async {
@@ -183,7 +204,7 @@ class MovieDetailViewController : UIViewController {
         setupView()
         setupConstraints()
         
-        self.navigationItem.title = movieDetail?.original_title
+//        self.navigationItem.title = movieDetail?.original_title
 
         
         self.videoCollectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: videoCollectionViewCellIdentifier)
@@ -247,7 +268,7 @@ class MovieDetailViewController : UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if userIsSignedIn() {
-            addWatchListBarButtonItem()
+            addFavoriteWatchListBarButtonItems()
         }
     }
     
@@ -264,13 +285,38 @@ class MovieDetailViewController : UIViewController {
         })
     }
     
-    private func addWatchListBarButtonItem() {
-        navigationItem.rightBarButtonItem = watchListBarButtonItem
+    @objc private func shareBarButtonItemClicked() {
+        var shareText = "Check out this movie! "
+        if let videoCount = movieDetail?.videos?.results.count, videoCount > 0, let videoUrl = movieDetail?.videos?.results[0].key {
+            shareText.append(YoutubeWatchUrl + videoUrl)
+        } else if let title = movieDetail?.title {
+            shareText.append(title)
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: [shareText],
+                                                              applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
     
-    @objc private func watchListBarButtonOnClick() {
+    private func addFavoriteWatchListBarButtonItems() {
+        navigationItem.rightBarButtonItems = [shareBarButtonItem,watchListBarButtonItem,favoriteBarButtonItem]
+    }
+    
+    @objc private func favoriteBarButtonClicked() {
         if let movieId = movieDetail?.id {
-            networkManager.postWatchListFor(mediaId: movieId, onWatchList: !(self.isWatchList), success: {
+            networkManager.postFavoriteFor(mediaId: movieId, onFavoriteList: !self.isFavorite, success: {
+                response in
+                self.getMovieAccountState()
+            }, failure: {
+                error in
+                self.getMovieAccountState()
+            })
+        }
+    }
+    
+    @objc private func watchListBarButtonClicked() {
+        if let movieId = movieDetail?.id {
+            networkManager.postWatchListFor(mediaId: movieId, onWatchList: !self.isWatchList, success: {
                 response in
                 self.getMovieAccountState()
         }, failure: {
@@ -278,13 +324,6 @@ class MovieDetailViewController : UIViewController {
                 self.getMovieAccountState()
             })
         }
-    }
-    
-    fileprivate func addShareBarButtonItem() {
-        let shareText = movieDetail?.homepage == "" ? "Check out \(movieDetail?.title) www.youtube.com!" : movieDetail?.homepage
-        let activityViewController = UIActivityViewController(activityItems: [shareText],
-                                                              applicationActivities: nil)
-        present(activityViewController, animated: true, completion: nil)
     }
     
     private func getCastAndCrew() {
@@ -508,7 +547,7 @@ extension MovieDetailViewController : UICollectionViewDataSource {
         if collectionView == videoCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoCollectionViewCellIdentifier, for: indexPath) as? VideoCollectionViewCell {
                 if let youtubeVideoUrlKey = movieDetail?.videos?.results[indexPath.row].key,
-                    let url = URL(string: YoutubeWatchUrl + youtubeVideoUrlKey)
+                    let url = URL(string: YoutubeEmbedUrl + youtubeVideoUrlKey)
                 {
                     cell.loadVideoFrom(URLRequest(url: url))
                 }

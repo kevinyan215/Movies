@@ -40,6 +40,8 @@
 		5280FF20226C35520092D197 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5280FF1F226C35520092D197 /* NetworkingManager.swift */; };
 		528A72EF2399DFEE00510B0E /* CastCrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A72EE2399DFEE00510B0E /* CastCrew.swift */; };
 		52AC09CE235987C700DEC28B /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC09CD235987C700DEC28B /* MovieDetailViewController.swift */; };
+		52C4FEC925049E5500860F7A /* AccountUserNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4FEC825049E5500860F7A /* AccountUserNameTableViewCell.swift */; };
+		52C4FECB2504A43C00860F7A /* AccountSignOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4FECA2504A43C00860F7A /* AccountSignOutTableViewCell.swift */; };
 		52C6226E23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C6226C23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift */; };
 		52CC6DE024AADBA500A416E3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526DB9AF247230D1009B309B /* SearchViewController.swift */; };
 		52CC6DE224AADF4800A416E3 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CC6DE124AADF4800A416E3 /* SearchResultsTableViewCell.swift */; };
@@ -84,6 +86,8 @@
 		5280FF1F226C35520092D197 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		528A72EE2399DFEE00510B0E /* CastCrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCrew.swift; sourceTree = "<group>"; };
 		52AC09CD235987C700DEC28B /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		52C4FEC825049E5500860F7A /* AccountUserNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserNameTableViewCell.swift; sourceTree = "<group>"; };
+		52C4FECA2504A43C00860F7A /* AccountSignOutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSignOutTableViewCell.swift; sourceTree = "<group>"; };
 		52C6226C23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCrewCollectionViewCell.swift; sourceTree = "<group>"; };
 		52CC6DE124AADF4800A416E3 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		52CC6DE324C372D900A416E3 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				525D7C6624E3BE3000F66056 /* SignInViewController.swift */,
 				525ECE2B24E62C56003D7DF0 /* WebViewViewController.swift */,
 				52556E7E24E8C8E7002FBD47 /* AccountViewController.swift */,
+				52C4FEC825049E5500860F7A /* AccountUserNameTableViewCell.swift */,
+				52C4FECA2504A43C00860F7A /* AccountSignOutTableViewCell.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -331,10 +337,12 @@
 				525D7C6724E3BE3100F66056 /* SignInViewController.swift in Sources */,
 				525D7C6024E331C800F66056 /* TopRatedMoviesCell.swift in Sources */,
 				52556E7A24E8AB54002FBD47 /* RequestToken.swift in Sources */,
+				52C4FEC925049E5500860F7A /* AccountUserNameTableViewCell.swift in Sources */,
 				525D7C5224E0E89D00F66056 /* UIColor+RGB.swift in Sources */,
 				525D7C6224E3331700F66056 /* UpcomingMoviesCell.swift in Sources */,
 				528A72EF2399DFEE00510B0E /* CastCrew.swift in Sources */,
 				52C6226E23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift in Sources */,
+				52C4FECB2504A43C00860F7A /* AccountSignOutTableViewCell.swift in Sources */,
 				525D7C6524E33FCE00F66056 /* RatingView.swift in Sources */,
 				5280FF20226C35520092D197 /* NetworkingManager.swift in Sources */,
 				525ECE2C24E62C56003D7DF0 /* WebViewViewController.swift in Sources */,

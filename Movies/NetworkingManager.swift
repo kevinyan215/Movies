@@ -122,6 +122,25 @@ class NetworkingManager {
         dataTask.resume()
     }
     
+    func logoutUser(success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue)]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + authentication + "session?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let jsonDict = ["session_id": getSessionId()]
+        do {
+            let json = try JSONSerialization.data(withJSONObject: jsonDict, options: [])
+            urlRequest.httpBody = json
+        } catch {
+            
+        }
+        self.request(with: urlRequest, decodingType: DeleteSessionResponse.self, success: success, failure: failure)
+        
+    }
+    
     func getMovieStateFor(movieId: Int, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
         let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId()), URLQueryItem(name: "movie_id", value: String(movieId))]
         var urlComps = URLComponents(string: theMovieDBBaseURL + movie + "\(movieId)/account_states?")
@@ -129,6 +148,26 @@ class NetworkingManager {
         guard let url = urlComps?.url else { return }
         self.request(with: URLRequest(url: url), decodingType: MovieAccountState.self, success: success, failure: failure)
         
+    }
+    
+    func postFavoriteFor(mediaId: Int, onFavoriteList: Bool, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue), URLQueryItem(name: "session_id", value: getSessionId())]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/favorite?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let jsonDict:[String:Any] = ["media_type": "movie", "media_id": mediaId, "favorite": onFavoriteList]
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDict, options: [])
+            request.httpBody = data
+        } catch {
+            
+        }
+
+        self.request(with: request, decodingType: AccountResponse.self, success: success, failure: failure)
     }
     
     func postWatchListFor(mediaId: Int, onWatchList:Bool, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
@@ -149,6 +188,17 @@ class NetworkingManager {
         }
 
         self.request(with: request, decodingType: AccountResponse.self, success: success, failure: failure)
+    }
+    
+    func getFavoritesListFor(sessionId: String, pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        let queryItems: [URLQueryItem] = [URLQueryItem(name: "api_key", value: APIKeyValue),
+                          URLQueryItem(name: "language", value: "en-US"),
+                          URLQueryItem(name: "page", value: String(pageNumber)),
+                          URLQueryItem(name: "session_id", value: sessionId)]
+        var urlComps = URLComponents(string: theMovieDBBaseURL + "account/\(getAccountId())/favorite/movies?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return  }
+        self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
     func getWatchListFor(sessionId: String, pageNumber: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {

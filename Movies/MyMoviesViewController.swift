@@ -65,7 +65,12 @@ class MyMoviesViewController : UIViewController {
     
     @objc func refresh() {
         DispatchQueue.main.async {
-            self.getNumberOfPages()
+            if self.segmentedControl.selectedSegmentIndex == 0 {
+                self.getNumberOfWatchListPages()
+            } else {
+                self.getNumberOfFavoritePages()
+
+            }
             self.refreshControl.endRefreshing()
         }
     }
@@ -73,15 +78,15 @@ class MyMoviesViewController : UIViewController {
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.white
         setupStackViews()
-        
-        if !userIsSignedIn() {
-             resetWatchList()
-         } else {
-             getNumberOfPages()
-         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if !userIsSignedIn() {
+            resetWatchListFavoritesList()
+        } else {
+            getNumberOfFavoritePages()
+            getNumberOfWatchListPages()
+        }
     }
     
     func setupStackViews() {
@@ -102,15 +107,16 @@ class MyMoviesViewController : UIViewController {
         ])
     }
     
-    func resetWatchList() {
-        self.clearWatchList()
+    func resetWatchListFavoritesList() {
+        self.clearLists()
         DispatchQueue.main.async {
             self.moviesCollectionView.reloadData()
         }
     }
     
-    func clearWatchList() {
+    func clearLists() {
         self.watchList = []
+        self.favoritesList = []
         self.setRowsToDisplay(list: self.watchList)
     }
     
@@ -123,20 +129,28 @@ class MyMoviesViewController : UIViewController {
         })
     }
     
-    func getWatchListFor(pageNumber: Int) {
-        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: pageNumber, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+    func getNumberOfFavoritePages() {
+        self.favoritesList = []
+        networkManager.getFavoritesListFor(sessionId: getSessionId(), pageNumber: 1, completionHandler: getNumberOfPages(completionHandler: {
+            pageNumber in
+            networkManager.getFavoritesListFor(sessionId: getSessionId(), pageNumber: pageNumber, completionHandler: self.getMovieList(completionHandler: self.getFavoritesListResponse))
+        }))
     }
     
-    func getNumberOfPages() {
-        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: 1, completionHandler: getWatchList())
+    func getNumberOfWatchListPages() {
+        self.watchList = []
+        networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: 1, completionHandler: getNumberOfPages(completionHandler: {
+            pageNumber in
+            networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: pageNumber, completionHandler: self.getMovieList(completionHandler: self.getWatchListResponse))
+        }))
     }
     
-    func getWatchList() -> (Decodable?, Error?) -> Void {
+    func getNumberOfPages(completionHandler: @escaping (Int) -> Void) -> (Decodable?, Error?) -> Void {
         return {
             response, error in
             if let response = response as? MovieList, let totalPages = response.total_pages {
                 for pageNumber in 1...totalPages {
-                    networkManager.getWatchListFor(sessionId: getSessionId(), pageNumber: pageNumber, completionHandler: self.getMovieList(completionHandler: self.fetchWatchListResponse))
+                    completionHandler(pageNumber)
                 }
             }
         }
@@ -147,7 +161,6 @@ class MyMoviesViewController : UIViewController {
             response, error in
             if error == nil {
             }
-            self.clearWatchList()
             guard let response = response as? MovieList else { return }
             for movie in response.results {
                 if let movie = movie, let movieId = movie.id {
@@ -175,20 +188,24 @@ class MyMoviesViewController : UIViewController {
         }
     }
     
-    lazy var favoritesListResponse = getMoviePosterImagesAt { response in
+    lazy var getFavoritesListResponse = getMoviePosterImagesAt { response in
         self.favoritesList.append(response)
-        self.setRowsToDisplay(list: self.favoritesList)
-    }
-    
-    lazy var fetchWatchListResponse = getMoviePosterImagesAt { response in
-        self.watchList.append(response)
-        self.setRowsToDisplay(list: self.watchList)
-    }
-    
-    
+        DispatchQueue.main.async {
+            if self.segmentedControl.selectedSegmentIndex == 1 {
+                self.setRowsToDisplay(list: self.favoritesList)
+            }
+        }
    
+    }
     
-    
+    lazy var getWatchListResponse = getMoviePosterImagesAt { response in
+        self.watchList.append(response)
+        DispatchQueue.main.async {
+            if self.segmentedControl.selectedSegmentIndex == 0 {
+                self.setRowsToDisplay(list: self.watchList)
+            }
+        }
+    }
 }
 
 extension MyMoviesViewController : UICollectionViewDataSource {

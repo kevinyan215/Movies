@@ -37,7 +37,8 @@ let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500"
 let multiSearchUrl = multiSearchBaseUrl + APIKey
 let movieSearchUrl = movieSearchBaseUrl + APIKey
 let APIKey = "api_key=\(APIKeyValue)"
-let YoutubeWatchUrl = "https://www.youtube.com/embed/"
+let YoutubeEmbedUrl = "https://www.youtube.com/embed/"
+let YoutubeWatchUrl = "https://www.youtube.com/watch?v="
 
 let movieCollectionViewCellIdentifier = "MovieCollectionViewCellIdentifier"
 let videoCollectionViewCellIdentifier = "VideoCollectionViewCellIdentifier"
@@ -48,6 +49,9 @@ let MovieTabBarCellId = "MovieTabBarCellId"
 let NowPlayingMoviesCellId = "NowPlayingMoviesCellId"
 let TopRatedMoviesCellId = "TopRatedMoviesCellId"
 let UpcomingMoviesCellId = "UpcomingMoviesCellId"
+
+let AccountUserNameTableViewCellId = "AccountUserNameTableViewCellId"
+let AccountSignOutTableViewCellId = "AccountSignOutTableViewCellId"
 
 let sessionIdIdentifier = "sessionIdIdentifier"
 let accountIdIdentifier = "accountIdIdentifier"
