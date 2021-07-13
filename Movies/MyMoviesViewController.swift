@@ -122,11 +122,11 @@ class MyMoviesViewController : UIViewController {
     
     func setRowsToDisplay(list: [MovieDetail]) {
         self.rowsToDisplay = list
-        self.rowsToDisplay.sort(by: {
-            first, second in
-            guard let first = first.title, let second = second.title else { return false }
-            return first < second
-        })
+//        self.rowsToDisplay.sort(by: {
+//            first, second in
+//            guard let first = first.title, let second = second.title else { return false }
+//            return first < second
+//        })
     }
     
     func getNumberOfFavoritePages() {
