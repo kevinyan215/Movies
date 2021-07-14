@@ -270,6 +270,36 @@ class MovieDetailViewController : UIViewController {
         }
     }
     
+    private func getSimilarMovies() {
+        guard let movieId = self.movieDetail?.id else { return }
+        networkManager.getSimilarMoviesFor(movieId: movieId, success: {
+            response in
+            
+            guard let response = response as? MovieList else { return }
+            for movie in response.results {
+                if let movie = movie, let movieId = movie.id {
+                    networkManager.getMovieDetailAt(movieId, completionHandler:  {
+                        movieResponse, error in
+                        guard var movieResponse = movieResponse as? MovieDetail else {return}
+                        networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                            data,error  in
+                            movieResponse.poster_image = data
+                            self.similarMovies.append(movieResponse)
+                            DispatchQueue.main.async {
+                                self.similarMoviesCollectionView.reloadData()
+                            }
+                        })
+
+                    })
+                }
+            }
+            
+        }, failure: {
+            error in
+        })
+        
+    }
+    
     private func getMovieAccountState() {
         guard let movieId = self.movieDetail?.id else { return }
         networkManager.getMovieStateFor(movieId: movieId, success: {
