@@ -158,6 +158,8 @@
 				525D7C5F24E331C800F66056 /* TopRatedMoviesCell.swift */,
 				525D7C5D24E32F4E00F66056 /* NowPlayingMoviesCell.swift */,
 				521A18BF2272588300AC8CDF /* MovieCollectionViewCell.swift */,
+				5224551E237FBDF60008E1AE /* VideoCollectionViewCell.swift */,
+				52C6226C23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
