@@ -172,9 +172,9 @@ class MovieDetailViewController : UIViewController {
         return item
     }()
     
-    var isFavorite: Bool = false {
+    var isFavoriteList: Bool = false {
         didSet {
-            if isFavorite {
+            if isFavoriteList {
                 DispatchQueue.main.async {
                     self.favoriteBarButtonItem.image = UIImage(named: "filled_star_icon")
                 }
@@ -277,7 +277,7 @@ class MovieDetailViewController : UIViewController {
         networkManager.getMovieStateFor(movieId: movieId, success: {
             response in
             guard let response = response as? MovieAccountState else { return }
-            self.isFavorite = response.favorite
+            self.isFavoriteList = response.favorite
             self.isWatchList = response.watchlist
         }, failure: {
             error in
@@ -304,7 +304,7 @@ class MovieDetailViewController : UIViewController {
     
     @objc private func favoriteBarButtonClicked() {
         if let movieId = movieDetail?.id {
-            networkManager.postFavoriteFor(mediaId: movieId, onFavoriteList: !self.isFavorite, success: {
+            networkManager.postFavoriteFor(mediaId: movieId, onFavoriteList: !self.isFavoriteList, success: {
                 response in
                 self.getMovieAccountState()
             }, failure: {
