@@ -263,7 +263,6 @@ class MovieDetailViewController : UIViewController {
         getMoviePosterImage()
         getCastAndCrew()
         getMovieAccountState()
-//        addShareBarButtonItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
