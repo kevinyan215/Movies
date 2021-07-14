@@ -12,6 +12,7 @@ import WebKit
 class MovieDetailViewController : UIViewController {
     var movieDetail: MovieDetail?
     var castCrew: CastCrew?
+    var similarMovies: [MovieDetail] = []
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -92,6 +93,13 @@ class MovieDetailViewController : UIViewController {
             return layout
         }()
     
+    let similarMoviesCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+            layout.itemSize = CGSize(width: 130, height: 200)
+            layout.scrollDirection = .horizontal
+            return layout
+        }()
     
     lazy var videoCollectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: videoCollectionViewFlowLayout)
@@ -111,6 +119,21 @@ class MovieDetailViewController : UIViewController {
 
     lazy var crewCollectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: crewCollectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    
+    let similarMovieLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Similar Movies"
+        return label
+    }()
+    
+    lazy var similarMoviesCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: similarMoviesCollectionViewFlowLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -209,6 +232,7 @@ class MovieDetailViewController : UIViewController {
         self.videoCollectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: videoCollectionViewCellIdentifier)
         self.castCollectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: castCrewCollectionViewCellIdentifier)
         self.crewCollectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: castCrewCollectionViewCellIdentifier)
+        self.similarMoviesCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: SimilarMovieCollectionViewCellIdentifer)
         
         self.titleLabel.text = movieDetail?.title
 //        self.titleLabel.adjustsFontSizeToFitWidth = true
@@ -262,6 +286,7 @@ class MovieDetailViewController : UIViewController {
         getMoviePosterImage()
         getCastAndCrew()
         getMovieAccountState()
+        getSimilarMovies()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -440,16 +465,19 @@ class MovieDetailViewController : UIViewController {
         contentView.addSubview(releaseDateLabel)
         contentView.addSubview(genreLabel)
         contentView.addSubview(plotSummaryDescriptionLabel)
+        
+        contentView.addSubview(videoCollectionView)
+        contentView.addSubview(castCollectionView)
+        contentView.addSubview(crewCollectionView)
+        contentView.addSubview(similarMovieLabel)
+        contentView.addSubview(similarMoviesCollectionView)
+        
         contentView.addSubview(runtimeLabel)
         contentView.addSubview(runtimeDescriptionLabel)
         contentView.addSubview(budgetLabel)
         contentView.addSubview(budgetDescriptionLabel)
         contentView.addSubview(revenueLabel)
         contentView.addSubview(revenueDescriptionLabel)
-        
-        contentView.addSubview(videoCollectionView)
-        contentView.addSubview(castCollectionView)
-        contentView.addSubview(crewCollectionView)
         
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
@@ -459,7 +487,7 @@ class MovieDetailViewController : UIViewController {
     func setupConstraints() {
         let collectionViewHeight: CGFloat = 200.0
         let leadingAnchorSpacing: CGFloat = 20.0
-        let collectionViewsleadingAnchorSpacing: CGFloat = 15.0
+        let collectionViewsleadingAnchorSpacing: CGFloat = 20.0
         let trailingAnchorSpacing: CGFloat = -20.0
         let topBottomSpacingMovieFacts: CGFloat = 0.0
         let widthSpacingMovieFactLabel : CGFloat = 75
@@ -513,12 +541,22 @@ class MovieDetailViewController : UIViewController {
             crewCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
             crewCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
-            runtimeLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            similarMovieLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            similarMovieLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            similarMovieLabel.widthAnchor.constraint(equalToConstant: 150),
+            similarMovieLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+            
+            similarMoviesCollectionView.topAnchor.constraint(equalTo: similarMovieLabel.bottomAnchor, constant: 0),
+            similarMoviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
+            similarMoviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            similarMoviesCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+
+            runtimeLabel.topAnchor.constraint(equalTo: similarMoviesCollectionView.bottomAnchor, constant: 20),
             runtimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
             runtimeLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
             runtimeLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
 
-            runtimeDescriptionLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            runtimeDescriptionLabel.topAnchor.constraint(equalTo: similarMoviesCollectionView.bottomAnchor, constant: 20),
             runtimeDescriptionLabel.leadingAnchor.constraint(equalTo: runtimeLabel.trailingAnchor, constant: 5),
             runtimeDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
             runtimeDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
@@ -567,6 +605,8 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                 }
                 return crewCount
             }
+        } else if collectionView == similarMoviesCollectionView {
+            return self.similarMovies.count
         }
         return 0
     }
@@ -616,6 +656,15 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                 }
                 return cell
             }
+        } else if collectionView == similarMoviesCollectionView {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarMovieCollectionViewCellIdentifer, for: indexPath) as? MovieCollectionViewCell {
+                cell.movieImage.image = nil
+                if let data = similarMovies[indexPath.item].poster_image,
+                    let poster_image = UIImage(data: data) {
+                        cell.movieImage.image = poster_image
+                }
+                cell.ratingView.configureViewFor(voteAverage: similarMovies[indexPath.item].vote_average ?? 0.0)
+                return cell            }
         }
        
         return UICollectionViewCell()
