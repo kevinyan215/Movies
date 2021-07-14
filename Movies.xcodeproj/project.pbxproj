@@ -199,8 +199,6 @@
 				525D7C5124E0E89D00F66056 /* UIColor+RGB.swift */,
 				525D7C6324E33E8300F66056 /* View */,
 				5246613E23065BF00002438B /* Model */,
-				5224551E237FBDF60008E1AE /* VideoCollectionViewCell.swift */,
-				52C6226C23A89BAA00B72B65 /* CastCrewCollectionViewCell.swift */,
 				52CC6DE124AADF4800A416E3 /* SearchResultsTableViewCell.swift */,
 				521A18BB2272444C00AC8CDF /* Constants.swift */,
 				52556E8224E905B2002FBD47 /* Utility.swift */,
