@@ -317,4 +317,13 @@ class NetworkingManager {
         }
     }
     
+    func getCastDetails(creditId: String, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        let queryItems = [ URLQueryItem(name: "api_key", value: APIKeyValue)]
+        let creditIdQueryString = creditId + "?"
+        var urlComps = URLComponents(string: theMovieDBBaseURL + credit + creditIdQueryString)
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        self.request(with: URLRequest(url: url), decodingType: CastDetails.self, completionHandler: completion)
+    }
+    
 }

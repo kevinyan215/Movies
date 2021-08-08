@@ -44,12 +44,6 @@ class MovieDetailViewController : UIViewController {
         label.allowsDefaultTighteningForTruncation = true
         return label
     }()
-    
-    let releaseDateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
 
     let genreLabel: UILabel = {
         let label = UILabel()
@@ -57,6 +51,18 @@ class MovieDetailViewController : UIViewController {
         label.numberOfLines = 4
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
+        return label
+    }()
+    
+    let releaseDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let ratingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -114,6 +120,7 @@ class MovieDetailViewController : UIViewController {
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
 
@@ -122,6 +129,7 @@ class MovieDetailViewController : UIViewController {
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -137,6 +145,7 @@ class MovieDetailViewController : UIViewController {
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -262,6 +271,8 @@ class MovieDetailViewController : UIViewController {
 
         }
         genreLabel.text = genresString
+        
+        ratingLabel.text = String(self.movieDetail?.vote_average ?? 0.0)
         
         if let runtime = movieDetail?.runtime {
             self.runtimeDescriptionLabel.text = "\(runtime) minutes"
@@ -462,8 +473,9 @@ class MovieDetailViewController : UIViewController {
         contentView.backgroundColor = UIColor.gray
         contentView.addSubview(posterImage)
         contentView.addSubview(titleLabel)
-        contentView.addSubview(releaseDateLabel)
         contentView.addSubview(genreLabel)
+        contentView.addSubview(releaseDateLabel)
+        contentView.addSubview(ratingLabel)
         contentView.addSubview(plotSummaryDescriptionLabel)
         
         contentView.addSubview(videoCollectionView)
@@ -507,7 +519,7 @@ class MovieDetailViewController : UIViewController {
             
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: leadingAnchorSpacing),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            posterImage.heightAnchor.constraint(equalToConstant: 100),
+            posterImage.heightAnchor.constraint(equalToConstant: 150),
             posterImage.widthAnchor.constraint(equalToConstant: 100),
             
             titleLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
@@ -520,6 +532,9 @@ class MovieDetailViewController : UIViewController {
             
             releaseDateLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 10),
             releaseDateLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
+            
+            ratingLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: 10),
+            ratingLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
             
             plotSummaryDescriptionLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor, constant: 30),
             plotSummaryDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
@@ -593,16 +608,16 @@ extension MovieDetailViewController : UICollectionViewDataSource {
             }
         } else if collectionView == castCollectionView {
             if let castCount = castCrew?.cast.count {
-                if castCount > 10 {
-                    return 10
-                }
+//                if castCount > 10 {
+//                    return 10
+//                }
                 return castCount
             }
         } else if collectionView == crewCollectionView {
             if let crewCount = castCrew?.crew.count {
-                if crewCount > 10 {
-                    return 10
-                }
+//                if crewCount > 10 {
+//                    return 10
+//                }
                 return crewCount
             }
         } else if collectionView == similarMoviesCollectionView {
@@ -668,5 +683,24 @@ extension MovieDetailViewController : UICollectionViewDataSource {
         }
        
         return UICollectionViewCell()
+    }
+}
+
+extension MovieDetailViewController :UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == castCollectionView || collectionView == crewCollectionView {
+            let castCrewDetailViewController = CastCrewDetailsViewController()
+            if collectionView == castCollectionView {
+                castCrewDetailViewController.creditId = castCrew?.cast[indexPath.row].credit_id
+            } else if collectionView == crewCollectionView {
+                castCrewDetailViewController.creditId = castCrew?.crew[indexPath.row].credit_id
+            }
+            self.navigationController?.pushViewController(castCrewDetailViewController, animated: false)
+        }
+        else if collectionView == similarMoviesCollectionView {
+            let movieDetailViewController = MovieDetailViewController()
+            movieDetailViewController.movieDetail = similarMovies[indexPath.row]
+            self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+        }
     }
 }
