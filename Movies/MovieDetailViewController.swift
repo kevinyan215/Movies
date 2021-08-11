@@ -235,7 +235,7 @@ class MovieDetailViewController : UIViewController {
         setupView()
         setupConstraints()
         
-//        self.navigationItem.title = movieDetail?.original_title
+        self.navigationItem.title = movieDetail?.original_title
 
         
         self.videoCollectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: videoCollectionViewCellIdentifier)
