@@ -13,6 +13,7 @@ class SearchResultsTableViewCell : UITableViewCell {
     let movieTitlelabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         return label
     }()
     
@@ -44,7 +45,7 @@ class SearchResultsTableViewCell : UITableViewCell {
     func setupConstraints() {
         NSLayoutConstraint.activate([
 //            moviePosterImage.heightAnchor.constraint(equalToConstant: 100),
-            moviePosterImage.widthAnchor.constraint(equalToConstant: 100),
+            moviePosterImage.widthAnchor.constraint(equalToConstant: 80),
             moviePosterImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             moviePosterImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
             moviePosterImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -5),
