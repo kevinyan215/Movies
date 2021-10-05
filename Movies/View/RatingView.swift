@@ -15,16 +15,7 @@ class RatingView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.white
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
-    var percentLabel : UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.white
-        label.font = UIFont.init(descriptor: UIFontDescriptor(name: "Helvetica Nue", size: 5), size: 5)
-        label.text = "%"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
     
@@ -42,9 +33,8 @@ class RatingView: UIView {
     
     
     func configureViewFor(voteAverage: Double) {
-        let average:CGFloat = CGFloat(voteAverage/10)
-        percentValueLabel.text = String(Int(voteAverage*10))
-        
+        percentValueLabel.text = String(voteAverage)
+
         self.backgroundColor = UIColor.clear
 //         self.backgroundColor = UIColor.init(red: 33/255, green: 33/255, blue: 33/255, alpha: 1.0)
          let shapeLayer = CAShapeLayer()
@@ -61,7 +51,7 @@ class RatingView: UIView {
          trackLayer.fillColor = UIColor.clear.cgColor
 
          
-        if average >= 0.5 {
+        if voteAverage >= 0.5 {
             shapeLayer.strokeColor = UIColor.init(red: 31/255, green: 209/255, blue: 122/255, alpha: 1.0).cgColor
             trackLayer.strokeColor = UIColor.init(red: 32/255, green: 70/255, blue: 40/255, alpha: 1).cgColor
         } else {
@@ -70,7 +60,7 @@ class RatingView: UIView {
         }
         
         shapeLayer.lineWidth =  4
-        shapeLayer.strokeEnd = average
+        shapeLayer.strokeEnd = CGFloat(voteAverage)
         self.layer.addSublayer(trackLayer)
         self.layer.addSublayer(shapeLayer)
         
@@ -78,19 +68,14 @@ class RatingView: UIView {
     }
     func setupViews() {
         addSubview(percentValueLabel)
-        addSubview(percentLabel)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            percentValueLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor, constant: 0),
-            percentValueLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
+            percentValueLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            percentValueLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
             percentValueLabel.widthAnchor.constraint(equalToConstant: 20),
             percentValueLabel.heightAnchor.constraint(equalToConstant: 20),
-            percentLabel.leadingAnchor.constraint(equalTo: percentValueLabel.trailingAnchor, constant: 0),
-            percentLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            percentLabel.widthAnchor.constraint(equalToConstant: 7),
-            percentLabel.heightAnchor.constraint(equalToConstant: 7)
         ])
     }
 }

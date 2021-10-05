@@ -9,7 +9,8 @@
 import UIKit
 
 class UpcomingMoviesCell : MovieTabBarCell {
-    override func fetchMovies() {
-        networkManager.getUpcomingMovies(completion: fetchMovieClosure)
+    override func getMovies() {
+        super.getMovies()
+        networkManager.getUpcomingMoviesWith(pageNumber: pageNumber, completionHandler: getMovieClosure)
     }
 }

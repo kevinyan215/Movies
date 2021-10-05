@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MovieTabBarDelegate : class {
+    func scrollToMenuIndex(menuIndex: Int)
+}
+
 class MovieTabBar: UIView {
     
     lazy var menuTabsCollectionView: UICollectionView = {
@@ -19,9 +23,10 @@ class MovieTabBar: UIView {
         collectionView.delegate = self
         return collectionView
     }()
-    var tabSelections = ["Popular", "Top Rated", "Now Playing",  "Upcoming"] //["Popular", "Latest", "Now Playing", "Top Rated", "Upcoming"] 
+    var tabSelections:[String]
     var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
     var movieCollectionViewController: MovieCollectionViewController?
+    weak var delegate: MovieTabBarDelegate?
     
     func setupHorizontalBar() {
         let horizontalBarView = UIView()
@@ -37,7 +42,8 @@ class MovieTabBar: UIView {
         horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     }
     
-    override init(frame: CGRect) {
+    init(tabSelections: [String], frame: CGRect) {
+        self.tabSelections = tabSelections
         super.init(frame: frame)
         menuTabsCollectionView.register(MenuCell.self, forCellWithReuseIdentifier: "MenuCell")
         setupView()
@@ -59,10 +65,10 @@ class MovieTabBar: UIView {
     func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            menuTabsCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            menuTabsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            menuTabsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            menuTabsCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            menuTabsCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            menuTabsCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            menuTabsCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            menuTabsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }
@@ -84,7 +90,7 @@ extension MovieTabBar : UICollectionViewDataSource {
 
 extension MovieTabBar : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        movieCollectionViewController?.scrollToMenuIndex(menuIndex: indexPath.item)
+        delegate?.scrollToMenuIndex(menuIndex: indexPath.item)
     }
 }
 
