@@ -55,7 +55,7 @@ class SignInViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.gray
+        self.view.backgroundColor = UIColor.white
         setupView()
     }
     

@@ -22,7 +22,7 @@ class AccountViewController : UIViewController {
     
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
-        self.view.backgroundColor = UIColor.gray
+//        self.view.backgroundColor = UIColor.gray
         
         self.view.addSubview(tableView)
         

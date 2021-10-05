@@ -33,7 +33,8 @@ private let multiSearchBaseUrl = theMovieDBBaseURL + searchQuery + "multi?"
 private let movieSearchBaseUrl = theMovieDBBaseURL + searchQuery + "movie?"
 let tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500"
 
-//let castCrewQuery =
+let credit = "credit/"
+
 let multiSearchUrl = multiSearchBaseUrl + APIKey
 let movieSearchUrl = movieSearchBaseUrl + APIKey
 let APIKey = "api_key=\(APIKeyValue)"
@@ -44,6 +45,7 @@ let movieCollectionViewCellIdentifier = "MovieCollectionViewCellIdentifier"
 let videoCollectionViewCellIdentifier = "VideoCollectionViewCellIdentifier"
 let castCrewCollectionViewCellIdentifier = "CastCrewCollectionViewCellIdentifier"
 let SearchResultsTableViewCellIdentifier = "SearchResultsTableViewCellIdentifier"
+let SimilarMovieCollectionViewCellIdentifer = "SimilarMovieCollectionViewCellIdentifer"
 let PopularMoviesCellId = "PopularMoviesCellId"
 let MovieTabBarCellId = "MovieTabBarCellId"
 let NowPlayingMoviesCellId = "NowPlayingMoviesCellId"

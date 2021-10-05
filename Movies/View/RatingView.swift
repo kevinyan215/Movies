@@ -15,7 +15,7 @@ class RatingView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.white
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
     
@@ -33,9 +33,8 @@ class RatingView: UIView {
     
     
     func configureViewFor(voteAverage: Double) {
-        let average:CGFloat = CGFloat(voteAverage/10)
-        percentValueLabel.text = String(Int(voteAverage*10))
-        
+        percentValueLabel.text = String(voteAverage)
+
         self.backgroundColor = UIColor.clear
 //         self.backgroundColor = UIColor.init(red: 33/255, green: 33/255, blue: 33/255, alpha: 1.0)
          let shapeLayer = CAShapeLayer()
@@ -52,7 +51,7 @@ class RatingView: UIView {
          trackLayer.fillColor = UIColor.clear.cgColor
 
          
-        if average >= 0.5 {
+        if voteAverage >= 0.5 {
             shapeLayer.strokeColor = UIColor.init(red: 31/255, green: 209/255, blue: 122/255, alpha: 1.0).cgColor
             trackLayer.strokeColor = UIColor.init(red: 32/255, green: 70/255, blue: 40/255, alpha: 1).cgColor
         } else {
@@ -61,7 +60,7 @@ class RatingView: UIView {
         }
         
         shapeLayer.lineWidth =  4
-        shapeLayer.strokeEnd = average
+        shapeLayer.strokeEnd = CGFloat(voteAverage)
         self.layer.addSublayer(trackLayer)
         self.layer.addSublayer(shapeLayer)
         

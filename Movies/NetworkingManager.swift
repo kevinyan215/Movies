@@ -295,6 +295,13 @@ class NetworkingManager {
         self.request(with: URLRequest(url: url), decodingType: MovieList.self, completionHandler: completion)
     }
     
+    func getSimilarMoviesFor(movieId: Int, success: @escaping (Decodable?) -> Void, failure: @escaping (Error?) -> Void) {
+        let movieIdQuery = "\(movieId)/"
+        guard let url = URL(string: movieBaseUrl + movieIdQuery + "similar?" + APIKey) else { return }
+        let urlRequest = URLRequest(url: url)
+        self.request(with: urlRequest, decodingType: MovieList.self, success: success, failure: failure)
+    }
+    
     func getMovieDetailAt(_ movieId: Int, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
         let movieIdQuery = "\(movieId)?"
         guard let url = URL(string: movieBaseUrl + movieIdQuery + APIKey + "&append_to_response=videos,images") else { return  }
@@ -308,6 +315,15 @@ class NetworkingManager {
                 self.request(urlRequest: URLRequest(url: posterPathUrl), completionHandler: completion)
             }
         }
+    }
+    
+    func getCastDetails(creditId: String, completionHandler completion: @escaping (Decodable?, Error?) -> Void) {
+        let queryItems = [ URLQueryItem(name: "api_key", value: APIKeyValue)]
+        let creditIdQueryString = creditId + "?"
+        var urlComps = URLComponents(string: theMovieDBBaseURL + credit + creditIdQueryString)
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        self.request(with: URLRequest(url: url), decodingType: CastDetails.self, completionHandler: completion)
     }
     
 }

@@ -28,8 +28,8 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let imageView: UIImageView  = {
-        let imageView = UIImageView(frame: .zero)
+    let imageView: CastCrewImageView = {
+        let imageView = CastCrewImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -62,7 +62,7 @@ class CastCrewCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 130),
-            imageView.heightAnchor.constraint(equalToConstant: 160),
+            imageView.heightAnchor.constraint(equalToConstant: 130),
             
             subTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             subTitleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),

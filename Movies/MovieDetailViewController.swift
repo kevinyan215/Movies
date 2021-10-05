@@ -12,6 +12,7 @@ import WebKit
 class MovieDetailViewController : UIViewController {
     var movieDetail: MovieDetail?
     var castCrew: CastCrew?
+    var similarMovies: [MovieDetail] = []
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -43,12 +44,6 @@ class MovieDetailViewController : UIViewController {
         label.allowsDefaultTighteningForTruncation = true
         return label
     }()
-    
-    let releaseDateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
 
     let genreLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +51,18 @@ class MovieDetailViewController : UIViewController {
         label.numberOfLines = 4
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
+        return label
+    }()
+    
+    let releaseDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let ratingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -68,6 +75,79 @@ class MovieDetailViewController : UIViewController {
         return label
     }()
     
+    let videoCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 130, height: 200)
+        layout.scrollDirection = .horizontal
+        return layout
+    }()
+    
+    let castCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+            layout.itemSize = CGSize(width: 130, height: 200)
+            layout.scrollDirection = .horizontal
+            return layout
+        }()
+    
+    let crewCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+            layout.itemSize = CGSize(width: 130, height: 200)
+            layout.scrollDirection = .horizontal
+            return layout
+        }()
+    
+    let similarMoviesCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+            layout.itemSize = CGSize(width: 130, height: 200)
+            layout.scrollDirection = .horizontal
+            return layout
+        }()
+    
+    lazy var videoCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: videoCollectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    
+    lazy var castCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: castCollectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        return collectionView
+    }()
+
+    lazy var crewCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: crewCollectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        return collectionView
+    }()
+    
+    let similarMovieLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Similar Movies"
+        return label
+    }()
+    
+    lazy var similarMoviesCollectionView : UICollectionView = {
+        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: similarMoviesCollectionViewFlowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        return collectionView
+    }()
     
     let runtimeLabel: UILabel = {
         let label = UILabel()
@@ -108,55 +188,6 @@ class MovieDetailViewController : UIViewController {
         return label
     }()
     
-    let videoCollectionViewFlowLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 130, height: 200)
-        layout.scrollDirection = .horizontal
-        return layout
-    }()
-    
-    let castCollectionViewFlowLayout: UICollectionViewFlowLayout = {
-            let layout = UICollectionViewFlowLayout()
-    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-            layout.itemSize = CGSize(width: 130, height: 200)
-            layout.scrollDirection = .horizontal
-            return layout
-        }()
-    
-    let crewCollectionViewFlowLayout: UICollectionViewFlowLayout = {
-            let layout = UICollectionViewFlowLayout()
-    //        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-            layout.itemSize = CGSize(width: 130, height: 200)
-            layout.scrollDirection = .horizontal
-            return layout
-        }()
-    
-    
-    lazy var videoCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: videoCollectionViewFlowLayout)
-        collectionView.backgroundColor = UIColor.clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        return collectionView
-    }()
-    
-    lazy var castCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: castCollectionViewFlowLayout)
-        collectionView.backgroundColor = UIColor.clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        return collectionView
-    }()
-
-    lazy var crewCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: crewCollectionViewFlowLayout)
-        collectionView.backgroundColor = UIColor.clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        return collectionView
-    }()
-    
     lazy var watchListBarButtonItem: UIBarButtonItem = {
         let item = UIBarButtonItem(image: UIImage(named: "watchlist_icon"), style: .plain, target: self, action: #selector(watchListBarButtonClicked))
         return item
@@ -172,9 +203,9 @@ class MovieDetailViewController : UIViewController {
         return item
     }()
     
-    var isFavorite: Bool = false {
+    var isFavoriteList: Bool = false {
         didSet {
-            if isFavorite {
+            if isFavoriteList {
                 DispatchQueue.main.async {
                     self.favoriteBarButtonItem.image = UIImage(named: "filled_star_icon")
                 }
@@ -204,12 +235,13 @@ class MovieDetailViewController : UIViewController {
         setupView()
         setupConstraints()
         
-//        self.navigationItem.title = movieDetail?.original_title
+        self.navigationItem.title = movieDetail?.original_title
 
         
         self.videoCollectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: videoCollectionViewCellIdentifier)
         self.castCollectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: castCrewCollectionViewCellIdentifier)
         self.crewCollectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: castCrewCollectionViewCellIdentifier)
+        self.similarMoviesCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: SimilarMovieCollectionViewCellIdentifer)
         
         self.titleLabel.text = movieDetail?.title
 //        self.titleLabel.adjustsFontSizeToFitWidth = true
@@ -240,6 +272,8 @@ class MovieDetailViewController : UIViewController {
         }
         genreLabel.text = genresString
         
+        ratingLabel.text = String(self.movieDetail?.vote_average ?? 0.0)
+        
         if let runtime = movieDetail?.runtime {
             self.runtimeDescriptionLabel.text = "\(runtime) minutes"
         }
@@ -263,7 +297,7 @@ class MovieDetailViewController : UIViewController {
         getMoviePosterImage()
         getCastAndCrew()
         getMovieAccountState()
-//        addShareBarButtonItem()
+        getSimilarMovies()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -272,12 +306,42 @@ class MovieDetailViewController : UIViewController {
         }
     }
     
+    private func getSimilarMovies() {
+        guard let movieId = self.movieDetail?.id else { return }
+        networkManager.getSimilarMoviesFor(movieId: movieId, success: {
+            response in
+            
+            guard let response = response as? MovieList else { return }
+            for movie in response.results {
+                if let movie = movie, let movieId = movie.id {
+                    networkManager.getMovieDetailAt(movieId, completionHandler:  {
+                        movieResponse, error in
+                        guard var movieResponse = movieResponse as? MovieDetail else {return}
+                        networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                            data,error  in
+                            movieResponse.poster_image = data
+                            self.similarMovies.append(movieResponse)
+                            DispatchQueue.main.async {
+                                self.similarMoviesCollectionView.reloadData()
+                            }
+                        })
+
+                    })
+                }
+            }
+            
+        }, failure: {
+            error in
+        })
+        
+    }
+    
     private func getMovieAccountState() {
         guard let movieId = self.movieDetail?.id else { return }
         networkManager.getMovieStateFor(movieId: movieId, success: {
             response in
             guard let response = response as? MovieAccountState else { return }
-            self.isFavorite = response.favorite
+            self.isFavoriteList = response.favorite
             self.isWatchList = response.watchlist
         }, failure: {
             error in
@@ -304,7 +368,7 @@ class MovieDetailViewController : UIViewController {
     
     @objc private func favoriteBarButtonClicked() {
         if let movieId = movieDetail?.id {
-            networkManager.postFavoriteFor(mediaId: movieId, onFavoriteList: !self.isFavorite, success: {
+            networkManager.postFavoriteFor(mediaId: movieId, onFavoriteList: !self.isFavoriteList, success: {
                 response in
                 self.getMovieAccountState()
             }, failure: {
@@ -409,19 +473,23 @@ class MovieDetailViewController : UIViewController {
         contentView.backgroundColor = UIColor.gray
         contentView.addSubview(posterImage)
         contentView.addSubview(titleLabel)
-        contentView.addSubview(releaseDateLabel)
         contentView.addSubview(genreLabel)
+        contentView.addSubview(releaseDateLabel)
+        contentView.addSubview(ratingLabel)
         contentView.addSubview(plotSummaryDescriptionLabel)
+        
+        contentView.addSubview(videoCollectionView)
+        contentView.addSubview(castCollectionView)
+        contentView.addSubview(crewCollectionView)
+        contentView.addSubview(similarMovieLabel)
+        contentView.addSubview(similarMoviesCollectionView)
+        
         contentView.addSubview(runtimeLabel)
         contentView.addSubview(runtimeDescriptionLabel)
         contentView.addSubview(budgetLabel)
         contentView.addSubview(budgetDescriptionLabel)
         contentView.addSubview(revenueLabel)
         contentView.addSubview(revenueDescriptionLabel)
-        
-        contentView.addSubview(videoCollectionView)
-        contentView.addSubview(castCollectionView)
-        contentView.addSubview(crewCollectionView)
         
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
@@ -431,7 +499,7 @@ class MovieDetailViewController : UIViewController {
     func setupConstraints() {
         let collectionViewHeight: CGFloat = 200.0
         let leadingAnchorSpacing: CGFloat = 20.0
-        let collectionViewsleadingAnchorSpacing: CGFloat = 15.0
+        let collectionViewsleadingAnchorSpacing: CGFloat = 20.0
         let trailingAnchorSpacing: CGFloat = -20.0
         let topBottomSpacingMovieFacts: CGFloat = 0.0
         let widthSpacingMovieFactLabel : CGFloat = 75
@@ -451,7 +519,7 @@ class MovieDetailViewController : UIViewController {
             
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: leadingAnchorSpacing),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            posterImage.heightAnchor.constraint(equalToConstant: 100),
+            posterImage.heightAnchor.constraint(equalToConstant: 150),
             posterImage.widthAnchor.constraint(equalToConstant: 100),
             
             titleLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
@@ -464,6 +532,9 @@ class MovieDetailViewController : UIViewController {
             
             releaseDateLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 10),
             releaseDateLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
+            
+            ratingLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: 10),
+            ratingLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
             
             plotSummaryDescriptionLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor, constant: 30),
             plotSummaryDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
@@ -485,12 +556,22 @@ class MovieDetailViewController : UIViewController {
             crewCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
             crewCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
-            runtimeLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            similarMovieLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            similarMovieLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+            similarMovieLabel.widthAnchor.constraint(equalToConstant: 150),
+            similarMovieLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
+            
+            similarMoviesCollectionView.topAnchor.constraint(equalTo: similarMovieLabel.bottomAnchor, constant: 0),
+            similarMoviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: collectionViewsleadingAnchorSpacing),
+            similarMoviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
+            similarMoviesCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+
+            runtimeLabel.topAnchor.constraint(equalTo: similarMoviesCollectionView.bottomAnchor, constant: 20),
             runtimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
             runtimeLabel.widthAnchor.constraint(equalToConstant: widthSpacingMovieFactLabel),
             runtimeLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
 
-            runtimeDescriptionLabel.topAnchor.constraint(equalTo: crewCollectionView.bottomAnchor, constant: 20),
+            runtimeDescriptionLabel.topAnchor.constraint(equalTo: similarMoviesCollectionView.bottomAnchor, constant: 20),
             runtimeDescriptionLabel.leadingAnchor.constraint(equalTo: runtimeLabel.trailingAnchor, constant: 5),
             runtimeDescriptionLabel.widthAnchor.constraint(equalToConstant: 200),
             runtimeDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
@@ -527,18 +608,20 @@ extension MovieDetailViewController : UICollectionViewDataSource {
             }
         } else if collectionView == castCollectionView {
             if let castCount = castCrew?.cast.count {
-                if castCount > 10 {
-                    return 10
-                }
+//                if castCount > 10 {
+//                    return 10
+//                }
                 return castCount
             }
         } else if collectionView == crewCollectionView {
             if let crewCount = castCrew?.crew.count {
-                if crewCount > 10 {
-                    return 10
-                }
+//                if crewCount > 10 {
+//                    return 10
+//                }
                 return crewCount
             }
+        } else if collectionView == similarMoviesCollectionView {
+            return self.similarMovies.count
         }
         return 0
     }
@@ -588,8 +671,36 @@ extension MovieDetailViewController : UICollectionViewDataSource {
                 }
                 return cell
             }
+        } else if collectionView == similarMoviesCollectionView {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarMovieCollectionViewCellIdentifer, for: indexPath) as? MovieCollectionViewCell {
+                cell.movieImage.image = nil
+                if let data = similarMovies[indexPath.item].poster_image,
+                    let poster_image = UIImage(data: data) {
+                        cell.movieImage.image = poster_image
+                }
+                cell.ratingView.configureViewFor(voteAverage: similarMovies[indexPath.item].vote_average ?? 0.0)
+                return cell            }
         }
        
         return UICollectionViewCell()
+    }
+}
+
+extension MovieDetailViewController :UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == castCollectionView || collectionView == crewCollectionView {
+            let castCrewDetailViewController = CastCrewDetailsViewController()
+            if collectionView == castCollectionView {
+                castCrewDetailViewController.creditId = castCrew?.cast[indexPath.row].credit_id
+            } else if collectionView == crewCollectionView {
+                castCrewDetailViewController.creditId = castCrew?.crew[indexPath.row].credit_id
+            }
+            self.navigationController?.pushViewController(castCrewDetailViewController, animated: false)
+        }
+        else if collectionView == similarMoviesCollectionView {
+            let movieDetailViewController = MovieDetailViewController()
+            movieDetailViewController.movieDetail = similarMovies[indexPath.row]
+            self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+        }
     }
 }
