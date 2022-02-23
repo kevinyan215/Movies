@@ -66,6 +66,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func setupUI() {
+        view.backgroundColor = UIColor.white
         view.addSubview(scrollView)
         view.addSubview(contentView)
         self.contentView.addSubview(self.moviesCollectionView)

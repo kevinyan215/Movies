@@ -77,6 +77,7 @@ class MyMoviesViewController : UIViewController {
     
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.white
+        self.navigationItem.title = "My Movies"
         setupStackViews()
     }
     

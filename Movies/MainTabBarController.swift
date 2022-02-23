@@ -39,5 +39,14 @@ class MainTabBarController : UITabBarController {
         accountVC.tabBarItem.image = UIImage(named: "account_icon")
         
         viewControllers = [movieCollectionVC, myMoviesVC, searchVC, accountVC]
+        
+        if #available(iOS 15.0, *) {
+           let appearance = UITabBarAppearance()
+           appearance.configureWithOpaqueBackground()
+           appearance.backgroundColor = UIColor.white
+           
+           self.tabBar.standardAppearance = appearance
+           self.tabBar.scrollEdgeAppearance = self.tabBar.standardAppearance
+        }
     }
 }

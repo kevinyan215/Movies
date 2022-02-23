@@ -29,6 +29,7 @@ class SearchViewController : UIViewController {
         searchBar.delegate = self
         
         view.addSubview(tableView)
+        view.backgroundColor = UIColor.white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(SearchResultsTableViewCell.self, forCellReuseIdentifier: SearchResultsTableViewCellIdentifier)

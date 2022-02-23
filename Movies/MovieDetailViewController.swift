@@ -493,6 +493,7 @@ class MovieDetailViewController : UIViewController {
         
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
+        view.backgroundColor = UIColor.white
         
     }
     
