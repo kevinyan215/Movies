@@ -34,7 +34,6 @@ class SearchViewController : UIViewController {
         tableView.delegate = self
         tableView.register(SearchResultsTableViewCell.self, forCellReuseIdentifier: SearchResultsTableViewCellIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.lightGray
         
         let tapGesture = UITapGestureRecognizer(target: self,
                                                 action: #selector(dismissKeyboard))
