@@ -39,13 +39,14 @@ class SignInViewController : UIViewController {
     
     func getRequestToken() {
         networkManager.getRequestToken(success: {
+            [weak self]
            requestToken in
            DispatchQueue.main.async {
                 if let requestToken = requestToken as? RequestToken {
                     let vc = WebViewViewController()
                     vc.delegate = self
                     vc.requestToken = requestToken.request_token
-                    self.navigationController?.present(vc, animated: true, completion: nil)
+                    self?.navigationController?.present(vc, animated: true, completion: nil)
                 }
            }
        }, failure: {

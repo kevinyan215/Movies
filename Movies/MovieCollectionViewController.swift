@@ -257,23 +257,23 @@ extension MovieCollectionViewController : UISearchBarDelegate {
         if let url = URL(string: urlString) {
             let urlRequest = URLRequest(url: url)
             networkManager.request(urlRequest: urlRequest, success: {
-                data in
+                [weak self] data in
                 if let data = data {
                      do {
                         var response = try JSONDecoder().decode(SearchResultList.self, from: data)
                         if response.results.count == 0 {
-                            self.searchResults = []
+                            self?.searchResults = []
                             DispatchQueue.main.async {
-                                self.tableView.reloadData()
+                                self?.tableView.reloadData()
                             }
                         }
                         for (index,movieTvShow) in response.results.enumerated() {
                             networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
                                 data,error in
                                 response.results[index]?.poster_image = data
-                                self.searchResults = response.results
+                                self?.searchResults = response.results
                                 DispatchQueue.main.async {
-                                   self.tableView.reloadData()
+                                   self?.tableView.reloadData()
                                 }
                             })
                             

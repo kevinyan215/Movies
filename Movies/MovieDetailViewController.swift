@@ -309,7 +309,7 @@ class MovieDetailViewController : UIViewController {
     private func getSimilarMovies() {
         guard let movieId = self.movieDetail?.id else { return }
         networkManager.getSimilarMoviesFor(movieId: movieId, success: {
-            response in
+            [weak self] response in
             
             guard let response = response as? MovieList else { return }
             for movie in response.results {
@@ -320,9 +320,9 @@ class MovieDetailViewController : UIViewController {
                         networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
                             data,error  in
                             movieResponse.poster_image = data
-                            self.similarMovies.append(movieResponse)
+                            self?.similarMovies.append(movieResponse)
                             DispatchQueue.main.async {
-                                self.similarMoviesCollectionView.reloadData()
+                                self?.similarMoviesCollectionView.reloadData()
                             }
                         })
 
@@ -339,10 +339,10 @@ class MovieDetailViewController : UIViewController {
     private func getMovieAccountState() {
         guard let movieId = self.movieDetail?.id else { return }
         networkManager.getMovieStateFor(movieId: movieId, success: {
-            response in
+            [weak self] response in
             guard let response = response as? MovieAccountState else { return }
-            self.isFavoriteList = response.favorite
-            self.isWatchList = response.watchlist
+            self?.isFavoriteList = response.favorite
+            self?.isWatchList = response.watchlist
         }, failure: {
             error in
             print(error)
@@ -369,11 +369,11 @@ class MovieDetailViewController : UIViewController {
     @objc private func favoriteBarButtonClicked() {
         if let movieId = movieDetail?.id {
             networkManager.postFavoriteFor(mediaId: movieId, onFavoriteList: !self.isFavoriteList, success: {
-                response in
-                self.getMovieAccountState()
+                [weak self] response in
+                self?.getMovieAccountState()
             }, failure: {
-                error in
-                self.getMovieAccountState()
+                [weak self] error in
+                self?.getMovieAccountState()
             })
         }
     }
@@ -381,11 +381,11 @@ class MovieDetailViewController : UIViewController {
     @objc private func watchListBarButtonClicked() {
         if let movieId = movieDetail?.id {
             networkManager.postWatchListFor(mediaId: movieId, onWatchList: !self.isWatchList, success: {
-                response in
-                self.getMovieAccountState()
+                [weak self] response in
+                self?.getMovieAccountState()
         }, failure: {
-                error in
-                self.getMovieAccountState()
+                [weak self] error in
+                self?.getMovieAccountState()
             })
         }
     }
@@ -404,11 +404,12 @@ class MovieDetailViewController : UIViewController {
                             for actor in cast {
                                 if let profilePathUrl = actor.profile_path {
                                     if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                        networkManager.request(urlRequest: URLRequest(url: url), success: { data in
+                                        networkManager.request(urlRequest: URLRequest(url: url), success: {
+                                            [weak self] data in
                                             actor.profile_image = data
                                             
                                             DispatchQueue.main.async {
-                                                self.castCollectionView.reloadData()
+                                                self?.castCollectionView.reloadData()
                                             }
                                             
                                         }, failure: { error in
@@ -422,11 +423,12 @@ class MovieDetailViewController : UIViewController {
                                     
                                     if let profilePathUrl = member.profile_path {
                                         if let url = URL(string: tmdbImageBaseUrl + profilePathUrl) {
-                                            networkManager.request(urlRequest: URLRequest(url: url), success: { data in
+                                            networkManager.request(urlRequest: URLRequest(url: url), success: {
+                                                [weak self] data in
                                                 member.profile_image = data
                                                 
                                                 DispatchQueue.main.async {
-                                                    self.crewCollectionView.reloadData()
+                                                    self?.crewCollectionView.reloadData()
                                                 }
                                                 
                                             }, failure: { error in
