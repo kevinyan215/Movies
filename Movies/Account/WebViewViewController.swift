@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-protocol WebViewViewControllerDelegate : class {
+protocol WebViewViewControllerDelegate : AnyObject {
     func webViewDidDismiss()
 }
 
