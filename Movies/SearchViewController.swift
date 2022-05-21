@@ -9,7 +9,13 @@
 import UIKit
 
 class SearchViewController : UIViewController {
-    let searchBar = UISearchBar()
+    lazy var searchBar : UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.placeholder = "Search"
+        return searchBar
+    }()
+    
     let tableView : UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +31,6 @@ class SearchViewController : UIViewController {
     
     func setupView() {
         navigationItem.titleView = searchBar
-        searchBar.placeholder = "Search"
-        searchBar.delegate = self
         
         view.addSubview(tableView)
         view.backgroundColor = UIColor.white
@@ -87,7 +91,7 @@ extension SearchViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text, searchText != "" {
-            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
+//            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
             self.perform(#selector(searchNetworkCall), with: nil, afterDelay: 0.5)
         } else {
             self.resetTableView()
