@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-protocol WebViewViewControllerDelegate : class {
+protocol WebViewViewControllerDelegate : AnyObject {
     func webViewDidDismiss()
 }
 
@@ -63,10 +63,10 @@ extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
     
     func newSession() {
         networkManager.newSession(requestToken: requestToken ?? "", success: {
-            session in
+            [weak self] session in
             if let session = session as? Session, session.success {
                 userDefaults.set(session.session_id, forKey: sessionIdIdentifier)
-                self.getAccountDetailsWith(sessionId: session.session_id ?? "")
+                self?.getAccountDetailsWith(sessionId: session.session_id ?? "")
             }
         }, failure: {
             error in
@@ -76,11 +76,11 @@ extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
     
     func getAccountDetailsWith(sessionId: String){
         networkManager.getAccountDetailsWith(sessionId: sessionId, success: {
-            account in
+            [weak self] account in
             if let account = account as? Account {
                 userDefaults.set(account.username, forKey: accountUsernameIdentifier)
                 userDefaults.set(account.id, forKey: accountIdIdentifier)
-                self.delegate?.webViewDidDismiss()
+                self?.delegate?.webViewDidDismiss()
             }
         }, failure: {
             error in

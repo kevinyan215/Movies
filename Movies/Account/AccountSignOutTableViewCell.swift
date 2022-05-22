@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AccountSignOutTableViewCellDelegate: class {
+protocol AccountSignOutTableViewCellDelegate: AnyObject {
     func didSelectAccountSignOutTableViewCell()
 }
 
@@ -27,10 +27,10 @@ class AccountSignOutTableViewCell: UITableViewCell {
     @objc func signOutButtonClicked() {
         print("sign out button clicked")
         networkManager.logoutUser(success: {
-            response in
+            [weak self] response in
             if let response = response as? DeleteSessionResponse, response.success {
                 deleteUserData()
-                self.delegate?.didSelectAccountSignOutTableViewCell()
+                self?.delegate?.didSelectAccountSignOutTableViewCell()
             }
         }, failure: {
             error in

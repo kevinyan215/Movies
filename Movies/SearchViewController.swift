@@ -9,7 +9,13 @@
 import UIKit
 
 class SearchViewController : UIViewController {
-    let searchBar = UISearchBar()
+    lazy var searchBar : UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.placeholder = "Search"
+        return searchBar
+    }()
+    
     let tableView : UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +31,6 @@ class SearchViewController : UIViewController {
     
     func setupView() {
         navigationItem.titleView = searchBar
-        searchBar.placeholder = "Search"
-        searchBar.delegate = self
         
         view.addSubview(tableView)
         view.backgroundColor = UIColor.white
@@ -34,7 +38,6 @@ class SearchViewController : UIViewController {
         tableView.delegate = self
         tableView.register(SearchResultsTableViewCell.self, forCellReuseIdentifier: SearchResultsTableViewCellIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.lightGray
         
         let tapGesture = UITapGestureRecognizer(target: self,
                                                 action: #selector(dismissKeyboard))
@@ -88,7 +91,7 @@ extension SearchViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text, searchText != "" {
-            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
+//            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
             self.perform(#selector(searchNetworkCall), with: nil, afterDelay: 0.5)
         } else {
             self.resetTableView()
@@ -102,23 +105,23 @@ extension SearchViewController : UISearchBarDelegate {
         if let url = URL(string: urlString) {
             let urlRequest = URLRequest(url: url)
             networkManager.request(urlRequest: urlRequest, success: {
-                data in
+                [weak self] data in
                 if let data = data {
                      do {
                         var response = try JSONDecoder().decode(SearchResultList.self, from: data)
                         if response.results.count == 0 {
-                            self.searchResults = []
+                            self?.searchResults = []
                             DispatchQueue.main.async {
-                                self.tableView.reloadData()
+                                self?.tableView.reloadData()
                             }
                         }
                         for (index,movieTvShow) in response.results.enumerated() {
                             networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
                                 data,error in
                                 response.results[index]?.poster_image = data
-                                self.searchResults = response.results
+                                self?.searchResults = response.results
                                 DispatchQueue.main.async {
-                                   self.tableView.reloadData()
+                                   self?.tableView.reloadData()
                                 }
                             })
                             

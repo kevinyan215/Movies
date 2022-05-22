@@ -21,6 +21,29 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         return view
     }()
     
+    lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        
+        return searchBar
+    }()
+    
+    lazy var tableView : UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor.clear
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(SearchResultsTableViewCell.self, forCellReuseIdentifier: SearchResultsTableViewCellIdentifier)
+        tableView.separatorStyle = .none
+    
+        return tableView
+    }()
+    
+    var searchResults: [SearchResult?] = []
+    
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -66,6 +89,14 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func setupUI() {
+        navigationItem.titleView = searchBar
+
+        view.addSubview(tableView)
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
         view.backgroundColor = UIColor.white
         view.addSubview(scrollView)
         view.addSubview(contentView)
@@ -90,6 +121,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -99,6 +134,23 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
         ])
+    }
+    
+    @objc func dismissKeyboard() {
+        navigationItem.rightBarButtonItem = nil
+        searchBar.resignFirstResponder()
+    }
+    
+    @objc func cancelBarButtonItemClicked() {
+        self.dismissKeyboard()
+        self.resetTableView()
+    }
+    
+    func resetTableView() {
+        searchResults = []
+        searchBar.text = ""
+        searchBar.placeholder = "Search"
+        self.tableView.reloadData()
     }
 }
 
@@ -170,3 +222,126 @@ extension MovieCollectionViewController : MovieTabBarCellDelegate {
     }
     
 }
+
+extension MovieCollectionViewController : UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
+                                                            target: self,
+                                                            action: #selector(cancelBarButtonItemClicked))
+        searchBar.placeholder = nil
+        self.view.bringSubviewToFront(tableView)
+        
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.view.sendSubviewToBack(tableView)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.dismissKeyboard()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let searchText = searchBar.text, searchText != "" {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchNetworkCall), object: nil)
+            self.perform(#selector(searchNetworkCall), with: nil, afterDelay: 0.5)
+        } else {
+            self.resetTableView()
+        }
+    }
+    
+    @objc func searchNetworkCall() {
+        let searchTextUrlEncoded = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = movieSearchUrl + query + searchTextUrlEncoded
+        print(urlString)
+        if let url = URL(string: urlString) {
+            let urlRequest = URLRequest(url: url)
+            networkManager.request(urlRequest: urlRequest, success: {
+                [weak self] data in
+                if let data = data {
+                     do {
+                        var response = try JSONDecoder().decode(SearchResultList.self, from: data)
+                        if response.results.count == 0 {
+                            self?.searchResults = []
+                            DispatchQueue.main.async {
+                                self?.tableView.reloadData()
+                            }
+                        }
+                        for (index,movieTvShow) in response.results.enumerated() {
+                            networkManager.getMoviePosterImagesAt(movieTvShow?.poster_path, completion: {
+                                data,error in
+                                response.results[index]?.poster_image = data
+                                self?.searchResults = response.results
+                                DispatchQueue.main.async {
+                                   self?.tableView.reloadData()
+                                }
+                            })
+                            
+                        }
+
+                        
+                     } catch {
+                        print(error)
+                    }
+                }
+                
+            }, failure: {
+                response in
+                print(response)
+            })
+        }
+    }
+}
+
+extension MovieCollectionViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultsTableViewCellIdentifier, for: indexPath) as? SearchResultsTableViewCell {
+            //multisearch
+//            if searchResults[indexPath.row]?.media_type == "tv" {
+//                cell.movieTitlelabel.text = searchResults[indexPath.row]?.name
+//            } else if searchResults[indexPath.row]?.media_type == "movie" {
+            cell.moviePosterImage.image = nil
+            cell.movieTitlelabel.text = nil
+            if let title = searchResults[indexPath.row]?.title {
+                cell.movieTitlelabel.text = title
+            }
+            if let data = searchResults[indexPath.row]?.poster_image,
+                let poster_image = UIImage(data: data) {
+                cell.moviePosterImage.image = poster_image
+            }
+//            }
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
+
+extension MovieCollectionViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        if let searchId = searchResults[indexPath.row]?.id {
+            NetworkingManager.shared.getMovieDetailAt(searchId, completionHandler: {
+                movieDetailResponse, error  in
+                guard var movieDetailResponse = movieDetailResponse as? MovieDetail else { return }
+                DispatchQueue.main.async {
+                    let movieDetailViewController = MovieDetailViewController()
+                    movieDetailViewController.movieDetail = movieDetailResponse
+                    self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+                }
+            })
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+}
+
