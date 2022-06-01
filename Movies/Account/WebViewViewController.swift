@@ -9,13 +9,9 @@
 import UIKit
 import WebKit
 
-protocol WebViewViewControllerDelegate : AnyObject {
-    func webViewDidDismiss()
-}
-
 class WebViewViewController : UIViewController, WKNavigationDelegate {
-    var requestToken: String?
-    weak var delegate : WebViewViewControllerDelegate?
+//    var requestToken: String?
+    weak var delegate : AccountSignInViewControllerDelegate?
     lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero
             , configuration: WKWebViewConfiguration())
@@ -26,17 +22,11 @@ class WebViewViewController : UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         setupWebView()
-        
-        if let requestToken = requestToken {
-            goToAuthPageWith(requestToken: requestToken)
-        }
+        setupWebViewConstraints()
     }
     
     func setupWebView() {
         view.addSubview(webView)
-        self.presentationController?.delegate = self
-
-        setupWebViewConstraints()
      }
      
      func setupWebViewConstraints() {
@@ -47,44 +37,4 @@ class WebViewViewController : UIViewController, WKNavigationDelegate {
              webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
          ])
      }
-    
-    func goToAuthPageWith(requestToken: String) {
-        if let url = URL(string: "https://www.themoviedb.org/authenticate/\(requestToken)"){
-            let urlRequest = URLRequest(url: url)
-            webView.load(urlRequest)
-        }
-    }
-}
-
-extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        newSession()
-    }
-    
-    func newSession() {
-        networkManager.newSession(requestToken: requestToken ?? "", success: {
-            [weak self] session in
-            if let session = session as? Session, session.success {
-                userDefaults.set(session.session_id, forKey: sessionIdIdentifier)
-                self?.getAccountDetailsWith(sessionId: session.session_id ?? "")
-            }
-        }, failure: {
-            error in
-            print(error)
-        })
-    }
-    
-    func getAccountDetailsWith(sessionId: String){
-        networkManager.getAccountDetailsWith(sessionId: sessionId, success: {
-            [weak self] account in
-            if let account = account as? Account {
-                userDefaults.set(account.username, forKey: accountUsernameIdentifier)
-                userDefaults.set(account.id, forKey: accountIdIdentifier)
-                self?.delegate?.webViewDidDismiss()
-            }
-        }, failure: {
-            error in
-            print(error)
-        })
-    }
 }
