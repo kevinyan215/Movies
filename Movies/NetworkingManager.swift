@@ -22,6 +22,8 @@ class NetworkingManager {
     var upcomingMoviesPageNumber = 1
     var topRatedMoviesPageNumber = 1
     
+    var movieGluApiCall = 0
+    
     func request(url: URL, success: @escaping success, failure: @escaping failure) {
         let dataTask = URLSession.shared.dataTask(with: url, completionHandler: {
             (data, response, error) in
@@ -109,7 +111,10 @@ class NetworkingManager {
 //                    if response.statusCode == 200 {
                         if let data = data {
                             do {
+                                let response2 = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+
                                 let response = try JSONDecoder().decode(decodingType.self, from: data)
+//                                print(response)
                                 success(response)
                             } catch {
                                 failure(error)
@@ -326,4 +331,119 @@ class NetworkingManager {
         self.request(with: URLRequest(url: url), decodingType: CastDetails.self, completionHandler: completion)
     }
     
+    func searchMovieDetails(searchString: String,
+                            success: @escaping (Decodable?) -> Void,
+                            failure: @escaping (Error?) -> Void) {
+        
+        let searchTextUrlEncoded = searchString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = movieSearchUrl + query + searchTextUrlEncoded
+        print(urlString)
+        guard let url = URL(string: urlString) else { return }
+        let urlRequest = URLRequest(url: url)
+        self.request(with: urlRequest, decodingType: SearchResultList.self, success: success, failure: failure)
+    }
+                                    
+                                    
+    func getFilmsNowShowing(success: @escaping (Decodable?) -> Void,
+                            failure: @escaping (Error?) -> Void) {
+        let urlString = "https://api-gate2.movieglu.com/filmsNowShowing/?n=100"
+        guard let url = URL(string: urlString) else { return }
+        var request = URLRequest(url: url)
+        
+        request.setValue(MovieGluClient, forHTTPHeaderField: "client")
+        request.setValue(MovieGluAPIKeyValue, forHTTPHeaderField: "x-api-key")
+        request.setValue(MovieGluAuthorization, forHTTPHeaderField: "authorization")
+        
+        
+        request.setValue(MovieGluTerritory, forHTTPHeaderField: "territory") //must change back to US
+        request.setValue(MovieGluAPIVersion, forHTTPHeaderField: "api-version")
+        request.setValue(latLong, forHTTPHeaderField: "geolocation")
+        request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
+        
+        self.request(with: request, decodingType: FilmResponse.self, success: success, failure: failure)
+        movieGluApiCall = 0
+        movieGluApiCall += 1
+        print("getFilmsNowShowing: \(movieGluApiCall)")
+    }
+    
+
+    func getNearbyCinemas(withLatLong latLong: String,
+                          success: @escaping (Decodable?) -> Void,
+                          failure: @escaping (Error?) -> Void) {
+    
+        let urlString = "https://api-gate2.movieglu.com/cinemasNearby/?n=5"
+        guard let url = URL(string: urlString) else { return }
+        var request = URLRequest(url: url)
+        
+        request.setValue(MovieGluClient, forHTTPHeaderField: "client")
+        request.setValue(MovieGluAPIKeyValue, forHTTPHeaderField: "x-api-key")
+        request.setValue(MovieGluAuthorization, forHTTPHeaderField: "authorization")
+        
+        
+        request.setValue(MovieGluTerritory, forHTTPHeaderField: "territory") //must change back to US
+        request.setValue(MovieGluAPIVersion, forHTTPHeaderField: "api-version")
+        request.setValue(latLong, forHTTPHeaderField: "geolocation")
+        request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
+        
+        self.request(with: request, decodingType: CinemaResponse.self, success: success, failure: failure)
+        movieGluApiCall += 1
+        print("getNearbyCinemas: \(movieGluApiCall)")
+    }
+
+    func getCinemaShowTimes(cinemaId: Int,
+                            filmId: Int,
+                            date: String,
+                            success: @escaping (Decodable?) -> Void,
+                            failure: @escaping (Error?) -> Void) {
+        let queryItems = [URLQueryItem(name: "cinema_id", value: "\(cinemaId)"),
+                          URLQueryItem(name: "film_id", value: "\(filmId)"),
+                          URLQueryItem(name: "date", value: date) ]
+        var urlComps = URLComponents(string: "https://api-gate2.movieglu.com/cinemaShowTimes/")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        
+        request.setValue(MovieGluClient, forHTTPHeaderField: "client")
+        request.setValue(MovieGluAPIKeyValue, forHTTPHeaderField: "x-api-key")
+        request.setValue(MovieGluAuthorization, forHTTPHeaderField: "authorization")
+        
+        request.setValue(MovieGluTerritory, forHTTPHeaderField: "territory") //must change back to US
+        request.setValue(MovieGluAPIVersion, forHTTPHeaderField: "api-version")
+        request.setValue(latLong, forHTTPHeaderField: "geolocation")
+        request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
+        
+        self.request(with: request, decodingType: CinemaShowTimeResponse.self, success: success, failure: failure)
+        movieGluApiCall += 1
+        print("getCinemaShowTimes: \(movieGluApiCall)")
+    }
+    
+    func purchaseMovieTicket(cinemaId: Int,
+                             filmId: Int,
+                             date: String,
+                             time: String,
+                             success: @escaping (Decodable?) -> Void,
+                             failure: @escaping (Error?) -> Void ) {
+        
+        let queryItems = [URLQueryItem(name: "cinema_id", value: "\(cinemaId)"),
+                          URLQueryItem(name: "film_id", value: "\(filmId)"),
+                          URLQueryItem(name: "date", value: date),
+                          URLQueryItem(name: "time", value: time)]
+        var urlComps = URLComponents(string: "https://api-gate2.movieglu.com/purchaseConfirmation/?")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        
+        request.setValue(MovieGluClient, forHTTPHeaderField: "client")
+        request.setValue(MovieGluAPIKeyValue, forHTTPHeaderField: "x-api-key")
+        request.setValue(MovieGluAuthorization, forHTTPHeaderField: "authorization")
+        
+        request.setValue(MovieGluTerritory, forHTTPHeaderField: "territory") //must change back to US
+        request.setValue(MovieGluAPIVersion, forHTTPHeaderField: "api-version")
+        request.setValue(latLong, forHTTPHeaderField: "geolocation")
+        request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
+        
+        self.request(with: request, decodingType: PurchaseConfirmation.self, success: success, failure: failure)
+        movieGluApiCall += 1
+        print("purchaseMovieTicket: \(movieGluApiCall)")
+    }
 }

@@ -10,6 +10,19 @@ import Foundation
 
 let APIKeyValue = "608b8e34a89c818571631096e34773a3"
 
+//sandbox cvstest
+let MovieGluAPIKeyValue = "X2HHxAGa8uAolhC2JslK60cDRYTFsAE2QphLN023"
+let MovieGluAuthorization = "Basic SU1EQl9YWDp6SW9YeG53TFQ5QWE="
+let MovieGluTerritory = "XX" //sandbox
+
+let MovieGluClient = "IMDB" //may need to change if get new API key
+let MovieGluAPIVersion = "v200"
+
+//prod cvstest
+//let MovieGluAuthorization = "Basic SU1EQjpydG9BZHdVcGxxUmY="
+//let MovieGluAPIKeyValue = "Z9wfWOztr05qZsOXQTiKl2R3srCaImYx7u5UBle2"
+//let MovieGluTerritory = "US"
+
 let theMovieDBBaseURL = "https://api.themoviedb.org/3/"
 let movieBaseUrl = theMovieDBBaseURL + movie
 let requestNewTokenUrl = theMovieDBBaseURL + authentication + token + new + APIKey
@@ -51,6 +64,8 @@ let MovieTabBarCellId = "MovieTabBarCellId"
 let NowPlayingMoviesCellId = "NowPlayingMoviesCellId"
 let TopRatedMoviesCellId = "TopRatedMoviesCellId"
 let UpcomingMoviesCellId = "UpcomingMoviesCellId"
+let NearbyCinemaTableViewCellIdentifier = "NearbyCinemaTableViewCellIdentifier"
+let CinemaShowTimeCollectionViewCellIdentifier = "CinemaShowTimeCollectionViewCellIdentifier"
 
 let AccountUserNameTableViewCellId = "AccountUserNameTableViewCellId"
 let AccountSignOutTableViewCellId = "AccountSignOutTableViewCellId"
@@ -58,3 +73,7 @@ let AccountSignOutTableViewCellId = "AccountSignOutTableViewCellId"
 let sessionIdIdentifier = "sessionIdIdentifier"
 let accountIdIdentifier = "accountIdIdentifier"
 let accountUsernameIdentifier = "accountUsernameIdentifier"
+
+let deviceDateTime = getCurrentTimeInISO8601()
+//let latLong = "37.77;-122.41"
+let latLong = "-22.0;14.0"

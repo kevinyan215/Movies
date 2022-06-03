@@ -66,6 +66,28 @@ class MovieDetailViewController : UIViewController {
         return label
     }()
     
+    let buyTicketsButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 10
+        button.setAttributedTitle(NSAttributedString(string: "Buy Tickets",
+                                                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]), for: .normal)
+        var buttonConfig = UIButton.Configuration.filled()
+        buttonConfig.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        button.configuration = buttonConfig
+        button.addTarget(self, action: #selector(buyTicketsButtonClicked), for: .touchDown)
+        return button
+    }()
+    
+    @objc func buyTicketsButtonClicked() {
+        let cinemaViewController = CinemaViewController()
+        cinemaViewController.filmId = self.movieDetail?.film_id
+        self.navigationController?.pushViewController(cinemaViewController, animated: true)
+        print("buyTicketsButtonClicked")
+    }
+    
     let plotSummaryDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -245,7 +267,9 @@ class MovieDetailViewController : UIViewController {
         
         self.titleLabel.text = movieDetail?.title
 //        self.titleLabel.adjustsFontSizeToFitWidth = true
-        self.releaseDateLabel.text = movieDetail?.release_date
+        if let date = getDateFromString(date: movieDetail?.release_date ?? "", withFormat: "yyyy-MM-dd") {
+            self.releaseDateLabel.text = getStringFromDate(date, withFormat: "MM/dd/yyyy")
+        }
 //        self.genreLabel.text = viewModel.g
         self.plotSummaryDescriptionLabel.text = movieDetail?.overview
 //        self.plotSummaryDescriptionLabel.adjustsFontSizeToFitWidth = true
@@ -302,7 +326,9 @@ class MovieDetailViewController : UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if userIsSignedIn() {
-            addFavoriteWatchListBarButtonItems()
+            addShareFavoriteWatchListBarButtonItems()
+        } else {
+            addShareBarButtonItem()
         }
     }
     
@@ -362,8 +388,12 @@ class MovieDetailViewController : UIViewController {
         present(activityViewController, animated: true, completion: nil)
     }
     
-    private func addFavoriteWatchListBarButtonItems() {
+    private func addShareFavoriteWatchListBarButtonItems() {
         navigationItem.rightBarButtonItems = [shareBarButtonItem,watchListBarButtonItem,favoriteBarButtonItem]
+    }
+    
+    private func addShareBarButtonItem() {
+        navigationItem.rightBarButtonItems = [shareBarButtonItem]
     }
     
     @objc private func favoriteBarButtonClicked() {
@@ -478,6 +508,9 @@ class MovieDetailViewController : UIViewController {
         contentView.addSubview(genreLabel)
         contentView.addSubview(releaseDateLabel)
         contentView.addSubview(ratingLabel)
+        if self.movieDetail?.film_id != nil {
+            contentView.addSubview(buyTicketsButton)
+        }
         contentView.addSubview(plotSummaryDescriptionLabel)
         
         contentView.addSubview(videoCollectionView)
@@ -522,8 +555,8 @@ class MovieDetailViewController : UIViewController {
             
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: leadingAnchorSpacing),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            posterImage.heightAnchor.constraint(equalToConstant: 150),
-            posterImage.widthAnchor.constraint(equalToConstant: 100),
+            posterImage.heightAnchor.constraint(equalToConstant: 180),
+            posterImage.widthAnchor.constraint(equalToConstant: 130),
             
             titleLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
@@ -539,7 +572,6 @@ class MovieDetailViewController : UIViewController {
             ratingLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: 10),
             ratingLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 20),
             
-            plotSummaryDescriptionLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor, constant: 30),
             plotSummaryDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
             plotSummaryDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingAnchorSpacing),
             
@@ -600,6 +632,19 @@ class MovieDetailViewController : UIViewController {
             revenueDescriptionLabel.heightAnchor.constraint(equalToConstant: heightSpacingMovieFactLabel),
             revenueDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
+        
+        if self.movieDetail?.film_id != nil {
+            NSLayoutConstraint.activate([
+                buyTicketsButton.topAnchor.constraint(equalTo: posterImage.bottomAnchor, constant: 30),
+                buyTicketsButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingAnchorSpacing),
+                
+                plotSummaryDescriptionLabel.topAnchor.constraint(equalTo: buyTicketsButton.bottomAnchor, constant: 30),
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                plotSummaryDescriptionLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor, constant: 30)
+            ])
+        }
     }
 }
 

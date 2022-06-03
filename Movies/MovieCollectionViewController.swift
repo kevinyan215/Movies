@@ -69,7 +69,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
     }()
     
     lazy var movieTabBar: MovieTabBar = {
-        let tabBar = MovieTabBar(tabSelections: ["Popular", "Top Rated", "Now Playing", "Upcoming"], frame: .zero)
+        let tabBar = MovieTabBar(tabSelections: ["Now Playing", "Popular", "Top Rated", "Upcoming"], frame: .zero)
         tabBar.translatesAutoresizingMaskIntoConstraints = false
         tabBar.delegate = self
         return tabBar
@@ -93,7 +93,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
 
         view.addSubview(tableView)
         let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(dismissKeyboard))
+                                                action: #selector(dismissSearchBar))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
@@ -136,13 +136,18 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDataSourc
         ])
     }
     
-    @objc func dismissKeyboard() {
+    @objc func dismissSearchBar() {
         navigationItem.rightBarButtonItem = nil
+        dismissKeyboard()
+    }
+    
+    @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
+//        view.endEditing(true)
     }
     
     @objc func cancelBarButtonItemClicked() {
-        self.dismissKeyboard()
+        self.dismissSearchBar()
         self.resetTableView()
     }
     
@@ -162,11 +167,11 @@ extension MovieCollectionViewController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier: String
         if indexPath.item == 0 {
-            identifier = PopularMoviesCellId
-        } else if indexPath.item == 1 {
-            identifier = TopRatedMoviesCellId
-        } else if indexPath.item == 2  {
             identifier = NowPlayingMoviesCellId
+        } else if indexPath.item == 1 {
+            identifier = PopularMoviesCellId
+        } else if indexPath.item == 2  {
+            identifier = TopRatedMoviesCellId
         } else if indexPath.item == 3 {
             identifier = UpcomingMoviesCellId
         }
@@ -341,7 +346,8 @@ extension MovieCollectionViewController : UITableViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
+//        searchBar.resignFirstResponder()
+        view.endEditing(true)
     }
 }
 

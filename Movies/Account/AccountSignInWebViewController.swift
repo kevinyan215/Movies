@@ -14,6 +14,7 @@ protocol AccountSignInViewControllerDelegate : AnyObject {
 }
 
 class AccountSignInWebViewController : WebViewViewController {
+    weak var delegate : AccountSignInViewControllerDelegate?
     var requestToken: String?
     
     override func viewDidLoad() {

@@ -10,8 +10,6 @@ import UIKit
 import WebKit
 
 class WebViewViewController : UIViewController, WKNavigationDelegate {
-//    var requestToken: String?
-    weak var delegate : AccountSignInViewControllerDelegate?
     lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero
             , configuration: WKWebViewConfiguration())
