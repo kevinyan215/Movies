@@ -32,8 +32,8 @@ struct Film : Codable {
     let other_titles: OtherTitles?
     let release_dates: [ReleaseDate]?
     let age_rating: [AgeRating]?
-    let film_trailer: String?
-    let synopsis_long: String?
+//    let film_trailer: String?
+//    let synopsis_long: String?
     let images: Image?
     
     let showings: Showings?

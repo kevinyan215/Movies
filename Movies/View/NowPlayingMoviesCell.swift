@@ -13,8 +13,8 @@ class NowPlayingMoviesCell : MovieTabBarCell {
 //        super.getMovies()
 //        networkManager.getNowPlayingMoviesWith(pageNumber: pageNumber, completionHandler: getMovieClosure)
         
-        if true {
-            guard let data = readLocalFile(forName: "NowShowingFilmsSandbox") else { return }
+        if sandboxEnabled {
+            guard let data = readLocalFile(forName: NowShowingFilmsSandbox) else { return }
             let parsedData = parse(decodingType: FilmResponse.self, jsonData: data)
             self.searchMovieDetails(data: parsedData)
                     
@@ -36,7 +36,15 @@ class NowPlayingMoviesCell : MovieTabBarCell {
             guard let filmName = film.film_name else { return }
             networkManager.searchMovieDetails(searchString: filmName, success: {
                [weak self] response in
-                guard let searchResponseList = response as? SearchResultList, let firstMovieFound = searchResponseList.results.first, let id = firstMovieFound?.id else { return }
+                guard let searchResponseList = response as? SearchResultList else { return }
+                let firstMovieFound = searchResponseList.results.first(where: {
+                    searchResult in
+                    if let searchTitle = searchResult?.title {
+                        return searchTitle == filmName
+                    }
+                    return false
+                })
+                guard let id = firstMovieFound??.id else { return }
                 networkManager.getMovieDetailAt(id, completionHandler:  {
                     movieResponse, error in
                     guard var movieResponse = movieResponse as? MovieDetail else {return}
@@ -60,6 +68,5 @@ class NowPlayingMoviesCell : MovieTabBarCell {
         }
     }
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("overrode here")
     }
 }

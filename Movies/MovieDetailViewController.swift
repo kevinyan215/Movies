@@ -70,7 +70,7 @@ class MovieDetailViewController : UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 2
+//        button.layer.borderWidth = 2
         button.layer.cornerRadius = 10
         button.setAttributedTitle(NSAttributedString(string: "Buy Tickets",
                                                      attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]), for: .normal)

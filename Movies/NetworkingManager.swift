@@ -361,17 +361,17 @@ class NetworkingManager {
         request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
         
         self.request(with: request, decodingType: FilmResponse.self, success: success, failure: failure)
-        movieGluApiCall = 0
         movieGluApiCall += 1
-        print("getFilmsNowShowing: \(movieGluApiCall)")
+        print("movieGluApiCall getFilmsNowShowing: \(movieGluApiCall)")
     }
     
 
     func getNearbyCinemas(withLatLong latLong: String,
+                          numberOfResults number: Int,
                           success: @escaping (Decodable?) -> Void,
                           failure: @escaping (Error?) -> Void) {
     
-        let urlString = "https://api-gate2.movieglu.com/cinemasNearby/?n=5"
+        let urlString = "https://api-gate2.movieglu.com/cinemasNearby/?n=\(number)"
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         
@@ -387,9 +387,65 @@ class NetworkingManager {
         
         self.request(with: request, decodingType: CinemaResponse.self, success: success, failure: failure)
         movieGluApiCall += 1
-        print("getNearbyCinemas: \(movieGluApiCall)")
+        print("movieGluApiCall getNearbyCinemas: \(movieGluApiCall)")
     }
 
+    func getFilmShowTimes(withFilmId filmId: Int,
+                          latLong: String,
+                          date: String,
+                          numberOfResults: Int,
+                          success: @escaping (Decodable?) -> Void,
+                          failure: @escaping (Error?) -> Void) {
+            
+        let queryItems = [URLQueryItem(name: "n", value: "\(numberOfResults)"),
+                          URLQueryItem(name: "film_id", value: "\(filmId)"),
+                          URLQueryItem(name: "date", value: date) ]
+        var urlComps = URLComponents(string: "https://api-gate2.movieglu.com/filmShowTimes/")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        
+        request.setValue(MovieGluClient, forHTTPHeaderField: "client")
+        request.setValue(MovieGluAPIKeyValue, forHTTPHeaderField: "x-api-key")
+        request.setValue(MovieGluAuthorization, forHTTPHeaderField: "authorization")
+        
+        
+        request.setValue(MovieGluTerritory, forHTTPHeaderField: "territory") //must change back to US
+        request.setValue(MovieGluAPIVersion, forHTTPHeaderField: "api-version")
+        request.setValue(latLong, forHTTPHeaderField: "geolocation")
+        request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
+        
+        self.request(with: request, decodingType: FilmShowTimeResponse.self, success: success, failure: failure)
+        movieGluApiCall += 1
+        print("movieGluApiCall, getFilmShowTimes: \(movieGluApiCall)")
+    }
+    
+    func getCinemaDetails(withCinemaId cinemaId: Int,
+                          latLong: String,
+                          success: @escaping (Decodable?) -> Void,
+                          failure: @escaping (Error?) -> Void) {
+            
+        let queryItems = [URLQueryItem(name: "cinema_id", value: "\(cinemaId)")]
+        var urlComps = URLComponents(string: "https://api-gate2.movieglu.com/cinemaDetails/")
+        urlComps?.queryItems = queryItems
+        guard let url = urlComps?.url else { return }
+        var request = URLRequest(url: url)
+        
+        request.setValue(MovieGluClient, forHTTPHeaderField: "client")
+        request.setValue(MovieGluAPIKeyValue, forHTTPHeaderField: "x-api-key")
+        request.setValue(MovieGluAuthorization, forHTTPHeaderField: "authorization")
+        
+        
+        request.setValue(MovieGluTerritory, forHTTPHeaderField: "territory") //must change back to US
+        request.setValue(MovieGluAPIVersion, forHTTPHeaderField: "api-version")
+        request.setValue(latLong, forHTTPHeaderField: "geolocation")
+        request.setValue(deviceDateTime, forHTTPHeaderField: "device-datetime")
+        
+        self.request(with: request, decodingType: Cinema.self, success: success, failure: failure)
+        movieGluApiCall += 1
+        print("movieGluApiCall, getCinemaDetails: \(movieGluApiCall)")
+    }
+    
     func getCinemaShowTimes(cinemaId: Int,
                             filmId: Int,
                             date: String,
@@ -414,7 +470,7 @@ class NetworkingManager {
         
         self.request(with: request, decodingType: CinemaShowTimeResponse.self, success: success, failure: failure)
         movieGluApiCall += 1
-        print("getCinemaShowTimes: \(movieGluApiCall)")
+        print("movieGluApiCall, getCinemaShowTimes: \(movieGluApiCall)")
     }
     
     func purchaseMovieTicket(cinemaId: Int,
@@ -444,6 +500,6 @@ class NetworkingManager {
         
         self.request(with: request, decodingType: PurchaseConfirmation.self, success: success, failure: failure)
         movieGluApiCall += 1
-        print("purchaseMovieTicket: \(movieGluApiCall)")
+        print("movieGluApiCall, purchaseMovieTicket: \(movieGluApiCall)")
     }
 }

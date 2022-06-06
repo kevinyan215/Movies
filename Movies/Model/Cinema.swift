@@ -13,6 +13,11 @@ struct CinemaResponse : Codable {
     let status: Status?
 }
 
+struct CinemaDetailResponse : Codable {
+    let cinema: Cinema?
+    let status: Status?
+}
+
 struct Cinema : Codable {
 	let cinema_id: Int?
 	let cinema_name: String?
@@ -21,11 +26,14 @@ struct Cinema : Codable {
 	let city: String?
 	let state: String?
 	let country: String?
-	let postacode: String?
-	let lat: Double?
-	let lng: Double?
+//	let postcode: Int?
+	var lat: Double?
+	var lng: Double?
 	let distance: Double?
 	let logo_url: String?
+    
+    let showings: Showings?
+    let county: String?
 }
 
 struct CinemaShowTimeResponse: Codable {

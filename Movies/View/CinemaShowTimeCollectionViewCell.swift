@@ -18,7 +18,7 @@ class CinemaShowTimeCollectionViewCell : UICollectionViewCell {
     let movieStartTimeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 2
+        button.layer.cornerRadius = 5
         button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(moviesStartTimeButtonClicked), for: .touchDown)
         return button
@@ -42,7 +42,7 @@ class CinemaShowTimeCollectionViewCell : UICollectionViewCell {
     }
     
     func setupView() {
-        addSubview(movieStartTimeButton)
+        self.addSubview(movieStartTimeButton)
     }
     
     func setupConstraints() {
@@ -50,9 +50,7 @@ class CinemaShowTimeCollectionViewCell : UICollectionViewCell {
             movieStartTimeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             movieStartTimeButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             movieStartTimeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            movieStartTimeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0)
+            movieStartTimeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
         ])
     }
 }
-
-

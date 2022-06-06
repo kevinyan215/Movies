@@ -17,12 +17,20 @@ class NearbyCinemaTableViewCell : UITableViewCell {
 	let cinemaTitle: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
 		return label
 	}()
 
+    let distanceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
+        return label
+    }()
+    
     let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let collectionViewFlowLayout = UICollectionViewFlowLayout()
-        collectionViewFlowLayout.itemSize = CGSize(width: 75, height: 50)
+        collectionViewFlowLayout.itemSize = CGSize(width: 100, height: 50)
         collectionViewFlowLayout.scrollDirection = .horizontal
         return collectionViewFlowLayout
         
@@ -52,6 +60,7 @@ class NearbyCinemaTableViewCell : UITableViewCell {
     
     func setupView() {
         self.addSubview(cinemaTitle)
+        self.addSubview(distanceLabel)
         self.contentView.addSubview(collectionView)
     }
     
@@ -59,8 +68,13 @@ class NearbyCinemaTableViewCell : UITableViewCell {
         NSLayoutConstraint.activate([
             cinemaTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             cinemaTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            cinemaTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
             cinemaTitle.heightAnchor.constraint(equalToConstant: 50),
+            cinemaTitle.trailingAnchor.constraint(equalTo: distanceLabel.leadingAnchor, constant: -10),
+            
+            distanceLabel.centerYAnchor.constraint(equalTo: self.cinemaTitle.centerYAnchor),
+            distanceLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            distanceLabel.widthAnchor.constraint(equalToConstant: 120),
+            distanceLabel.heightAnchor.constraint(equalToConstant: 50),
             
             collectionView.topAnchor.constraint(equalTo: self.cinemaTitle.bottomAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
@@ -69,7 +83,7 @@ class NearbyCinemaTableViewCell : UITableViewCell {
         ])
     }
     
-    func getShowTimes(success: @escaping () -> Void) {
+    func getShowTimes(success: @escaping () -> Void, failure: @escaping (Int?) -> Void) {
         guard let cinemaId = cinemaId, let filmId = filmId else {
             return
         }
@@ -81,6 +95,7 @@ class NearbyCinemaTableViewCell : UITableViewCell {
             success()
 //            print(response)
         }, failure: {
+            failure(self.cinemaId)
             print($0)
         } )
     }
@@ -92,8 +107,14 @@ extension NearbyCinemaTableViewCell : UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CinemaShowTimeCollectionViewCellIdentifier, for: indexPath) as? CinemaShowTimeCollectionViewCell {
-            cell.movieStartTimeButton.setTitle(self.cinemaShowTimes?[indexPath.row].start_time, for: .normal)
+        guard let cinemaShowTimes = self.cinemaShowTimes, indexPath.row <= cinemaShowTimes.count-1 else { return UICollectionViewCell() }
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CinemaShowTimeCollectionViewCellIdentifier, for: indexPath) as? CinemaShowTimeCollectionViewCell, let startTime = self.cinemaShowTimes?[indexPath.row].start_time {
+            let dateTime = getDateFromString(date: startTime, withFormat: "HH:mm")
+            guard let dateTime = dateTime else {
+                return UICollectionViewCell()
+            }
+            let startTimeString = getStringFromDate(dateTime, withFormat: "h:mm a")
+            cell.movieStartTimeButton.setTitle(startTimeString, for: .normal)
             cell.delegate = self
             return cell
         }
@@ -114,6 +135,7 @@ extension NearbyCinemaTableViewCell : MovieStartTimeButtonDelegate {
             DispatchQueue.main.async {
                 let vc = PurchaseMovieTicketWebViewController()
                 vc.url = response.url
+//                self?.parent?.navigationController?.pushViewController(vc, animated: true)
                 self?.parent?.navigationController?.present(vc, animated: true, completion: nil)
             }
         }, failure: {
