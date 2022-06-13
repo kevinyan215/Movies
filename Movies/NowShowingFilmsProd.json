@@ -1,0 +1,1070 @@
+{
+    "films": [
+        {
+            "film_id": 253705,
+            "imdb_id": 1745960,
+            "imdb_title_id": "tt1745960",
+            "film_name": "Top Gun: Maverick",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-27",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for sequences of intense action, and some strong language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/253705_high_V3.mp4",
+            "synopsis_long": "After more than thirty years of service as one of the Navy's top aviators, Pete \"Maverick\" Mitchell (Tom Cruise) is where he belongs, pushing the envelope as a courageous test pilot and dodging the advancement in rank that would ground him. When he finds himself training a detachment of Top Gun graduates for a specialized mission the likes of which no living pilot has ever seen, Maverick encounters Lt. Bradley Bradshaw (Miles Teller), call sign: \"Rooster,\" the son of Maverick's late friend and Radar Intercept Officer Lt. Nick Bradshaw, aka \"Goose\".\n\n Facing an uncertain future and confronting the ghosts of his past, Maverick is drawn into a confrontation with his own deepest fears, culminating in a mission that demands the ultimate sacrifice from those who will be chosen to fly it.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/253705/253705h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/253705/253705h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 296301,
+            "imdb_id": 9419884,
+            "imdb_title_id": "tt9419884",
+            "film_name": "Doctor Strange in the Multiverse of Madness",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-06",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for intense sequences of violence and action, frightening images and some language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/296301_high_V2.mp4",
+            "synopsis_long": "In Marvel Studios' \"Doctor Strange in the Multiverse of Madness,\" the MCU unlocks the Multiverse and pushes its boundaries further than ever before. Journey into the unknown with Doctor Strange, who, with the help of mystical allies both old and new, traverses the mind-bending and dangerous alternate realities of the Multiverse to confront a mysterious new adversary.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/296301/296301h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/296301/296301h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 258781,
+            "imdb_id": null,
+            "imdb_title_id": null,
+            "film_name": "The Bob's Burgers Movie",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-27",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for rude/suggestive material and language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/258781_high_V2.mp4",
+            "synopsis_long": "\"The Bob's Burgers Movie\" is an animated, big-screen, musical comedy-mystery-adventure based on the long-running Emmy-winning series. The story begins when a ruptured water main creates an enormous sinkhole right in front of Bob's Burgers, blocking the entrance indefinitely and ruining the Belchers' plans for a successful summer. While Bob and Linda struggle to keep the business afloat, the kids try to solve a mystery that could save their family's restaurant. As the dangers mount, these underdogs help each other find hope and fight to get back behind the counter, where they belong.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/258781/258781h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/258781/258781h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 318008,
+            "imdb_id": 11703710,
+            "imdb_title_id": "tt11703710",
+            "film_name": "Downton Abbey: A New Era",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-20",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg.png",
+                    "age_advisory": "for some suggestive references, language and thematic elements."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/318008_high_V2.mp4",
+            "synopsis_long": "From award-winning creator Julian Fellowes comes the motion picture event DOWNTON ABBEY: A NEW ERA. The much-anticipated cinematic return of the global phenomenon reunites the beloved cast as they go on a grand journey to the South of France to uncover the mystery of the Dowager Countess' newly inherited villa.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/318008/318008h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/318008/318008h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 300783,
+            "imdb_id": 8115900,
+            "imdb_title_id": "tt8115900",
+            "film_name": "The Bad Guys",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-04-22",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg.png",
+                    "age_advisory": "for action and rude humor."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/300783_high_V2.mp4",
+            "synopsis_long": "In the new action comedy from DreamWorks Animation, based on the New York Times best-selling book series, a crackerjack criminal crew of animal outlaws are about to attempt their most challenging con yet - becoming model citizens. Never have there been five friends as infamous as The Bad Guys - dashing pickpocket Mr. Wolf, seen-it-all safecracker Mr. Snake, chill master-of-disguise Mr. Shark,  short-fused \"muscle\" Mr. Piranha, and sharp-tongued expert hacker Ms. Tarantula, aka \"Webs.\" But when, after years of countless heists and being the world's most-wanted villains, the gang is finally caught, Mr. Wolf brokers a deal (that he has no intention of keeping) to save them all from prison: The Bad Guys will go good.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/300783/300783h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/300783/300783h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 310966,
+            "imdb_id": 12412888,
+            "imdb_title_id": "tt12412888",
+            "film_name": "Sonic the Hedgehog 2",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-04-08",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg.png",
+                    "age_advisory": "for action, some violence, rude humor, and mild language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/310966_high_V2.mp4",
+            "synopsis_long": "The world's favorite blue hedgehog is back for a next-level adventure in SONIC THE HEDGEHOG 2. After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/310966/310966h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/310966/310966h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 327020,
+            "imdb_id": 6710474,
+            "imdb_title_id": "tt6710474",
+            "film_name": "Everything Everywhere All At Once",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-03-25",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for some violence, sexual material and language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/327020_high.mp4",
+            "synopsis_long": "\"Everything Everywhere All at Once\"  is a hilarious and big-hearted sci-fi action adventure about an exhausted Chinese American woman (Michelle Yeoh) who can't seem to finish her taxes.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/327020/327020h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/327020/327020h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 327081,
+            "imdb_id": 12004038,
+            "imdb_title_id": "tt12004038",
+            "film_name": "Watcher",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for some bloody violence, language, and some sexual material/nudity."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/327081_high_V2.mp4",
+            "synopsis_long": "As a serial killer stalks the city, a young actress who just moved to town with her boyfriend notices a mysterious stranger watching her from across the street in this terrifying thriller.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/327081/327081h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 318375,
+            "imdb_id": 14549466,
+            "imdb_title_id": "tt14549466",
+            "film_name": "Crimes of the Future",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for strong disturbing violent content and grisly images, graphic nudity and some language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/318375_high_V2.mp4",
+            "synopsis_long": "As the human species adapts to a synthetic environment, the body undergoes new transformations and mutations. With his partner Caprice (Léa Seydoux), Saul Tenser (Viggo Mortensen), celebrity performance artist, publicly showcases the metamorphosis of his organs in avant-garde performances. Timlin (Kristen Stewart), an investigator from the National Organ Registry, obsessively tracks their movements, which is when a mysterious group is revealed... Their mission - to use Saul's notoriety to shed light on the next phase of human evolution.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/318375/318375h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/318375/318375h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 275276,
+            "imdb_id": 7630550,
+            "imdb_title_id": "tt7630550",
+            "film_name": "Morbius",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-04-01",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for intense sequences of violence, some frightening images, and brief strong language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/275276_high_V2.mp4",
+            "synopsis_long": "One of Marvel's most compelling and conflicted characters comes to the big screen as Oscar® winner Jared Leto transforms into the enigmatic antihero Michael Morbius. Dangerously ill with a rare blood disorder and determined to save others suffering his same fate, Dr. Morbius attempts a desperate gamble.  While at first it seems to be a radical success, a darkness inside him is unleashed. Will good override evil - or will Morbius succumb to his mysterious new urges?",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/275276/275276h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/275276/275276h2.jpg",
+                            "width": 300,
+                            "height": 199
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 328900,
+            "imdb_id": 13841850,
+            "imdb_title_id": "tt13841850",
+            "film_name": "Men",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-20",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for disturbing and violent content, graphic nudity, grisly images and language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/328900_high_V2.mp4",
+            "synopsis_long": "In the aftermath of a personal tragedy, Harper retreats alone to the beautiful English countryside, hoping to have found a place to heal. But someone or something from the surrounding woods appears to be stalking her. What begins as simmering dread becomes a fully-formed nightmare, inhabited by her darkest memories and fears.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/328900/328900h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/328900/328900h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 312421,
+            "imdb_id": 9179430,
+            "imdb_title_id": "tt9179430",
+            "film_name": "Vikram (Tamil)",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "0 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/uc.png",
+                    "age_advisory": ""
+                }
+            ],
+            "film_trailer": null,
+            "synopsis_long": "VIKRAM is a Telugu language action thriller in which the leader of a police special operations team pursues an elusive criminal.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/312421/312421h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 316485,
+            "imdb_id": 13320622,
+            "imdb_title_id": "tt13320622",
+            "film_name": "The Lost City",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-03-25",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for violence and some bloody images, suggestive material, partial nudity and language."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/316485_high.mp4",
+            "synopsis_long": "Brilliant, but reclusive author Loretta Sage has spent her career writing about exotic places in her popular romance-adventure novels featuring handsome cover model Alan, who has dedicated his life to embodying the hero character, \"Dash.\" While on tour promoting her new book with Alan, Loretta is kidnapped by an eccentric billionaire who hopes that she can lead him to the ancient lost city's treasure from her latest story. Wanting to prove that he can be a hero in real life and not just on the pages of her books, Alan sets off to rescue her. Thrust into an epic jungle adventure, the unlikely pair will need to work together to survive the elements and find the ancient treasure before it's lost forever.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/316485/316485h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/316485/316485h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 331062,
+            "imdb_id": 8009428,
+            "imdb_title_id": "tt8009428",
+            "film_name": "Hustle",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for language"
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/331062_high.mp4",
+            "synopsis_long": "tanley Sugerman's (Adam Sandler) love for basketball is unparalleled, but the travel weary Philadelphia 76ers scout who has higher ambitions of being a coach remains stuck on the road looking for the next unknown talent. His search around the world leads him to Spain, when he discovers Bo Cruz (NBA player Juancho Hernangómez), an incredible streetball player with a troubled past. Stanley and Bo connect on and off the court, with their passion for the game and as loving family men who want to prove they can win, in basketball and in life. With the support of Stanley's wife, Teresa (Queen Latifah), can the underdogs come out on top?",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/331062/331062h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/331062/331062h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 316153,
+            "imdb_id": 10366514,
+            "imdb_title_id": "tt10366514",
+            "film_name": "Eiffel",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for some sexuality/nudity."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/316153_high_V2.mp4",
+            "synopsis_long": "Having just finished his collaboration on the Statue of Liberty, celebrated engineer Gustave Eiffel is on top of the world. Now, the French government is pressuring him to design something spectacular for the 1889 Paris World Fair, but Eiffel simply wants to design the subway. Suddenly, everything changes when Eiffel crosses paths with a mysterious woman from his past. Their long lost, forbidden passion inspires him to change the Paris skyline forever.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/316153/316153h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/316153/316153h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 197407,
+            "imdb_id": 4123432,
+            "imdb_title_id": "tt4123432",
+            "film_name": "Fantastic Beasts: The Secrets of Dumbledore",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-04-15",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for some fantasy action/violence."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/197407_high_V3.mp4",
+            "synopsis_long": "Professor Albus Dumbledore knows the powerful Dark wizard Gellert Grindelwald is moving to seize control of the wizarding world. Unable to stop him alone, he entrusts Magizoologist Newt Scamander to lead an intrepid team of wizards, witches and one brave Muggle baker on a dangerous mission, where they encounter old and new beasts and clash with Grindelwald's growing legion of followers. But with the stakes so high, how long can Dumbledore remain on the sidelines?",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/197407/197407h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/197407/197407h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 288706,
+            "imdb_id": 9851854,
+            "imdb_title_id": "tt9851854",
+            "film_name": "Major (Telugu)",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-02",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "0 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/uc.png",
+                    "age_advisory": ""
+                }
+            ],
+            "film_trailer": null,
+            "synopsis_long": "Based on the life of Major Sandeep Unnikrishnan, who was martyred in action during the November 2008 Mumbai attacks and was consequently awarded the Ashoka Chakra, India's highest peacetime gallantry award, on 26 January 2009.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/288706/288706h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 298877,
+            "imdb_id": 9637132,
+            "imdb_title_id": "tt9637132",
+            "film_name": "Prithviraj (Hindi)",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "OTHER ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/other.png",
+                    "age_advisory": ""
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/298877_high.mp4",
+            "synopsis_long": "A biopic on legendary Hindu warrior king \"Prithviraj Chauhan\" including his early military successes, love story with Sanyukta & clashes with Muhammad of Ghor, a ruler of the Muslim Ghurid dynasty who led the Islamic Conquest of Hindustan.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/298877/298877h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 324925,
+            "imdb_id": 16418964,
+            "imdb_title_id": "tt16418964",
+            "film_name": "Jazz Fest: A New Orleans Story",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-13",
+                    "notes": "NY/LA"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for brief language and some suggestive material."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/324925_high.mp4",
+            "synopsis_long": "JAZZ FEST: A NEW ORLEANS STORY weaves together live performances and interviews from the 50th anniversary of the iconic festival, featuring some of the biggest names in the music industry, along with a wealth of archival documentary footage from the past half century. This film not only captures the Festival in all of its beauty and glory, but also delves deep into the rich culture of The Big Easy.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/324925/324925h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/324925/324925h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 329462,
+            "imdb_id": 11535358,
+            "imdb_title_id": "tt11535358",
+            "film_name": "Family Camp",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-13",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg.png",
+                    "age_advisory": "for some action and thematic elements."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/329462_high.mp4",
+            "synopsis_long": "When their pastor encourages the congregation to sign-up for a week away at family camp, Grace believes she's found the perfect cure for her imperfect clan - even if they'd all rather be anywhere but at rustic Camp Katokwah.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/329462/329462h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 327907,
+            "imdb_id": 1798632,
+            "imdb_title_id": "tt1798632",
+            "film_name": "Firestarter",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-13",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for violent content."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/327907_high.mp4",
+            "synopsis_long": "In a new adaptation of Stephen King's classic thriller from the producers of The Invisible Man, a girl with extraordinary pyrokinetic powers fights to protect her family and herself from sinister forces that seek to capture and control her. For more than a decade, parents Andy and Vicky have been on the run, desperate to hide their daughter Charlie from a shadowy federal agency that wants to harness her unprecedented gift for creating fire into a weapon of mass destruction. Andy has taught Charlie how to defuse her power, which is triggered by anger or pain. But as Charlie turns 11, the fire becomes harder and harder to control. After an incident reveals the family's location, a mysterious operative is deployed to hunt down the family and seize Charlie once and for all. Charlie has other plans.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/327907/327907h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/327907/327907h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 332375,
+            "imdb_id": 18924506,
+            "imdb_title_id": "tt18924506",
+            "film_name": "2000 Mules",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-20",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "0 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/uc.png",
+                    "age_advisory": ""
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/332375_high.mp4",
+            "synopsis_long": "\"2000 Mules,\" a documentary film created by Dinesh D'Souza, exposes widespread, coordinated voter fraud in the 2020 election, sufficient to change the overall outcome.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/332375/332375h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 318723,
+            "imdb_id": 11138512,
+            "imdb_title_id": "tt11138512",
+            "film_name": "The Northman",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-04-22",
+                    "notes": "Nationwide"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "R ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/r.png",
+                    "age_advisory": "for strong bloody violence, some sexual content and nudity."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/318723_high_V2.mp4",
+            "synopsis_long": "The Northman is an action-filled epic that follows a young Viking prince on his quest to avenge his father's murder.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/318723/318723h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/318723/318723h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 316131,
+            "imdb_id": 13645322,
+            "imdb_title_id": "tt13645322",
+            "film_name": "F3: Fun and Frustration",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-05-27",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "0 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/uc.png",
+                    "age_advisory": ""
+                }
+            ],
+            "film_trailer": null,
+            "synopsis_long": "Venky and Varun are trying to recover from financial problems. What happens when they encounter the Praganthi family, who are greedy for money?",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/316131/316131h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "film_id": 323632,
+            "imdb_id": 6852178,
+            "imdb_title_id": "tt6852178",
+            "film_name": "Benediction",
+            "other_titles": null,
+            "release_dates": [
+                {
+                    "release_date": "2022-06-03",
+                    "notes": "Limited"
+                }
+            ],
+            "age_rating": [
+                {
+                    "rating": "PG-13 ",
+                    "age_rating_image": "https://assets.movieglu.com/age_rating_logos/us/pg-13.png",
+                    "age_advisory": "for disturbing war images, some sexual material and thematic elements."
+                }
+            ],
+            "film_trailer": "https://trailer.movieglu.com/323632_high.mp4",
+            "synopsis_long": "Written and directed by acclaimed filmmaker Terence Davies, BENEDICTION explores the turbulent life of WWI poet Siegfried Sassoon (Jack Lowden). The writer and soldier was a complex man who survived the horrors of fighting in the First World War and was decorated for his bravery but who became a vocal critic of the government's continuation of the war when he returned from service. His poetry was inspired by his experiences on the Western Front, and he became one of the leading war poets of the era. Adored by members of the aristocracy as well as stars of London's literary and stage world, he embarked on affairs with several men as he attempted to come to terms with his homosexuality. At the same time, broken by the horror of war, he made his life's journey a quest for salvation, trying to find it within the conformity of marriage and religion.",
+            "images": {
+                "poster": {
+                    "1": {
+                        "image_orientation": "portrait",
+                        "region": "global",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/323632/323632h1.jpg",
+                            "width": 200,
+                            "height": 300
+                        }
+                    }
+                },
+                "still": {
+                    "1": {
+                        "image_orientation": "landscape",
+                        "medium": {
+                            "film_image": "https://image.movieglu.com/323632/323632h2.jpg",
+                            "width": 300,
+                            "height": 200
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "status": {
+        "count": 25,
+        "state": "OK",
+        "method": "filmsNowShowing",
+        "message": null,
+        "request_method": "GET",
+        "version": "MOVI_120v200",
+        "territory": "US",
+        "device_datetime_sent": "2022-06-04T23:33:51.917Z",
+        "device_datetime_used": "2022-06-04 00:33:51"
+    }
+}

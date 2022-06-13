@@ -47,22 +47,28 @@ class MovieTabBarCell : BaseCell {
         guard let response = response as? MovieList else { return }
         for movie in response.results {
             if let movie = movie, let movieId = movie.id {
-                networkManager.getMovieDetailAt(movieId, completionHandler:  {
-                    movieResponse, error in
-                    guard var movieResponse = movieResponse as? MovieDetail else {return}
-                    networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
-                        data,error  in
-                        movieResponse.poster_image = data
-                        self.movies.append(movieResponse)
-                        DispatchQueue.main.async {
-                            self.moviesCollectionView.reloadData()
-                            self.isWaiting = false
-                        }
-                    })
-
-                })
+                self.getMovieDetailClosure(movieId)
             }
         }
+    }
+    
+    lazy var getMovieDetailClosure: (Int) -> Void = {
+        movieId in
+        networkManager.getMovieDetailAt(movieId, completionHandler:  {
+            movieResponse, error in
+            guard var movieResponse = movieResponse as? MovieDetail else {return}
+            
+            networkManager.getMoviePosterImagesAt(movieResponse.poster_path, completion: {
+                data,error  in
+                movieResponse.poster_image = data
+                self.movies.append(movieResponse)
+                DispatchQueue.main.async {
+                    self.moviesCollectionView.reloadData()
+                    self.isWaiting = false
+                }
+            })
+
+        })
     }
     
     override func setupViews() {
@@ -105,7 +111,7 @@ extension MovieTabBarCell : UICollectionViewDataSource {
     }
 }
 
-extension MovieTabBarCell :UICollectionViewDelegate {
+extension MovieTabBarCell : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didTapMovieTabBarCellWith(movieDetail: movies[indexPath.item])
 
