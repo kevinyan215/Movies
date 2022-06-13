@@ -43,7 +43,7 @@ class SignInViewController : UIViewController {
            requestToken in
            DispatchQueue.main.async {
                 if let requestToken = requestToken as? RequestToken {
-                    let vc = WebViewViewController()
+                    let vc = AccountSignInWebViewController()
                     vc.delegate = self
                     vc.requestToken = requestToken.request_token
                     self?.navigationController?.present(vc, animated: true, completion: nil)
@@ -62,7 +62,6 @@ class SignInViewController : UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
     }
     
     func setupView(){
@@ -80,7 +79,7 @@ class SignInViewController : UIViewController {
     }
 }
 
-extension SignInViewController : WebViewViewControllerDelegate {
+extension SignInViewController : AccountSignInViewControllerDelegate {
     func webViewDidDismiss() {
         showProfileView()
     }

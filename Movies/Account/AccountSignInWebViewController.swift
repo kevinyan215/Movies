@@ -1,52 +1,30 @@
 //
-//  WebViewViewController.swift
+//  AccountSIgnInWebViewController.swift
 //  Movies
 //
-//  Created by Kevin Yan on 8/13/20.
-//  Copyright © 2020 Kevin Yan. All rights reserved.
+//  Created by Kevin Yan on 6/1/22.
+//  Copyright © 2022 Kevin Yan. All rights reserved.
 //
 
 import UIKit
 import WebKit
 
-protocol WebViewViewControllerDelegate : AnyObject {
+protocol AccountSignInViewControllerDelegate : AnyObject {
     func webViewDidDismiss()
 }
 
-class WebViewViewController : UIViewController, WKNavigationDelegate {
+class AccountSignInWebViewController : WebViewViewController {
+    weak var delegate : AccountSignInViewControllerDelegate?
     var requestToken: String?
-    weak var delegate : WebViewViewControllerDelegate?
-    lazy var webView: WKWebView = {
-        let webView = WKWebView(frame: .zero
-            , configuration: WKWebViewConfiguration())
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.navigationDelegate = self
-        return webView
-    }()
     
     override func viewDidLoad() {
-        setupWebView()
+        super.viewDidLoad()
+        self.presentationController?.delegate = self
         
         if let requestToken = requestToken {
             goToAuthPageWith(requestToken: requestToken)
         }
     }
-    
-    func setupWebView() {
-        view.addSubview(webView)
-        self.presentationController?.delegate = self
-
-        setupWebViewConstraints()
-     }
-     
-     func setupWebViewConstraints() {
-         NSLayoutConstraint.activate([
-             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-             webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-             webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-             webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-         ])
-     }
     
     func goToAuthPageWith(requestToken: String) {
         if let url = URL(string: "https://www.themoviedb.org/authenticate/\(requestToken)"){
@@ -56,17 +34,17 @@ class WebViewViewController : UIViewController, WKNavigationDelegate {
     }
 }
 
-extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
+extension AccountSignInWebViewController : UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         newSession()
     }
     
     func newSession() {
         networkManager.newSession(requestToken: requestToken ?? "", success: {
-            [weak self] session in
+            session in
             if let session = session as? Session, session.success {
                 userDefaults.set(session.session_id, forKey: sessionIdIdentifier)
-                self?.getAccountDetailsWith(sessionId: session.session_id ?? "")
+                self.getAccountDetailsWith(sessionId: session.session_id ?? "")
             }
         }, failure: {
             error in
@@ -88,3 +66,5 @@ extension WebViewViewController : UIAdaptivePresentationControllerDelegate {
         })
     }
 }
+
+

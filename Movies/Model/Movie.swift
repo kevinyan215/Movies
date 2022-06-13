@@ -63,6 +63,7 @@ struct MovieDetail: Codable {
     let videos: Videos?
     let images: Images?
     
+    var film_id: Int? //movie glu film id
     var poster_image: Data?
     var watchlist: Bool?
     var favorite: Bool?
