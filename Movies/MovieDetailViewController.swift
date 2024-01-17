@@ -73,7 +73,8 @@ class MovieDetailViewController : UIViewController {
 //        button.layer.borderWidth = 2
         button.layer.cornerRadius = 10
         button.setAttributedTitle(NSAttributedString(string: "Buy Tickets",
-                                                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]), for: .normal)
+                                                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]),
+                                  for: .normal)
         var buttonConfig = UIButton.Configuration.filled()
         buttonConfig.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         button.configuration = buttonConfig
