@@ -21,10 +21,10 @@ let sandboxEnabled = true
 let MovieGluAPIVersion = "v200"
 
 //prod cvstest
-//let MovieGluAuthorization = "Basic TU9WSV8xMjA6M0NOb0hGcG5VenM5"
-//let MovieGluAPIKeyValue = "0cc94yDFOk5UfEetE0hvr6Q9i4R8bj8K6O0JwUE7"
+//let MovieGluAuthorization = "Basic UlRFUzpxOE9Bd0szU3p3czQ="
+//let MovieGluAPIKeyValue = "01TkgG9fhRa25Dq77lo777sUdgSpubvC9pbrugUc"
 //let MovieGluTerritory = "US"
-//let MovieGluClient = "MOVI_120"
+//let MovieGluClient = "RTES"
 //let NowShowingFilmsSandbox = "NowShowingFilmsProd"
 
 //let latLong = "37.77;-122.41"
