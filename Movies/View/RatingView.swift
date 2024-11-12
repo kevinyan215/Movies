@@ -31,16 +31,15 @@ class RatingView: UIView {
         setupConstraints()
     }
     
-    
     func configureViewFor(voteAverage: Double) {
-        percentValueLabel.text = String(voteAverage)
+        percentValueLabel.text = String((voteAverage*10).rounded()/10) 
 
-        self.backgroundColor = UIColor.clear
-//         self.backgroundColor = UIColor.init(red: 33/255, green: 33/255, blue: 33/255, alpha: 1.0)
+//        self.backgroundColor = UIColor.clear
+         self.backgroundColor = UIColor.init(red: 1/255, green: 1/255, blue: 1/255, alpha: 1.0)
          let shapeLayer = CAShapeLayer()
          
          let center = CGPoint(x: self.bounds.origin.x + 25, y: self.bounds.origin.y + 25)
-         let circularPath = UIBezierPath(arcCenter: center, radius: 20, startAngle: -CGFloat.pi / 2.0, endAngle: 3 * CGFloat.pi / 2.0, clockwise: true)
+        let circularPath = UIBezierPath(arcCenter: center, radius: 23, startAngle: -CGFloat.pi / 2.0, endAngle: 3 * CGFloat.pi / 2.0, clockwise: true)
          shapeLayer.path = circularPath.cgPath
          shapeLayer.fillColor = UIColor.clear.cgColor
          

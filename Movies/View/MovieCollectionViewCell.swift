@@ -18,6 +18,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     let ratingView : RatingView = {
         let ratingView = RatingView()
+        ratingView.layer.cornerRadius = 25
         ratingView.translatesAutoresizingMaskIntoConstraints = false
         return ratingView
     }()
